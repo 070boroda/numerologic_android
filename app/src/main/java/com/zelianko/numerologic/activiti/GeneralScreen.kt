@@ -399,8 +399,10 @@ private fun date(map: MutableState<HashMap<String, String>>): MutableState<HashM
     )
 
     Column(
-        modifier = Modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.Bottom,
+        modifier = Modifier
+            .padding(top = 190.dp)
+            .fillMaxSize(),
+//        verticalArrangement = Arrangement.Bottom,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(

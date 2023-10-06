@@ -5,7 +5,7 @@ plugins {
 
 android {
     namespace = "com.zelianko.numerologic"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.zelianko.numerologic"
@@ -13,7 +13,7 @@ android {
         targetSdk = 33
         versionCode = 4
         versionName = "2.0.0.4"
-        compileSdkPreview = "UpsideDownCake"
+            //  compileSdkPreview = "UpsideDownCake"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {

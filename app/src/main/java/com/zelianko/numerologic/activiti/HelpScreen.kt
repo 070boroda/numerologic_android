@@ -55,7 +55,7 @@ fun HelpScreen() {
             horizontalArrangement = Arrangement.Center,
             verticalAlignment = Alignment.CenterVertically
         ) {
-//            Banner(id = R.string.banner_2)
+            Banner(id = R.string.banner_2)
         }
         LazyColumn(
             modifier = Modifier

@@ -30,7 +30,7 @@ fun ButtonNavigation(
     )
     NavigationBar(
         containerColor = NavBarColor,
-        contentColor = Color.White
+        contentColor = Color.White,
     ) {
         val backStateEntry by navController.currentBackStackEntryAsState()
         val currentRow = backStateEntry?.destination?.route
@@ -43,14 +43,15 @@ fun ButtonNavigation(
                 icon = {
                     Icon(
                         painter = painterResource(id = bottomItem.iconId),
-                        contentDescription = "Icon"
+                        contentDescription = "Icon",
+                        tint = Color.White
                     )
                 },
                 label = {
                     Text(text = bottomItem.title, fontSize = 12.sp)
                 },
-                selectedContentColor = Color.LightGray,
-                unselectedContentColor = Color.LightGray
+                selectedContentColor = Color.Black,
+                unselectedContentColor = Color.White
             )
         }
 

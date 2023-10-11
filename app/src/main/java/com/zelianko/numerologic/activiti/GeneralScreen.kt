@@ -125,7 +125,7 @@ fun GeneralScreen() {
                         } else {
                             dataMap.value["Число судьбы"].toString()
                         },
-                        modifier = Modifier.padding(top = 12.dp),
+                        modifier = Modifier.padding(top = 8.dp),
                         style = TextStyle(fontSize = 18.sp),
                         color = Color.White
                     )
@@ -156,7 +156,7 @@ fun GeneralScreen() {
                         } else {
                            dataMap.value["Темперамент"].toString()
                         },
-                        modifier = Modifier.padding(top = 12.dp),
+                        modifier = Modifier.padding(top = 8.dp),
                         style = TextStyle(fontSize = 18.sp),
                         color = Color.White
                     )

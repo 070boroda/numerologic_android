@@ -62,19 +62,28 @@ fun HelpScreen() {
                 .padding(
                     start = 20.dp,
                     end = 15.dp,
-                    top=10.dp,
-                    bottom = 60.dp)
+                    top = 10.dp,
+                    bottom = 60.dp
+                )
                 .fillMaxWidth()
         ) {
             itemsIndexed(
                 listOf("ХАРАКТЕР",
                     "ЭНЕРГИЯ",
+                    "ИНТЕРЕС",
                     "ЗДОРОВЬЕ",
                     "ЛОГИКА",
                     "ТРУД",
                     "УДАЧА",
                     "ДОЛГ",
-                    "ПАМЯТЬ")
+                    "ПАМЯТЬ",
+
+                    "ТЕМПЕРАМЕНТ",
+                    "ЦЕЛЬ",
+                    "СЕМЬЯ",
+                    "БЫТ",
+                    "ПРИВЫЧКИ",
+                    "ЧИСЛО СУДЬБЫ")
             ) { _, item ->
                 TextBlock(header = item)
             }
@@ -93,12 +102,19 @@ fun TextBlock(header: String) {
     when (header) {
         "ХАРАКТЕР" -> stringArray = stringArrayResource(R.array.character)
         "ЭНЕРГИЯ" -> stringArray = stringArrayResource(R.array.energy)
+        "ИНТЕРЕС" -> stringArray = stringArrayResource(R.array.interes)
         "ЗДОРОВЬЕ" -> stringArray = stringArrayResource(R.array.health)
-        "ЛОГИКА" -> stringArray = stringArrayResource(R.array.logic)
-        "ТРУД" -> stringArray = stringArrayResource(R.array.work)
+        "ЛОГИКА" -> stringArray = stringArrayResource(R.array.logik)
+        "ТРУД" -> stringArray = stringArrayResource(R.array.trud)
         "УДАЧА" -> stringArray = stringArrayResource(R.array.fart)
         "ДОЛГ" -> stringArray = stringArrayResource(R.array.dolg)
         "ПАМЯТЬ" -> stringArray = stringArrayResource(R.array.memory)
+        "ТЕМПЕРАМЕНТ" -> stringArray = stringArrayResource(R.array.temperament)
+        "ЦЕЛЬ" -> stringArray = stringArrayResource(R.array.cell)
+        "СЕМЬЯ" -> stringArray = stringArrayResource(R.array.famaly)
+        "БЫТ" -> stringArray = stringArrayResource(R.array.bit)
+        "ПРИВЫЧКИ" -> stringArray = stringArrayResource(R.array.privichki)
+        "ЧИСЛО СУДЬБЫ" -> stringArray = stringArrayResource(R.array.sudba)
         else -> {
             stringArray = emptyArray()
         }

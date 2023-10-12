@@ -400,9 +400,8 @@ private fun date(map: MutableState<HashMap<String, String>>): MutableState<HashM
 
     Column(
         modifier = Modifier
-            .padding(top = 190.dp)
+            .padding(top = 230.dp)
             .fillMaxSize(),
-//        verticalArrangement = Arrangement.Bottom,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
@@ -415,6 +414,7 @@ private fun date(map: MutableState<HashMap<String, String>>): MutableState<HashM
             color = Color.White
         )
         Button(
+           modifier = Modifier.padding(bottom = 2.dp),
             onClick = {
                 datePicker.show()
             }

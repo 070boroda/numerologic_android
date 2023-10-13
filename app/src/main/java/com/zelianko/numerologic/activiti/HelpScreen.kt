@@ -20,7 +20,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringArrayResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight.Companion.Bold
@@ -68,7 +67,9 @@ fun HelpScreen() {
                 .fillMaxWidth()
         ) {
             itemsIndexed(
-                listOf("ХАРАКТЕР",
+                listOf(
+                    "Общие сведения",
+                    "ХАРАКТЕР",
                     "ЭНЕРГИЯ",
                     "ИНТЕРЕС",
                     "ЗДОРОВЬЕ",
@@ -77,7 +78,6 @@ fun HelpScreen() {
                     "УДАЧА",
                     "ДОЛГ",
                     "ПАМЯТЬ",
-
                     "ТЕМПЕРАМЕНТ",
                     "ЦЕЛЬ",
                     "СЕМЬЯ",
@@ -100,6 +100,7 @@ fun HelpScreen() {
 fun TextBlock(header: String) {
     val stringArray: Array<String>
     when (header) {
+        "Общие сведения" -> stringArray = stringArrayResource(R.array.headers)
         "ХАРАКТЕР" -> stringArray = stringArrayResource(R.array.character)
         "ЭНЕРГИЯ" -> stringArray = stringArrayResource(R.array.energy)
         "ИНТЕРЕС" -> stringArray = stringArrayResource(R.array.interes)

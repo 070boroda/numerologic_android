@@ -38,6 +38,7 @@ import androidx.compose.ui.unit.sp
 import com.zelianko.numerologic.R
 import com.zelianko.numerologic.ads.Banner
 import com.zelianko.numerologic.services.CountNumberServices
+import com.zelianko.numerologic.ui.theme.Clear
 import com.zelianko.numerologic.ui.theme.LightBlue
 import java.util.Calendar
 
@@ -182,9 +183,11 @@ fun GeneralScreen() {
             label1 = "Интерес", value1 = dataMap.value["Интерес"].toString(),
             label2 = "Труд", value2 = dataMap.value["Труд"].toString(),
             label3 = "Память", value3 = dataMap.value["Память"].toString(),
-            label4 = "Привычки", value4 = dataMap.value["Привычки"].toString(), maxHeightSize = 0.125f
+            label4 = "Привычки", value4 = dataMap.value["Привычки"].toString(),
+            maxHeightSize = 0.125f
         )
-        LastRow(value = dataMap.value["Быт"].toString())
+        //LastRow(value = dataMap.value["Быт"].toString())
+        LastClearLine(label2 = "Быт",value2 = dataMap.value["Быт"].toString())
         date(dataMap)
     }
 }
@@ -232,7 +235,7 @@ private fun SecondLine(
                     } else {
                         value1
                     },
-                    modifier = Modifier.padding(top = 12.dp),
+                    modifier = Modifier.padding(top = 8.dp),
                     style = TextStyle(fontSize = 18.sp),
                     color = Color.White
                 )
@@ -264,7 +267,7 @@ private fun SecondLine(
                     } else {
                         value2
                     },
-                    modifier = Modifier.padding(top = 12.dp),
+                    modifier = Modifier.padding(top = 8.dp),
                     style = TextStyle(fontSize = 18.sp),
                     color = Color.White
                 )
@@ -295,7 +298,7 @@ private fun SecondLine(
                     } else {
                         value3
                     },
-                    modifier = Modifier.padding(top = 12.dp),
+                    modifier = Modifier.padding(top = 8.dp),
                     style = TextStyle(fontSize = 18.sp),
                     color = Color.White
                 )
@@ -326,7 +329,7 @@ private fun SecondLine(
                     } else {
                         value4
                     },
-                    modifier = Modifier.padding(top = 12.dp),
+                    modifier = Modifier.padding(top = 8.dp),
                     style = TextStyle(fontSize = 18.sp),
                     color = Color.White
                 )
@@ -335,20 +338,30 @@ private fun SecondLine(
     }
 }
 
+
 @Composable
-private fun LastRow(
-    value: String,
+private fun LastClearLine(
+    label2: String,
+    value2: String,
 ) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .fillMaxHeight(0.15f)
-            .offset(97.dp)
     )
     {
         Card(
             modifier = Modifier
                 .fillMaxWidth(0.25f)
+                .alpha(0.8f)
+                .padding(1.dp),
+            colors = CardDefaults.cardColors(Clear),
+            shape = RoundedCornerShape(10.dp)
+        ) {}
+
+        Card(
+            modifier = Modifier
+                .fillMaxWidth(0.335f)
                 .alpha(0.8f)
                 .padding(1.dp),
             colors = CardDefaults.cardColors(LightBlue),
@@ -360,25 +373,93 @@ private fun LastRow(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text(
-                    text = "Быт",
+                    text = label2,
                     modifier = Modifier.padding(top = 8.dp),
                     style = TextStyle(fontSize = 14.sp),
                     color = Color.White
                 )
                 Text(
-                    text = if (value == "null") {
+                    text = if (value2 == "null") {
                         "----"
                     } else {
-                        value
+                        value2
                     },
-                    modifier = Modifier.padding(top = 12.dp),
+                    modifier = Modifier.padding(top = 8.dp),
                     style = TextStyle(fontSize = 18.sp),
                     color = Color.White
                 )
             }
         }
+        Card(
+            modifier = Modifier
+                .fillMaxWidth(0.5f)
+                .alpha(0.8f)
+                .padding(1.dp),
+            colors = CardDefaults.cardColors(Clear),
+            shape = RoundedCornerShape(10.dp),
+        ) {
+        }
+        Card(
+            modifier = Modifier
+                .fillMaxWidth()
+                .alpha(1f)
+                .padding(1.dp),
+            colors = CardDefaults.cardColors(Clear),
+            shape = RoundedCornerShape(10.dp),
+        ) {
+        }
     }
 }
+
+
+
+
+
+
+//@Composable
+//private fun LastRow(
+//    value: String,
+//) {
+//    Row(
+//        modifier = Modifier
+//            .fillMaxWidth()
+//            .fillMaxHeight(0.15f)
+//            .offset(97.dp)
+//    )
+//    {
+//        Card(
+//            modifier = Modifier
+//                .fillMaxWidth(0.25f)
+//                .alpha(0.8f)
+//                .padding(1.dp),
+//            colors = CardDefaults.cardColors(LightBlue),
+//            elevation = CardDefaults.cardElevation(5.dp),
+//            shape = RoundedCornerShape(10.dp),
+//        ) {
+//            Column(
+//                modifier = Modifier.fillMaxSize(),
+//                horizontalAlignment = Alignment.CenterHorizontally
+//            ) {
+//                Text(
+//                    text = "Быт",
+//                    modifier = Modifier.padding(top = 8.dp),
+//                    style = TextStyle(fontSize = 14.sp),
+//                    color = Color.White
+//                )
+//                Text(
+//                    text = if (value == "null") {
+//                        "----"
+//                    } else {
+//                        value
+//                    },
+//                    modifier = Modifier.padding(top = 12.dp),
+//                    style = TextStyle(fontSize = 18.sp),
+//                    color = Color.White
+//                )
+//            }
+//        }
+//    }
+//}
 
 @Composable
 private fun date(map: MutableState<HashMap<String, String>>): MutableState<HashMap<String, String>> {
@@ -400,7 +481,7 @@ private fun date(map: MutableState<HashMap<String, String>>): MutableState<HashM
 
     Column(
         modifier = Modifier
-            .padding(top = 230.dp)
+            .padding(top = 190.dp)
             .fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {

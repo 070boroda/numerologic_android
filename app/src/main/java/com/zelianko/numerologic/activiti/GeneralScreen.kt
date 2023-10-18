@@ -4,13 +4,11 @@ import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.widget.DatePicker
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
@@ -32,7 +30,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.zelianko.numerologic.R
@@ -44,8 +41,9 @@ import java.util.Calendar
 
 @SuppressLint("MutableCollectionMutableState")
 @Composable
-@Preview(showBackground = true)
-fun GeneralScreen() {
+fun GeneralScreen(
+    date: MutableState<String>
+) {
     val dataMap = remember {
         mutableStateOf(hashMapOf<String, String>())
     }
@@ -186,9 +184,8 @@ fun GeneralScreen() {
             label4 = "Привычки", value4 = dataMap.value["Привычки"].toString(),
             maxHeightSize = 0.125f
         )
-        //LastRow(value = dataMap.value["Быт"].toString())
         LastClearLine(label2 = "Быт",value2 = dataMap.value["Быт"].toString())
-        date(dataMap)
+        date(dataMap, date)
     }
 }
 
@@ -412,57 +409,11 @@ private fun LastClearLine(
 }
 
 
-
-
-
-
-//@Composable
-//private fun LastRow(
-//    value: String,
-//) {
-//    Row(
-//        modifier = Modifier
-//            .fillMaxWidth()
-//            .fillMaxHeight(0.15f)
-//            .offset(97.dp)
-//    )
-//    {
-//        Card(
-//            modifier = Modifier
-//                .fillMaxWidth(0.25f)
-//                .alpha(0.8f)
-//                .padding(1.dp),
-//            colors = CardDefaults.cardColors(LightBlue),
-//            elevation = CardDefaults.cardElevation(5.dp),
-//            shape = RoundedCornerShape(10.dp),
-//        ) {
-//            Column(
-//                modifier = Modifier.fillMaxSize(),
-//                horizontalAlignment = Alignment.CenterHorizontally
-//            ) {
-//                Text(
-//                    text = "Быт",
-//                    modifier = Modifier.padding(top = 8.dp),
-//                    style = TextStyle(fontSize = 14.sp),
-//                    color = Color.White
-//                )
-//                Text(
-//                    text = if (value == "null") {
-//                        "----"
-//                    } else {
-//                        value
-//                    },
-//                    modifier = Modifier.padding(top = 12.dp),
-//                    style = TextStyle(fontSize = 18.sp),
-//                    color = Color.White
-//                )
-//            }
-//        }
-//    }
-//}
-
 @Composable
-private fun date(map: MutableState<HashMap<String, String>>): MutableState<HashMap<String, String>> {
+private fun date(
+    map: MutableState<HashMap<String, String>>,
+    date: MutableState<String>
+): MutableState<HashMap<String, String>> {
     val context = LocalContext.current
     val calendar = Calendar.getInstance()
 
@@ -479,6 +430,7 @@ private fun date(map: MutableState<HashMap<String, String>>): MutableState<HashM
         }, year, month, dayOfMonth
     )
 
+    date.value = selectedDateText
     Column(
         modifier = Modifier
             .padding(top = 190.dp)

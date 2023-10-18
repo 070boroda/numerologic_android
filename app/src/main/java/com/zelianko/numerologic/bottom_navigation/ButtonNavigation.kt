@@ -23,7 +23,8 @@ fun ButtonNavigation(
 ) {
     val listItem = listOf(
         BottomItem.Screen1,
-        BottomItem.Screen2
+        BottomItem.Screen2,
+        BottomItem.Screen3,
     )
     NavigationBar(
         modifier = Modifier.fillMaxHeight(0.08f),

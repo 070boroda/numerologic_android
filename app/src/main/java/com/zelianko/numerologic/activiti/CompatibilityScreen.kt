@@ -4,14 +4,24 @@ import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.widget.DatePicker
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonColors
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
@@ -37,17 +47,24 @@ import com.zelianko.numerologic.R
 import com.zelianko.numerologic.ads.Banner
 import com.zelianko.numerologic.services.CountNumberServices
 import com.zelianko.numerologic.ui.theme.Clear
+import com.zelianko.numerologic.ui.theme.DarkBlue
 import com.zelianko.numerologic.ui.theme.LightBlue
 import java.util.Calendar
 
+/**
+ * Экран совместимости
+ * две матрицы на одном экране
+ */
 @SuppressLint("MutableCollectionMutableState")
-@Composable
 @Preview(showBackground = true)
-fun GeneralScreen() {
+@Composable
+fun CompatibilityScreen() {
     val dataMap = remember {
         mutableStateOf(hashMapOf<String, String>())
     }
-
+    val dataMapSecond = remember {
+        mutableStateOf(hashMapOf<String, String>())
+    }
     Image(
         painter = painterResource(id = R.drawable.screen_1),
         contentDescription = "image1",
@@ -56,7 +73,23 @@ fun GeneralScreen() {
             .alpha(0.8f),
         contentScale = ContentScale.FillBounds
     )
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .verticalScroll(state = rememberScrollState(0)),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Square(dataMap)
+        Spacer(modifier = Modifier.size(5.dp))
+        Square(dataMapSecond)
+        Spacer(modifier = Modifier.size(1.dp))
+        Banner(id = R.string.banner_1)
+    }
+}
 
+
+@Composable()
+fun Square(dataMap: MutableState<HashMap<String, String>>) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -82,7 +115,7 @@ fun GeneralScreen() {
                 ) {
                     Text(
                         text = "Доп.цифры",
-                        modifier = Modifier.padding(top = 8.dp),
+                        modifier = Modifier.padding(top = 8.dp, bottom = 3.dp),
                         style = TextStyle(fontSize = 14.sp),
                         color = Color.White
                     )
@@ -92,7 +125,7 @@ fun GeneralScreen() {
                         } else {
                             dataMap.value["Доп.цифры"].toString()
                         },
-                        modifier = Modifier.padding(top = 12.dp),
+                        modifier = Modifier.padding(top = 5.dp, bottom = 8.dp),
                         style = TextStyle(fontSize = 18.sp),
                         color = Color.White
                     )
@@ -124,7 +157,7 @@ fun GeneralScreen() {
                         } else {
                             dataMap.value["Число судьбы"].toString()
                         },
-                        modifier = Modifier.padding(top = 8.dp),
+                        modifier = Modifier.padding(top = 8.dp, bottom = 15.dp),
                         style = TextStyle(fontSize = 18.sp),
                         color = Color.White
                     )
@@ -153,9 +186,9 @@ fun GeneralScreen() {
                         text = if (dataMap.value.isEmpty()) {
                             "----"
                         } else {
-                           dataMap.value["Темперамент"].toString()
+                            dataMap.value["Темперамент"].toString()
                         },
-                        modifier = Modifier.padding(top = 8.dp),
+                        modifier = Modifier.padding(top = 8.dp, bottom = 15.dp),
                         style = TextStyle(fontSize = 18.sp),
                         color = Color.White
                     )
@@ -184,10 +217,10 @@ fun GeneralScreen() {
             label4 = "Привычки", value4 = dataMap.value["Привычки"].toString(),
             maxHeightSize = 0.125f
         )
-        LastClearLine(label2 = "Быт",value2 = dataMap.value["Быт"].toString())
-        date(dataMap)
+        LastClearLine(value2 = dataMap.value["Быт"].toString(), map = dataMap)
     }
 }
+
 
 @Composable
 private fun SecondLine(
@@ -232,7 +265,7 @@ private fun SecondLine(
                     } else {
                         value1
                     },
-                    modifier = Modifier.padding(top = 8.dp),
+                    modifier = Modifier.padding(top = 8.dp, bottom = 3.dp),
                     style = TextStyle(fontSize = 18.sp),
                     color = Color.White
                 )
@@ -264,7 +297,7 @@ private fun SecondLine(
                     } else {
                         value2
                     },
-                    modifier = Modifier.padding(top = 8.dp),
+                    modifier = Modifier.padding(top = 8.dp, bottom = 3.dp),
                     style = TextStyle(fontSize = 18.sp),
                     color = Color.White
                 )
@@ -295,7 +328,7 @@ private fun SecondLine(
                     } else {
                         value3
                     },
-                    modifier = Modifier.padding(top = 8.dp),
+                    modifier = Modifier.padding(top = 8.dp, bottom = 3.dp),
                     style = TextStyle(fontSize = 18.sp),
                     color = Color.White
                 )
@@ -326,7 +359,7 @@ private fun SecondLine(
                     } else {
                         value4
                     },
-                    modifier = Modifier.padding(top = 8.dp),
+                    modifier = Modifier.padding(top = 8.dp, bottom = 3.dp),
                     style = TextStyle(fontSize = 18.sp),
                     color = Color.White
                 )
@@ -338,13 +371,13 @@ private fun SecondLine(
 
 @Composable
 private fun LastClearLine(
-    label2: String,
     value2: String,
+    map: MutableState<HashMap<String, String>>
 ) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .fillMaxHeight(0.15f)
+            .fillMaxHeight(0.20f)
     )
     {
         Card(
@@ -370,7 +403,7 @@ private fun LastClearLine(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text(
-                    text = label2,
+                    text = "Быт",
                     modifier = Modifier.padding(top = 8.dp),
                     style = TextStyle(fontSize = 14.sp),
                     color = Color.White
@@ -381,7 +414,7 @@ private fun LastClearLine(
                     } else {
                         value2
                     },
-                    modifier = Modifier.padding(top = 8.dp),
+                    modifier = Modifier.padding(top = 8.dp, bottom = 3.dp),
                     style = TextStyle(fontSize = 18.sp),
                     color = Color.White
                 )
@@ -389,28 +422,21 @@ private fun LastClearLine(
         }
         Card(
             modifier = Modifier
-                .fillMaxWidth(0.5f)
-                .alpha(0.8f)
-                .padding(1.dp),
-            colors = CardDefaults.cardColors(Clear),
-            shape = RoundedCornerShape(10.dp),
-        ) {
-        }
-        Card(
-            modifier = Modifier
-                .fillMaxWidth()
+                .fillMaxSize()
                 .alpha(1f)
-                .padding(1.dp),
-            colors = CardDefaults.cardColors(Clear),
+                .padding(5.dp),
+            colors = CardDefaults.cardColors(DarkBlue),
+            elevation = CardDefaults.cardElevation(5.dp),
             shape = RoundedCornerShape(10.dp),
         ) {
+            Date(map)
         }
     }
 }
 
 
 @Composable
-private fun date(map: MutableState<HashMap<String, String>>): MutableState<HashMap<String, String>> {
+private fun Date(map: MutableState<HashMap<String, String>>) {
     val context = LocalContext.current
     val calendar = Calendar.getInstance()
 
@@ -429,32 +455,31 @@ private fun date(map: MutableState<HashMap<String, String>>): MutableState<HashM
 
     Column(
         modifier = Modifier
-            .padding(top = 190.dp)
             .fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text(
-            text = if (selectedDateText.isNotEmpty()) {
-                "Дата рождения $selectedDateText"
-            } else {
-                "Пожалуйста выберите дату рождения"
-            },
-            style = TextStyle(fontSize = 20.sp,fontWeight = FontWeight.Bold),
-            color = Color.White
-        )
+        if (selectedDateText.isNotEmpty()) {
+            Text(
+                modifier = Modifier.padding(top = 6.dp),
+                text = selectedDateText,
+                style = TextStyle(fontSize = 11.sp, fontWeight = FontWeight.Normal),
+                color = Color.White
+            )
+        }
         Button(
-           modifier = Modifier.padding(bottom = 2.dp),
+            modifier = Modifier
+                .fillMaxSize(),
+            colors = ButtonDefaults.buttonColors(containerColor = DarkBlue),
             onClick = {
                 datePicker.show()
             }
         ) {
-            Text(text = "Дата рождения")
+            Text(text = "Дата рождения",
+                style = TextStyle(fontSize = 12.sp, fontWeight = FontWeight.Bold)
+            )
         }
-        Banner(id = R.string.banner_1)
     }
 
     val mapObject = CountNumberServices()
     map.value = mapObject.countNumber(selectedDateText)
-    return map
 }
-

@@ -7,6 +7,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.zelianko.numerologic.activiti.CompatibilityScreen
 import com.zelianko.numerologic.activiti.GeneralScreen
 import com.zelianko.numerologic.activiti.HelpScreen
 
@@ -19,6 +20,9 @@ fun NagGraph(
         modifier = Modifier.background(Color.Black)) {
         composable("screen_1") {
             GeneralScreen()
+        }
+        composable("screen_3") {
+            CompatibilityScreen()
         }
         composable("screen_2") {
             HelpScreen()

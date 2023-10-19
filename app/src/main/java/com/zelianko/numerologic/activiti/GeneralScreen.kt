@@ -17,10 +17,9 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -30,7 +29,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.zelianko.numerologic.R
@@ -38,12 +36,14 @@ import com.zelianko.numerologic.ads.Banner
 import com.zelianko.numerologic.services.CountNumberServices
 import com.zelianko.numerologic.ui.theme.Clear
 import com.zelianko.numerologic.ui.theme.LightBlue
+import com.zelianko.numerologic.viewmodel.SelectedDateTextViewModel
 import java.util.Calendar
 
 @SuppressLint("MutableCollectionMutableState")
 @Composable
-@Preview(showBackground = true)
-fun GeneralScreen() {
+fun GeneralScreen(
+    viewModel: SelectedDateTextViewModel
+) {
     val dataMap = remember {
         mutableStateOf(hashMapOf<String, String>())
     }
@@ -153,7 +153,7 @@ fun GeneralScreen() {
                         text = if (dataMap.value.isEmpty()) {
                             "----"
                         } else {
-                           dataMap.value["Темперамент"].toString()
+                            dataMap.value["Темперамент"].toString()
                         },
                         modifier = Modifier.padding(top = 8.dp),
                         style = TextStyle(fontSize = 18.sp),
@@ -184,8 +184,11 @@ fun GeneralScreen() {
             label4 = "Привычки", value4 = dataMap.value["Привычки"].toString(),
             maxHeightSize = 0.125f
         )
-        LastClearLine(label2 = "Быт",value2 = dataMap.value["Быт"].toString())
-        date(dataMap)
+        LastClearLine(label2 = "Быт", value2 = dataMap.value["Быт"].toString())
+        date(
+            map = dataMap,
+            viewModel = viewModel
+        )
     }
 }
 
@@ -410,11 +413,14 @@ private fun LastClearLine(
 
 
 @Composable
-private fun date(map: MutableState<HashMap<String, String>>): MutableState<HashMap<String, String>> {
+private fun date(
+    map: MutableState<HashMap<String, String>>,
+    viewModel: SelectedDateTextViewModel
+): MutableState<HashMap<String, String>> {
     val context = LocalContext.current
     val calendar = Calendar.getInstance()
 
-    var selectedDateText by remember { mutableStateOf("") }
+    val selectedDateText = viewModel.selectedDateText.observeAsState("")
 
     val year = calendar[Calendar.YEAR]
     val month = calendar[Calendar.MONTH]
@@ -423,7 +429,7 @@ private fun date(map: MutableState<HashMap<String, String>>): MutableState<HashM
     val datePicker = DatePickerDialog(
         context,
         { _: DatePicker, selectedYear: Int, selectedMonth: Int, selectedDayOfMonth: Int ->
-            selectedDateText = "$selectedDayOfMonth/${selectedMonth + 1}/$selectedYear"
+            viewModel.setSelectedDateText("$selectedDayOfMonth/${selectedMonth + 1}/$selectedYear")
         }, year, month, dayOfMonth
     )
 
@@ -434,16 +440,16 @@ private fun date(map: MutableState<HashMap<String, String>>): MutableState<HashM
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
-            text = if (selectedDateText.isNotEmpty()) {
-                "Дата рождения $selectedDateText"
+            text = if (selectedDateText.value.isNotEmpty()) {
+                "Дата рождения ${selectedDateText.value}"
             } else {
                 "Пожалуйста выберите дату рождения"
             },
-            style = TextStyle(fontSize = 20.sp,fontWeight = FontWeight.Bold),
+            style = TextStyle(fontSize = 20.sp, fontWeight = FontWeight.Bold),
             color = Color.White
         )
         Button(
-           modifier = Modifier.padding(bottom = 2.dp),
+            modifier = Modifier.padding(bottom = 2.dp),
             onClick = {
                 datePicker.show()
             }
@@ -454,7 +460,7 @@ private fun date(map: MutableState<HashMap<String, String>>): MutableState<HashM
     }
 
     val mapObject = CountNumberServices()
-    map.value = mapObject.countNumber(selectedDateText)
+    map.value = mapObject.countNumber(selectedDateText.value)
     return map
 }
 

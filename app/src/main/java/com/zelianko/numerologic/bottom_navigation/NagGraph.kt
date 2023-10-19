@@ -10,16 +10,20 @@ import androidx.navigation.compose.composable
 import com.zelianko.numerologic.activiti.CompatibilityScreen
 import com.zelianko.numerologic.activiti.GeneralScreen
 import com.zelianko.numerologic.activiti.HelpScreen
+import com.zelianko.numerologic.viewmodel.SelectedDateTextViewModel
 
 @Composable
 fun NagGraph(
+    viewModel: SelectedDateTextViewModel,
     navHostController: NavHostController
 ) {
     NavHost(navController = navHostController,
         startDestination = "screen_1",
         modifier = Modifier.background(Color.Black)) {
         composable("screen_1") {
-            GeneralScreen()
+            GeneralScreen(
+                viewModel = viewModel
+            )
         }
         composable("screen_3") {
             CompatibilityScreen()

@@ -11,8 +11,8 @@ android {
         applicationId = "com.zelianko.numerologic"
         minSdk = 24
         targetSdk = 33
-        versionCode = 8
-        versionName = "2.0.0.8"
+        versionCode = 9
+        versionName = "2.0.0.9"
             //  compileSdkPreview = "UpsideDownCake"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -59,6 +59,7 @@ dependencies {
     implementation("androidx.compose.material3:material3")
     implementation ("androidx.compose.material:material:1.5.3")
     implementation("androidx.navigation:navigation-compose:2.7.4")
+    implementation("androidx.compose.runtime:runtime-livedata:1.5.4")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")

@@ -16,6 +16,7 @@ fun NagGraph(
     generalScreenContent: @Composable () -> Unit,
     compatibilityScreenContent: @Composable () -> Unit,
     helpScreenContent: @Composable () -> Unit,
+    testScreenContent: @Composable () -> Unit,
 
     ) {
     NavHost(
@@ -36,6 +37,9 @@ fun NagGraph(
         composable("screen_2") {
             helpScreenContent()
             //HelpScreen()
+        }
+        composable("screen_4") {
+            testScreenContent()
         }
     }
 }

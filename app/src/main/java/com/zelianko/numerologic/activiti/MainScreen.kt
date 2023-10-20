@@ -2,9 +2,11 @@ package com.zelianko.numerologic.activiti
 
 
 import android.annotation.SuppressLint
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
 import com.zelianko.numerologic.bottom_navigation.ButtonNavigation
 import com.zelianko.numerologic.bottom_navigation.NagGraph
@@ -19,12 +21,14 @@ fun MainScreen(
     val navController = rememberNavController()
     Scaffold(
         bottomBar = {
-            ButtonNavigation(navController = navController)
+            ButtonNavigation(navHostController = navController)
         },
-    ) {
+    ) {paddingValues ->
         NagGraph(
-            viewModel = viewModel,
-            navHostController = navController
+            navHostController = navController,
+            generalScreenContent = {GeneralScreen(viewModel = viewModel, paddingValues = paddingValues)},
+            compatibilityScreenContent = { CompatibilityScreen(paddingValues = paddingValues)},
+            helpScreenContent = { HelpScreen(paddingValues = paddingValues)}
         )
     }
 }

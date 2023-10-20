@@ -8,6 +8,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -24,6 +25,8 @@ import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
@@ -55,16 +58,21 @@ import java.util.Calendar
  * Экран совместимости
  * две матрицы на одном экране
  */
-@SuppressLint("MutableCollectionMutableState")
-@Preview(showBackground = true)
+@OptIn(ExperimentalMaterial3Api::class)
+@SuppressLint("MutableCollectionMutableState", "UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun CompatibilityScreen() {
+fun CompatibilityScreen(
+    paddingValues: PaddingValues
+) {
     val dataMap = remember {
         mutableStateOf(hashMapOf<String, String>())
     }
     val dataMapSecond = remember {
         mutableStateOf(hashMapOf<String, String>())
     }
+    Scaffold (
+        modifier = Modifier.padding(paddingValues)
+    ){
     Image(
         painter = painterResource(id = R.drawable.screen_1),
         contentDescription = "image1",
@@ -73,17 +81,18 @@ fun CompatibilityScreen() {
             .alpha(0.8f),
         contentScale = ContentScale.FillBounds
     )
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .verticalScroll(state = rememberScrollState(0)),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Square(dataMap)
-        Spacer(modifier = Modifier.size(5.dp))
-        Square(dataMapSecond)
-        Spacer(modifier = Modifier.size(1.dp))
-        Banner(id = R.string.banner_1)
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .verticalScroll(state = rememberScrollState(0)),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Square(dataMap)
+            Spacer(modifier = Modifier.size(5.dp))
+            Square(dataMapSecond)
+            Spacer(modifier = Modifier.size(1.dp))
+            Banner(id = R.string.banner_1)
+        }
     }
 }
 
@@ -219,7 +228,8 @@ fun Square(dataMap: MutableState<HashMap<String, String>>) {
         )
         LastClearLine(value2 = dataMap.value["Быт"].toString(), map = dataMap)
     }
-}
+    }
+
 
 
 @Composable

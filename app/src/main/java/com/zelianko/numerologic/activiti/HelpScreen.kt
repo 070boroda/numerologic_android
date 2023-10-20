@@ -1,8 +1,10 @@
 package com.zelianko.numerologic.activiti
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -11,6 +13,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -31,65 +35,71 @@ import androidx.compose.ui.unit.sp
 import com.zelianko.numerologic.R
 import com.zelianko.numerologic.ads.Banner
 
+@OptIn(ExperimentalMaterial3Api::class)
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-@Preview(showBackground = true)
-fun HelpScreen() {
-    Image(
-        painter = painterResource(id = R.drawable.screen_1),
-        contentDescription = "image1",
-        modifier = Modifier
-            .fillMaxSize()
-            .alpha(0.8f),
-        contentScale = ContentScale.FillBounds
-    )
-    Column (
-        modifier = Modifier
-            .fillMaxSize(),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ){
-        Row(
+fun HelpScreen(
+    paddingValues: PaddingValues
+) {
+    Scaffold(
+        modifier = Modifier.padding(paddingValues)
+    ) {
+        Image(
+            painter = painterResource(id = R.drawable.screen_1),
+            contentDescription = "image1",
             modifier = Modifier
-                .fillMaxWidth(),
-            horizontalArrangement = Arrangement.Center,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Banner(id = R.string.banner_2)
-        }
-        LazyColumn(
+                .fillMaxSize()
+                .alpha(0.8f),
+            contentScale = ContentScale.FillBounds
+        )
+        Column(
             modifier = Modifier
-                .padding(
-                    start = 20.dp,
-                    end = 15.dp,
-                    top = 10.dp,
-                    bottom = 60.dp
-                )
-                .fillMaxWidth()
+                .fillMaxSize(),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            itemsIndexed(
-                listOf(
-                    "Общие сведения",
-                    "ХАРАКТЕР",
-                    "ЭНЕРГИЯ",
-                    "ИНТЕРЕС",
-                    "ЗДОРОВЬЕ",
-                    "ЛОГИКА",
-                    "ТРУД",
-                    "УДАЧА",
-                    "ДОЛГ",
-                    "ПАМЯТЬ",
-                    "ТЕМПЕРАМЕНТ",
-                    "ЦЕЛЬ",
-                    "СЕМЬЯ",
-                    "БЫТ",
-                    "ПРИВЫЧКИ",
-                    "ЧИСЛО СУДЬБЫ")
-            ) { _, item ->
-                TextBlock(header = item)
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth(),
+                horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Banner(id = R.string.banner_2)
+            }
+            LazyColumn(
+                modifier = Modifier
+                    .padding(
+                        start = 20.dp,
+                        end = 15.dp,
+                        top = 10.dp,
+                    )
+                    .fillMaxWidth()
+            ) {
+                itemsIndexed(
+                    listOf(
+                        "Общие сведения",
+                        "ХАРАКТЕР",
+                        "ЭНЕРГИЯ",
+                        "ИНТЕРЕС",
+                        "ЗДОРОВЬЕ",
+                        "ЛОГИКА",
+                        "ТРУД",
+                        "УДАЧА",
+                        "ДОЛГ",
+                        "ПАМЯТЬ",
+                        "ТЕМПЕРАМЕНТ",
+                        "ЦЕЛЬ",
+                        "СЕМЬЯ",
+                        "БЫТ",
+                        "ПРИВЫЧКИ",
+                        "ЧИСЛО СУДЬБЫ"
+                    )
+                ) { _, item ->
+                    TextBlock(header = item)
+                }
             }
         }
     }
-
 }
 
 /**

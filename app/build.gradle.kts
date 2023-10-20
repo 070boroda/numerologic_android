@@ -11,8 +11,8 @@ android {
         applicationId = "com.zelianko.numerologic"
         minSdk = 24
         targetSdk = 33
-        versionCode = 9
-        versionName = "2.0.0.9"
+        versionCode = 10
+        versionName = "2.0.0.10"
             //  compileSdkPreview = "UpsideDownCake"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -48,7 +48,7 @@ android {
 }
 
 dependencies {
-    implementation ("com.yandex.android:mobileads:6.0.1")
+    implementation ("com.yandex.android:mobileads:6.1.0")
     implementation("androidx.core:core-ktx:1.9.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")
     implementation("androidx.activity:activity-compose:1.7.2")

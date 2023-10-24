@@ -27,6 +27,7 @@ fun ButtonNavigation(
         BottomItem.Screen1,
         BottomItem.Screen3,
         BottomItem.Screen2,
+        BottomItem.Screen4,
     )
     NavigationBar(
         modifier = Modifier.fillMaxHeight(0.08f),

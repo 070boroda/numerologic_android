@@ -11,11 +11,11 @@ import com.zelianko.numerologic.viewmodel.SelectedDateTextViewModel
 
 @Composable
 fun NagGraph(
-   // viewModel: SelectedDateTextViewModel,
     navHostController: NavHostController,
     generalScreenContent: @Composable () -> Unit,
     compatibilityScreenContent: @Composable () -> Unit,
     helpScreenContent: @Composable () -> Unit,
+    testScreenContent: @Composable () -> Unit,
 
     ) {
     NavHost(
@@ -31,11 +31,15 @@ fun NagGraph(
         }
         composable("screen_3") {
             compatibilityScreenContent()
-            //CompatibilityScreen()
+
         }
         composable("screen_2") {
             helpScreenContent()
-            //HelpScreen()
+
+        }
+        composable("screen_4") {
+            testScreenContent()
+
         }
     }
 }

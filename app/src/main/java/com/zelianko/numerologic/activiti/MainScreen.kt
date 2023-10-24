@@ -10,13 +10,15 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
 import com.zelianko.numerologic.bottom_navigation.ButtonNavigation
 import com.zelianko.numerologic.bottom_navigation.NagGraph
+import com.zelianko.numerologic.viewmodel.BillingViewModel
 import com.zelianko.numerologic.viewmodel.SelectedDateTextViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun MainScreen(
-    viewModel: SelectedDateTextViewModel
+    viewModel: SelectedDateTextViewModel,
+    billViewModel: BillingViewModel
 ) {
     val navController = rememberNavController()
     Scaffold(
@@ -27,8 +29,10 @@ fun MainScreen(
         NagGraph(
             navHostController = navController,
             generalScreenContent = {GeneralScreen(viewModel = viewModel, paddingValues = paddingValues)},
-            compatibilityScreenContent = { CompatibilityScreen(paddingValues = paddingValues)},
-            helpScreenContent = { HelpScreen(paddingValues = paddingValues)}
+            compatibilityScreenContent = { CompatibilityScreen(paddingValues = paddingValues,
+                billViewModel = billViewModel)},
+            helpScreenContent = { HelpScreen(paddingValues = paddingValues)} ,
+            testScreenContent = { TestScreen(paddingValues = paddingValues, viewModel = billViewModel)}
         )
     }
 }

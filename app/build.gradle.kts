@@ -11,8 +11,8 @@ android {
         applicationId = "com.zelianko.numerologic"
         minSdk = 24
         targetSdk = 33
-        versionCode = 11
-        versionName = "2.0.0.11"
+        versionCode = 12
+        versionName = "2.0.0.12"
             //  compileSdkPreview = "UpsideDownCake"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"

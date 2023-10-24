@@ -89,8 +89,8 @@ fun GeneralScreen(
                     ) {
                         Text(
                             text = "Доп.цифры",
-                            modifier = Modifier.padding(top = 8.dp),
-                            style = TextStyle(fontSize = 14.sp),
+                            modifier = Modifier.padding(top = 2.dp),
+                            style = TextStyle(fontSize = 12.sp),
                             color = Color.White
                         )
                         Text(
@@ -99,7 +99,7 @@ fun GeneralScreen(
                             } else {
                                 dataMap.value["Доп.цифры"].toString()
                             },
-                            modifier = Modifier.padding(top = 12.dp),
+                            modifier = Modifier.padding(top = 8.dp, bottom = 2.dp),
                             style = TextStyle(fontSize = 18.sp),
                             color = Color.White
                         )
@@ -131,7 +131,7 @@ fun GeneralScreen(
                             } else {
                                 dataMap.value["Число судьбы"].toString()
                             },
-                            modifier = Modifier.padding(top = 8.dp),
+                            modifier = Modifier.padding(top = 8.dp, bottom = 2.dp),
                             style = TextStyle(fontSize = 18.sp),
                             color = Color.White
                         )
@@ -162,7 +162,7 @@ fun GeneralScreen(
                             } else {
                                 dataMap.value["Темперамент"].toString()
                             },
-                            modifier = Modifier.padding(top = 8.dp),
+                            modifier = Modifier.padding(top = 8.dp, bottom = 2.dp),
                             style = TextStyle(fontSize = 18.sp),
                             color = Color.White
                         )

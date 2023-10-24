@@ -2,6 +2,7 @@ package com.zelianko.numerologic.activiti
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -13,15 +14,23 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardColors
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.modifier.modifierLocalConsumer
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.text.TextStyle
@@ -34,6 +43,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.zelianko.numerologic.R
 import com.zelianko.numerologic.ads.Banner
+import com.zelianko.numerologic.ui.theme.LightBlue
 
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -130,10 +140,12 @@ fun TextBlock(header: String) {
             stringArray = emptyArray()
         }
     }
-    Header(header)
-    for (i in stringArray) {
-        InfoTextBlock(i)
-    }
+
+    var content:String = stringArray.contentToString()
+    content = content.replace("[", "").replace("]", "")
+
+    ExpandableCard(title = header,
+        content = content)
     Spacer(Modifier.height(15.dp))
 }
 
@@ -171,3 +183,52 @@ fun InfoTextBlock(value: String) {
         style = TextStyle(textIndent = TextIndent(20.sp, 0.sp))
     )
 }
+
+
+@Composable
+fun ExpandableCard(title:String, content:String) {
+
+    var expanded = remember { mutableStateOf (false) }
+
+    Card(
+        shape = RoundedCornerShape(8.dp),
+        colors = CardDefaults.cardColors(LightBlue),
+        elevation = CardDefaults.cardElevation(5.dp),
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable {
+                expanded.value = !expanded.value
+            }
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxSize(),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text(
+                modifier = Modifier
+                    .padding(15.dp),
+                text = title,
+                fontSize = 26.sp,
+                color = Color.White,
+                fontWeight = Normal,
+                fontFamily = FontFamily.Default,
+                style = TextStyle(textIndent = TextIndent(20.sp, 0.sp))
+            )
+            if (expanded.value) {
+                Text(
+                    modifier = Modifier
+                        .padding(start = 12.dp, bottom = 5.dp),
+                    text = content,
+                    fontSize = 16.sp,
+                    color = Color.White,
+                    fontWeight = Normal,
+                    fontFamily = FontFamily.Default,
+                    style = TextStyle(textIndent = TextIndent(20.sp, 0.sp))
+                )
+            }
+        }
+    }
+}
+

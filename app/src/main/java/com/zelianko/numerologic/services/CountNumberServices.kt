@@ -220,15 +220,17 @@ private fun createSudba(
     val sumYears = yearsArray.sum()
 
     var oneNumber = sumDay + sumMonth + sumYears
-    if (oneNumber != 11) {
-        while (oneNumber.toString().length > 1) {
-            oneNumber = oneNumber.toString().map { it.toString().toInt() }.sum()
-            if (oneNumber == 11) {
+    var twoNumber = oneNumber.toString().map { it.toString().toInt() }.sum()
+
+    if (twoNumber != 11) {
+        while (twoNumber.toString().length > 1) {
+            twoNumber = twoNumber.toString().map { it.toString().toInt() }.sum()
+            if (twoNumber == 11) {
                 break
             }
         }
     }
 
-    hashMap["Число судьбы"] = oneNumber.toString()
+    hashMap["Число судьбы"] = twoNumber.toString()
 }
 

@@ -10,10 +10,9 @@ android {
     defaultConfig {
         applicationId = "com.zelianko.numerologic"
         minSdk = 24
-        targetSdk = 33
-        versionCode = 11
-        versionName = "2.0.0.11"
-            //  compileSdkPreview = "UpsideDownCake"
+        targetSdk = 34
+        versionCode = 14
+        versionName = "2.0.0.14"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -49,9 +48,10 @@ android {
 
 dependencies {
     implementation ("com.yandex.android:mobileads:6.1.0")
-    implementation("androidx.core:core-ktx:1.9.0")
+    implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")
-    implementation("androidx.activity:activity-compose:1.7.2")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.2")
+    implementation("androidx.activity:activity-compose:1.8.0")
     implementation(platform("androidx.compose:compose-bom:2023.03.00"))
     implementation("androidx.compose.ui:ui")
     implementation("androidx.compose.ui:ui-graphics")
@@ -60,6 +60,7 @@ dependencies {
     implementation ("androidx.compose.material:material:1.5.3")
     implementation("androidx.navigation:navigation-compose:2.7.4")
     implementation("androidx.compose.runtime:runtime-livedata:1.5.4")
+    implementation("com.yandex.android:mobmetricalib:5.3.0")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")

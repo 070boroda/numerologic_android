@@ -11,8 +11,8 @@ android {
         applicationId = "com.zelianko.numerologic"
         minSdk = 24
         targetSdk = 34
-        versionCode = 14
-        versionName = "2.0.0.14"
+        versionCode = 15
+        versionName = "2.0.0.15"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -57,7 +57,7 @@ dependencies {
     implementation("androidx.compose.ui:ui-graphics")
     implementation("androidx.compose.ui:ui-tooling-preview")
     implementation("androidx.compose.material3:material3")
-    implementation ("androidx.compose.material:material:1.5.3")
+    implementation ("androidx.compose.material:material:1.5.4")
     implementation("androidx.navigation:navigation-compose:2.7.4")
     implementation("androidx.compose.runtime:runtime-livedata:1.5.4")
     implementation("com.yandex.android:mobmetricalib:5.3.0")
@@ -68,4 +68,6 @@ dependencies {
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
+    implementation ("com.maxkeppeler.sheets-compose-dialogs:core:1.2.0")
+    implementation ("com.maxkeppeler.sheets-compose-dialogs:calendar:1.2.0")
 }

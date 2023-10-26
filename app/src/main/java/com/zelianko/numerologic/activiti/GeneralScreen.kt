@@ -1,8 +1,8 @@
 package com.zelianko.numerologic.activiti
 
 import android.annotation.SuppressLint
-import android.app.DatePickerDialog
-import android.widget.DatePicker
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -28,20 +28,26 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.maxkeppeker.sheets.core.models.base.UseCaseState
+import com.maxkeppeker.sheets.core.models.base.rememberUseCaseState
+import com.maxkeppeler.sheets.calendar.CalendarDialog
+import com.maxkeppeler.sheets.calendar.models.CalendarConfig
+import com.maxkeppeler.sheets.calendar.models.CalendarSelection
+import com.maxkeppeler.sheets.calendar.models.CalendarStyle
 import com.zelianko.numerologic.R
 import com.zelianko.numerologic.ads.Banner
 import com.zelianko.numerologic.services.CountNumberServices
 import com.zelianko.numerologic.ui.theme.Clear
 import com.zelianko.numerologic.ui.theme.LightBlue
 import com.zelianko.numerologic.viewmodel.SelectedDateTextViewModel
-import java.util.Calendar
+import java.time.LocalDate
 
+@RequiresApi(Build.VERSION_CODES.O)
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("MutableCollectionMutableState", "UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
@@ -198,7 +204,7 @@ fun GeneralScreen(
             )
         }
     }
-    }
+}
 
 
 @Composable
@@ -421,26 +427,18 @@ private fun LastClearLine(
 }
 
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 private fun date(
     map: MutableState<HashMap<String, String>>,
     viewModel: SelectedDateTextViewModel
 ): MutableState<HashMap<String, String>> {
-    val context = LocalContext.current
-    val calendar = Calendar.getInstance()
+
+    val calendarState = rememberUseCaseState(visible = false)
 
     val selectedDateText = viewModel.selectedDateText.observeAsState("")
+    CalendarSample1(calendarState, viewModel)
 
-    val year = calendar[Calendar.YEAR]
-    val month = calendar[Calendar.MONTH]
-    val dayOfMonth = calendar[Calendar.DAY_OF_MONTH]
-
-    val datePicker = DatePickerDialog(
-        context,
-        { _: DatePicker, selectedYear: Int, selectedMonth: Int, selectedDayOfMonth: Int ->
-            viewModel.setSelectedDateText("$selectedDayOfMonth/${selectedMonth + 1}/$selectedYear")
-        }, year, month, dayOfMonth
-    )
 
     Column(
         modifier = Modifier
@@ -460,7 +458,7 @@ private fun date(
         Button(
             modifier = Modifier.padding(bottom = 2.dp),
             onClick = {
-                datePicker.show()
+                calendarState.show()
             }
         ) {
             Text(text = "Дата рождения")
@@ -471,5 +469,31 @@ private fun date(
     val mapObject = CountNumberServices()
     map.value = mapObject.countNumber(selectedDateText.value)
     return map
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@RequiresApi(Build.VERSION_CODES.O)
+@Composable
+internal fun CalendarSample1(
+    calendarState: UseCaseState,
+    viewModel: SelectedDateTextViewModel
+) {
+
+    CalendarDialog(
+        state = calendarState,
+        config = CalendarConfig(
+            yearSelection = true,
+            monthSelection = true,
+            style = CalendarStyle.MONTH,
+            boundary = LocalDate.of(1900, 1, 1)..LocalDate.now()
+        ),
+        selection = CalendarSelection.Dates { newDates ->
+            viewModel.setSelectedDateText(
+                "${newDates.get(0).dayOfMonth}/${newDates.get(0).month.value}/${
+                    newDates.get(0).year
+                }"
+            )
+        },
+    )
 }
 

@@ -1,12 +1,9 @@
 package com.zelianko.numerologic.activiti
 
 import android.annotation.SuppressLint
-import android.app.DatePickerDialog
-import android.widget.DatePicker
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -14,14 +11,12 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -30,34 +25,37 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.maxkeppeker.sheets.core.models.base.UseCaseState
+import com.maxkeppeker.sheets.core.models.base.rememberUseCaseState
+import com.maxkeppeler.sheets.calendar.CalendarDialog
+import com.maxkeppeler.sheets.calendar.models.CalendarConfig
+import com.maxkeppeler.sheets.calendar.models.CalendarSelection
+import com.maxkeppeler.sheets.calendar.models.CalendarStyle
 import com.zelianko.numerologic.R
 import com.zelianko.numerologic.ads.Banner
 import com.zelianko.numerologic.services.CountNumberServices
 import com.zelianko.numerologic.ui.theme.Clear
 import com.zelianko.numerologic.ui.theme.DarkBlue
 import com.zelianko.numerologic.ui.theme.LightBlue
-import java.util.Calendar
+import java.time.LocalDate
 
 /**
  * Экран совместимости
  * две матрицы на одном экране
  */
+@RequiresApi(Build.VERSION_CODES.O)
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("MutableCollectionMutableState", "UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
@@ -97,6 +95,7 @@ fun CompatibilityScreen(
 }
 
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable()
 fun Square(dataMap: MutableState<HashMap<String, String>>) {
     Column(
@@ -379,6 +378,7 @@ private fun SecondLine(
 }
 
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 private fun LastClearLine(
     value2: String,
@@ -445,33 +445,24 @@ private fun LastClearLine(
 }
 
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 private fun Date(map: MutableState<HashMap<String, String>>) {
-    val context = LocalContext.current
-    val calendar = Calendar.getInstance()
 
-    var selectedDateText by remember { mutableStateOf("") }
+    val selectedDateText = remember { mutableStateOf("") }
+    val calendarState = rememberUseCaseState(visible = false)
 
-    val year = calendar[Calendar.YEAR]
-    val month = calendar[Calendar.MONTH]
-    val dayOfMonth = calendar[Calendar.DAY_OF_MONTH]
-
-    val datePicker = DatePickerDialog(
-        context,
-        { _: DatePicker, selectedYear: Int, selectedMonth: Int, selectedDayOfMonth: Int ->
-            selectedDateText = "$selectedDayOfMonth/${selectedMonth + 1}/$selectedYear"
-        }, year, month, dayOfMonth
-    )
+    CalendarSample(calendarState = calendarState, selectedDateText = selectedDateText)
 
     Column(
         modifier = Modifier
             .fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        if (selectedDateText.isNotEmpty()) {
+        if (selectedDateText.value.isNotEmpty()) {
             Text(
                 modifier = Modifier.padding(top = 6.dp),
-                text = selectedDateText,
+                text = selectedDateText.value,
                 style = TextStyle(fontSize = 11.sp, fontWeight = FontWeight.Normal),
                 color = Color.White
             )
@@ -481,7 +472,7 @@ private fun Date(map: MutableState<HashMap<String, String>>) {
                 .fillMaxSize(),
             colors = ButtonDefaults.buttonColors(containerColor = DarkBlue),
             onClick = {
-                datePicker.show()
+                calendarState.show()
             }
         ) {
             Text(text = "Дата рождения",
@@ -491,5 +482,24 @@ private fun Date(map: MutableState<HashMap<String, String>>) {
     }
 
     val mapObject = CountNumberServices()
-    map.value = mapObject.countNumber(selectedDateText)
+    map.value = mapObject.countNumber(selectedDateText.value)
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@RequiresApi(Build.VERSION_CODES.O)
+@Composable
+internal fun CalendarSample(calendarState: UseCaseState, selectedDateText: MutableState<String>){
+
+    CalendarDialog(
+        state = calendarState,
+        config = CalendarConfig(
+            yearSelection = true,
+            monthSelection = true,
+            style = CalendarStyle.MONTH,
+            boundary = LocalDate.of(1900, 1, 1)..LocalDate.now()
+        ),
+        selection = CalendarSelection.Dates { newDates ->
+            selectedDateText.value = "${newDates.get(0).dayOfMonth}/${newDates.get(0).month.value}/${newDates.get(0).year}"
+        },
+    )
 }

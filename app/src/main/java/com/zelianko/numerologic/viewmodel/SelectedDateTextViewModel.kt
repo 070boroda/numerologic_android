@@ -12,4 +12,11 @@ class SelectedDateTextViewModel : ViewModel() {
     fun setSelectedDateText (newValue: String) {
         _selectedDateText.value = newValue
     }
+
+    private val _mapDataTransform = MutableLiveData<HashMap<String, String>>()
+    val mapDataTransform: LiveData<HashMap<String, String>> = _mapDataTransform
+
+    fun setMapDataTransform (newValue: HashMap<String, String>) {
+        _mapDataTransform.value = newValue
+    }
  }

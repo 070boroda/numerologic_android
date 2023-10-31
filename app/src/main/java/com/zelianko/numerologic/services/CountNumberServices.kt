@@ -26,6 +26,60 @@ class CountNumberServices {
         }
         return hashMap;
     }
+
+    /**
+     * Считаем трансформацию
+     */
+    fun countTransformNumber(value: HashMap<String, String>): HashMap<String, String> {
+
+        val copyMap: HashMap<String, String> = HashMap(value)
+
+        if (!copyMap.isEmpty()) {
+            if (copyMap["Характер"] != "---" && copyMap["Характер"]?.length!! > 2) {
+                if (copyMap["Характер"]?.length!! % 2 == 0) {
+                    //Кол-во весмерок для добавления
+                    val countEight = (copyMap["Характер"]?.length!! - 2) / 2
+                    var eight = copyMap["Долг"]
+                    for (i in 0..countEight - 1) {
+                        if (eight == "---") {
+                            eight = ""
+                        }
+                        eight += "8"
+                    }
+                    copyMap["Долг"] = eight.toString()
+                    copyMap["Характер"] = "11"
+                } else {
+                    //Кол-во весмерок для добавления
+                    val countEight = (copyMap["Характер"]?.length!! - 1) / 2
+                    var eight = copyMap["Долг"]
+                    for (i in 0..countEight - 1) {
+                        if (eight == "---") {
+                            eight = ""
+                        }
+                        eight += "8"
+                    }
+                    copyMap["Характер"] = "1"
+                    copyMap["Долг"] = eight.toString()
+                }
+            }
+
+            var six = copyMap["Труд"]
+            var seven = copyMap["Удача"]
+            if (copyMap["Труд"] != "---") {
+                for (i in 0..(six?.length?.minus(1) ?: 0)) {
+                    if (seven == "---") {
+                        seven = ""
+                    }
+                    seven += "7"
+                }
+                six = "---"
+                copyMap["Труд"] = six
+                copyMap["Удача"] = seven.toString()
+            }
+            return copyMap
+        }
+        return copyMap
+    }
 }
 
 /**

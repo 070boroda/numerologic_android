@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -12,17 +13,12 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -30,33 +26,23 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.maxkeppeker.sheets.core.models.base.UseCaseState
-import com.maxkeppeker.sheets.core.models.base.rememberUseCaseState
-import com.maxkeppeler.sheets.calendar.CalendarDialog
-import com.maxkeppeler.sheets.calendar.models.CalendarConfig
-import com.maxkeppeler.sheets.calendar.models.CalendarSelection
-import com.maxkeppeler.sheets.calendar.models.CalendarStyle
 import com.zelianko.numerologic.R
 import com.zelianko.numerologic.ads.Banner
-import com.zelianko.numerologic.services.CountNumberServices
 import com.zelianko.numerologic.ui.theme.Clear
 import com.zelianko.numerologic.ui.theme.LightBlue
 import com.zelianko.numerologic.viewmodel.SelectedDateTextViewModel
-import java.time.LocalDate
 
 @RequiresApi(Build.VERSION_CODES.O)
 @SuppressLint("MutableCollectionMutableState", "UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun GeneralScreen(
+fun DegradationScreen(
     viewModel: SelectedDateTextViewModel,
     paddingValues: PaddingValues
 ) {
-    val dataMap = remember {
-        mutableStateOf(hashMapOf<String, String>())
-    }
+    val dataMap = viewModel.mapDataDegrad.observeAsState(hashMapOf())
+
     Scaffold(
         modifier = Modifier.padding(paddingValues)
     ) {
@@ -197,10 +183,30 @@ fun GeneralScreen(
                 maxHeightSize = 0.125f
             )
             LastClearLine(label2 = "Быт", value2 = dataMap.value["Быт"].toString())
-            date(
-                map = dataMap,
-                viewModel = viewModel
-            )
+
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 15.dp),
+                horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                Banner(id = R.string.banner_4)
+            }
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 15.dp),
+                horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                Text(
+                    text = "Деградация",
+                    modifier = Modifier.padding(top = 8.dp, bottom = 2.dp),
+                    style = TextStyle(fontSize = 24.sp),
+                    color = Color.White
+                )
+            }
         }
     }
 }
@@ -426,75 +432,4 @@ private fun LastClearLine(
 }
 
 
-@RequiresApi(Build.VERSION_CODES.O)
-@Composable
-private fun date(
-    map: MutableState<HashMap<String, String>>,
-    viewModel: SelectedDateTextViewModel
-): MutableState<HashMap<String, String>> {
-
-    val calendarState = rememberUseCaseState(visible = false)
-
-    val selectedDateText = viewModel.selectedDateText.observeAsState("")
-    CalendarSample1(calendarState, viewModel)
-
-
-    Column(
-        modifier = Modifier
-            .padding(top = 100.dp)
-            .fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Text(
-            text = if (selectedDateText.value.isNotEmpty()) {
-                "Дата рождения ${selectedDateText.value}"
-            } else {
-                "Пожалуйста выберите дату рождения"
-            },
-            style = TextStyle(fontSize = 20.sp, fontWeight = FontWeight.Bold),
-            color = Color.White
-        )
-        Button(
-            modifier = Modifier.padding(bottom = 2.dp),
-            onClick = {
-                calendarState.show()
-            }
-        ) {
-            Text(text = "Дата рождения")
-        }
-        Banner(id = R.string.banner_1)
-    }
-
-    val mapObject = CountNumberServices()
-    map.value = mapObject.countNumber(selectedDateText.value)
-    viewModel.setMapDataTransform(mapObject.countTransformNumber(map.value))
-    viewModel.setMapDataDegrad(mapObject.countDegradateNumber(map.value))
-    return map
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@RequiresApi(Build.VERSION_CODES.O)
-@Composable
-internal fun CalendarSample1(
-    calendarState: UseCaseState,
-    viewModel: SelectedDateTextViewModel
-) {
-
-    CalendarDialog(
-        state = calendarState,
-        config = CalendarConfig(
-            yearSelection = true,
-            monthSelection = true,
-            style = CalendarStyle.MONTH,
-            boundary = LocalDate.of(1900, 1, 1)..LocalDate.now()
-        ),
-        selection = CalendarSelection.Dates { newDates ->
-            viewModel.setSelectedDateText(
-                "${newDates.get(0).dayOfMonth}/${newDates.get(0).month.value}/${
-                    newDates.get(0).year
-                }"
-            )
-        },
-    )
-}
 

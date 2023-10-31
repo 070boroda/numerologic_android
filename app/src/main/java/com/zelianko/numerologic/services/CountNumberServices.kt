@@ -80,6 +80,48 @@ class CountNumberServices {
         }
         return copyMap
     }
+
+    /**
+     * Считаем деградацию
+     */
+    fun countDegradateNumber(value: HashMap<String, String>): HashMap<String, String> {
+
+        val copyMap: HashMap<String, String> = HashMap(value)
+
+        if (!copyMap.isEmpty()) {
+
+            // 8 в 1, за каждую восмерку две единицы
+            if(copyMap["Долг"] != "---") {
+                val countEight: Int? = copyMap["Долг"]?.length
+                if (countEight != null) {
+                    for (i in 0..countEight - 1) {
+                        if (copyMap["Характер"] == "---") {
+                            copyMap["Характер"] = ""
+                        }
+                        copyMap["Характер"] += "11"
+                    }
+                    copyMap["Долг"] = "---"
+                }
+            }
+
+            // 7 в 6, за каждую восмерку две единицы
+            if (copyMap["Удача"] != "---") {
+                val countSeven: Int? = copyMap["Удача"]?.length
+                if (countSeven != null) {
+                    for (i in 0..countSeven - 1) {
+                        if (copyMap["Труд"] == "---") {
+                            copyMap["Труд"] = ""
+                        }
+                        copyMap["Труд"] += "6"
+                    }
+                    copyMap["Удача"] = "---"
+                }
+            }
+            return copyMap
+        }
+        return copyMap
+    }
+
 }
 
 /**

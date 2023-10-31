@@ -13,13 +13,11 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -28,13 +26,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.maxkeppeker.sheets.core.models.base.rememberUseCaseState
 import com.zelianko.numerologic.R
 import com.zelianko.numerologic.ads.Banner
-import com.zelianko.numerologic.services.CountNumberServices
 import com.zelianko.numerologic.ui.theme.Clear
 import com.zelianko.numerologic.ui.theme.LightBlue
 import com.zelianko.numerologic.viewmodel.SelectedDateTextViewModel
@@ -435,50 +430,3 @@ private fun LastClearLine(
         }
     }
 }
-
-
-@RequiresApi(Build.VERSION_CODES.O)
-@Composable
-private fun date(
-    map: MutableState<HashMap<String, String>>,
-    viewModel: SelectedDateTextViewModel
-): MutableState<HashMap<String, String>> {
-
-    val calendarState = rememberUseCaseState(visible = false)
-
-    val selectedDateText = viewModel.selectedDateText.observeAsState("")
-    CalendarSample1(calendarState, viewModel)
-
-
-    Column(
-        modifier = Modifier
-            .padding(top = 100.dp)
-            .fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Text(
-            text = if (selectedDateText.value.isNotEmpty()) {
-                "Дата рождения ${selectedDateText.value}"
-            } else {
-                "Пожалуйста выберите дату рождения"
-            },
-            style = TextStyle(fontSize = 20.sp, fontWeight = FontWeight.Bold),
-            color = Color.White
-        )
-        Button(
-            modifier = Modifier.padding(bottom = 2.dp),
-            onClick = {
-                calendarState.show()
-            }
-        ) {
-            Text(text = "Дата рождения")
-        }
-        Banner(id = R.string.banner_1)
-    }
-
-    val mapObject = CountNumberServices()
-    map.value = mapObject.countNumber(selectedDateText.value)
-    return map
-}
-
-

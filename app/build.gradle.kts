@@ -70,4 +70,5 @@ dependencies {
     debugImplementation("androidx.compose.ui:ui-test-manifest")
     implementation ("com.maxkeppeler.sheets-compose-dialogs:core:1.2.0")
     implementation ("com.maxkeppeler.sheets-compose-dialogs:calendar:1.2.0")
+    implementation ("com.yandex.android:mobmetricalib:5.3.0")
 }

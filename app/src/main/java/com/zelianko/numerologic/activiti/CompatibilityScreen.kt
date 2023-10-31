@@ -60,7 +60,8 @@ import java.time.LocalDate
 @SuppressLint("MutableCollectionMutableState", "UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun CompatibilityScreen(
-    paddingValues: PaddingValues
+    paddingValues: PaddingValues,
+    purchaseDone: Boolean
 ) {
     val dataMap = remember {
         mutableStateOf(hashMapOf<String, String>())

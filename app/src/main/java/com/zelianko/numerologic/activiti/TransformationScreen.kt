@@ -30,6 +30,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.zelianko.numerologic.R
 import com.zelianko.numerologic.ads.Banner
+import com.zelianko.numerologic.subscriptios.SubscriptionsHelper
 import com.zelianko.numerologic.ui.theme.Clear
 import com.zelianko.numerologic.ui.theme.LightBlue
 import com.zelianko.numerologic.viewmodel.SelectedDateTextViewModel
@@ -39,7 +40,9 @@ import com.zelianko.numerologic.viewmodel.SelectedDateTextViewModel
 @Composable
 fun TransformationScreen(
     viewModel: SelectedDateTextViewModel,
-    paddingValues: PaddingValues
+    paddingValues: PaddingValues,
+    purchaseDone: Boolean,
+    billingPurchaseHelper: SubscriptionsHelper
 ) {
     val dataMap = viewModel.mapDataTransform.observeAsState(hashMapOf())
 
@@ -191,7 +194,27 @@ fun TransformationScreen(
                 horizontalArrangement = Arrangement.Center,
                 verticalAlignment = Alignment.CenterVertically,
             ) {
-                Banner(id = R.string.banner_1)
+                if (purchaseDone == false) {
+                    Banner(id = R.string.banner_1)
+                }
+            }
+            if (purchaseDone == false) {
+                ButtonInit(billingPurchaseHelper = billingPurchaseHelper)
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 15.dp),
+                    horizontalArrangement = Arrangement.Center,
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    Text(
+                        text = "Для расчета трансформации оформите подписку",
+                        modifier = Modifier.padding(top = 8.dp, bottom = 2.dp),
+                        style = TextStyle(fontSize = 24.sp),
+                        color = Color.White
+                    )
+                }
+
             }
             Row(
                 modifier = Modifier

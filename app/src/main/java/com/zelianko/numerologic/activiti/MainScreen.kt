@@ -9,13 +9,16 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.rememberNavController
 import com.zelianko.numerologic.bottom_navigation.ButtonNavigation
 import com.zelianko.numerologic.bottom_navigation.NagGraph
+import com.zelianko.numerologic.subscriptios.SubscriptionsHelper
 import com.zelianko.numerologic.viewmodel.SelectedDateTextViewModel
 
 @RequiresApi(Build.VERSION_CODES.O)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun MainScreen(
-    viewModel: SelectedDateTextViewModel
+    viewModel: SelectedDateTextViewModel,
+    purchaseDone: Boolean,
+    billingPurchaseHelper: SubscriptionsHelper
 ) {
     val navController = rememberNavController()
     Scaffold(
@@ -34,16 +37,24 @@ fun MainScreen(
             transformationScreen = {
                 TransformationScreen(
                     viewModel = viewModel,
-                    paddingValues = paddingValues
+                    paddingValues = paddingValues,
+                    purchaseDone = purchaseDone,
+                    billingPurchaseHelper = billingPurchaseHelper
                 )
             },
             degradationScreen = {
                 DegradationScreen(
                     viewModel = viewModel,
-                    paddingValues = paddingValues
+                    paddingValues = paddingValues,
+                    purchaseDone = purchaseDone,
+                    billingPurchaseHelper = billingPurchaseHelper
+
                 )
             },
-            compatibilityScreenContent = { CompatibilityScreen(paddingValues = paddingValues) },
+            compatibilityScreenContent = { CompatibilityScreen(
+                paddingValues = paddingValues,
+                purchaseDone = purchaseDone
+            ) },
             helpScreenContent = { HelpScreen(paddingValues = paddingValues) }
         )
     }

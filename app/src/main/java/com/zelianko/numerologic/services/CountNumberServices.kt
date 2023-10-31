@@ -76,6 +76,13 @@ class CountNumberServices {
                 copyMap["Труд"] = six
                 copyMap["Удача"] = seven.toString()
             }
+
+            createTemperament(copyMap)
+            createBit(copyMap)
+            createCell(copyMap)
+            createFamaly(copyMap)
+            createPrivichki(copyMap)
+
             return copyMap
         }
         return copyMap
@@ -117,6 +124,12 @@ class CountNumberServices {
                     copyMap["Удача"] = "---"
                 }
             }
+
+            createTemperament(copyMap)
+            createBit(copyMap)
+            createCell(copyMap)
+            createFamaly(copyMap)
+            createPrivichki(copyMap)
             return copyMap
         }
         return copyMap

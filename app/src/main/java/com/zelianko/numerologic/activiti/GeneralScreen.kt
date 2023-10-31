@@ -239,7 +239,7 @@ private fun SecondLine(
             ) {
                 Text(
                     text = label1,
-                    modifier = Modifier.padding(top = 8.dp),
+                    modifier = Modifier.padding(top = 4.dp),
                     style = TextStyle(fontSize = 14.sp),
                     color = Color.White
                 )
@@ -271,7 +271,7 @@ private fun SecondLine(
             ) {
                 Text(
                     text = label2,
-                    modifier = Modifier.padding(top = 8.dp),
+                    modifier = Modifier.padding(top = 4.dp),
                     style = TextStyle(fontSize = 14.sp),
                     color = Color.White
                 )
@@ -302,7 +302,7 @@ private fun SecondLine(
             ) {
                 Text(
                     text = label3,
-                    modifier = Modifier.padding(top = 8.dp),
+                    modifier = Modifier.padding(top = 4.dp),
                     style = TextStyle(fontSize = 14.sp),
                     color = Color.White
                 )
@@ -333,7 +333,7 @@ private fun SecondLine(
             ) {
                 Text(
                     text = label4,
-                    modifier = Modifier.padding(top = 8.dp),
+                    modifier = Modifier.padding(top = 4.dp),
                     style = TextStyle(fontSize = 14.sp),
                     color = Color.White
                 )
@@ -388,7 +388,7 @@ private fun LastClearLine(
             ) {
                 Text(
                     text = label2,
-                    modifier = Modifier.padding(top = 8.dp),
+                    modifier = Modifier.padding(top = 4.dp),
                     style = TextStyle(fontSize = 14.sp),
                     color = Color.White
                 )
@@ -398,7 +398,7 @@ private fun LastClearLine(
                     } else {
                         value2
                     },
-                    modifier = Modifier.padding(top = 8.dp),
+                    modifier = Modifier.padding(top = 8.dp, bottom = 2.dp),
                     style = TextStyle(fontSize = 18.sp),
                     color = Color.White
                 )

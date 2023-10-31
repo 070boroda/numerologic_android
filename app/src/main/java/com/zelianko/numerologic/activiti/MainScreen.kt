@@ -2,17 +2,16 @@ package com.zelianko.numerologic.activiti
 
 
 import android.annotation.SuppressLint
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.ExperimentalMaterial3Api
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
 import com.zelianko.numerologic.bottom_navigation.ButtonNavigation
 import com.zelianko.numerologic.bottom_navigation.NagGraph
 import com.zelianko.numerologic.viewmodel.SelectedDateTextViewModel
 
-@OptIn(ExperimentalMaterial3Api::class)
+@RequiresApi(Build.VERSION_CODES.O)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun MainScreen(
@@ -23,12 +22,29 @@ fun MainScreen(
         bottomBar = {
             ButtonNavigation(navHostController = navController)
         },
-    ) {paddingValues ->
+    ) { paddingValues ->
         NagGraph(
             navHostController = navController,
-            generalScreenContent = {GeneralScreen(viewModel = viewModel, paddingValues = paddingValues)},
-            compatibilityScreenContent = { CompatibilityScreen(paddingValues = paddingValues)},
-            helpScreenContent = { HelpScreen(paddingValues = paddingValues)}
+            generalScreenContent = {
+                GeneralScreen(
+                    viewModel = viewModel,
+                    paddingValues = paddingValues
+                )
+            },
+            transformationScreen = {
+                TransformationScreen(
+                    viewModel = viewModel,
+                    paddingValues = paddingValues
+                )
+            },
+            degradationScreen = {
+                DegradationScreen(
+                    viewModel = viewModel,
+                    paddingValues = paddingValues
+                )
+            },
+            compatibilityScreenContent = { CompatibilityScreen(paddingValues = paddingValues) },
+            helpScreenContent = { HelpScreen(paddingValues = paddingValues) }
         )
     }
 }

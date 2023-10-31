@@ -48,7 +48,6 @@ import com.zelianko.numerologic.viewmodel.SelectedDateTextViewModel
 import java.time.LocalDate
 
 @RequiresApi(Build.VERSION_CODES.O)
-@OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("MutableCollectionMutableState", "UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun GeneralScreen(
@@ -159,7 +158,7 @@ fun GeneralScreen(
                         Text(
                             text = "Темперамент",
                             modifier = Modifier.padding(top = 2.dp),
-                            style = TextStyle(fontSize = 12.sp),
+                            style = TextStyle(fontSize = 11.sp),
                             color = Color.White
                         )
                         Text(
@@ -468,6 +467,8 @@ private fun date(
 
     val mapObject = CountNumberServices()
     map.value = mapObject.countNumber(selectedDateText.value)
+    viewModel.setMapDataTransform(mapObject.countTransformNumber(map.value))
+    viewModel.setMapDataDegrad(mapObject.countDegradateNumber(map.value))
     return map
 }
 

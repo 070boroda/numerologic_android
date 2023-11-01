@@ -38,8 +38,8 @@ fun AlertDialog(
         },
         text = {
             Text(
-                text = textSub.value + " " + textPrice.value + "/мес. " + textDiscr.value + ". "
-                        + "Скрывает рекламу. Вы всегда можете отменить подписку в личном кабинете Play Market")
+                text = textSub.value + " " + textPrice.value + "/мес. " + textDiscr.value + " "
+                        + "Вы всегда можете отменить подписку в личном кабинете Play Market")
         },
         onDismissRequest = {
             onDismissRequest()

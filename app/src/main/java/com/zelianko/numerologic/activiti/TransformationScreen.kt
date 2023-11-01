@@ -217,7 +217,7 @@ fun TransformationScreen(
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
                     Text(
-                        text = "     Для расчета трансформации требуется оформить полписку",
+                        text = "     Для расчета трансформации требуется оформить подписку",
                         modifier = Modifier.padding( all = 20.dp),
                         style = TextStyle(fontSize = 24.sp),
                         color = Color.White

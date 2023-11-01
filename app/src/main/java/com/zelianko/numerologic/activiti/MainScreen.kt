@@ -6,18 +6,22 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.navigation.compose.rememberNavController
 import com.zelianko.numerologic.bottom_navigation.ButtonNavigation
 import com.zelianko.numerologic.bottom_navigation.NagGraph
+import com.zelianko.numerologic.viewmodel.BillingViewModel
 import com.zelianko.numerologic.viewmodel.SelectedDateTextViewModel
 
 @RequiresApi(Build.VERSION_CODES.O)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun MainScreen(
-    viewModel: SelectedDateTextViewModel
+    viewModel: SelectedDateTextViewModel,
+    billingViewModel: BillingViewModel
 ) {
     val navController = rememberNavController()
+
     Scaffold(
         bottomBar = {
             ButtonNavigation(navHostController = navController)
@@ -28,23 +32,36 @@ fun MainScreen(
             generalScreenContent = {
                 GeneralScreen(
                     viewModel = viewModel,
-                    paddingValues = paddingValues
+                    paddingValues = paddingValues,
+                    billingViewModel = billingViewModel
                 )
             },
             transformationScreen = {
                 TransformationScreen(
                     viewModel = viewModel,
-                    paddingValues = paddingValues
+                    paddingValues = paddingValues,
+                    billingViewModel = billingViewModel
                 )
             },
             degradationScreen = {
                 DegradationScreen(
                     viewModel = viewModel,
-                    paddingValues = paddingValues
+                    paddingValues = paddingValues,
+                    billingViewModel = billingViewModel
                 )
             },
-            compatibilityScreenContent = { CompatibilityScreen(paddingValues = paddingValues) },
-            helpScreenContent = { HelpScreen(paddingValues = paddingValues) }
+            compatibilityScreenContent = {
+                CompatibilityScreen(
+                    paddingValues = paddingValues,
+                    billingViewModel = billingViewModel,
+                )
+                                         },
+            helpScreenContent = {
+                HelpScreen(
+                    paddingValues = paddingValues,
+                    billingViewModel = billingViewModel
+                )
+            }
         )
     }
 }

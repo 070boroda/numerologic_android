@@ -11,8 +11,8 @@ android {
         applicationId = "com.zelianko.numerologic"
         minSdk = 24
         targetSdk = 34
-        versionCode = 17
-        versionName = "2.0.0.17"
+        versionCode = 19
+        versionName = "2.0.0.19"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -61,6 +61,7 @@ dependencies {
     implementation("androidx.navigation:navigation-compose:2.7.4")
     implementation("androidx.compose.runtime:runtime-livedata:1.5.4")
     implementation("com.yandex.android:mobmetricalib:5.3.0")
+    implementation("com.google.firebase:firebase-crashlytics-buildtools:2.9.9")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
@@ -71,4 +72,6 @@ dependencies {
     implementation ("com.maxkeppeler.sheets-compose-dialogs:core:1.2.0")
     implementation ("com.maxkeppeler.sheets-compose-dialogs:calendar:1.2.0")
     implementation ("com.yandex.android:mobmetricalib:5.3.0")
+    implementation("com.android.billingclient:billing:6.0.1")
+    implementation("com.android.billingclient:billing-ktx:6.0.1")
 }

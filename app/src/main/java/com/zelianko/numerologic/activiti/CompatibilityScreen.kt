@@ -25,6 +25,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -37,6 +38,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.Dialog
 import com.maxkeppeker.sheets.core.models.base.UseCaseState
 import com.maxkeppeker.sheets.core.models.base.rememberUseCaseState
 import com.maxkeppeler.sheets.calendar.CalendarDialog
@@ -49,6 +51,7 @@ import com.zelianko.numerologic.services.CountNumberServices
 import com.zelianko.numerologic.ui.theme.Clear
 import com.zelianko.numerologic.ui.theme.DarkBlue
 import com.zelianko.numerologic.ui.theme.LightBlue
+import com.zelianko.numerologic.viewmodel.BillingViewModel
 import java.time.LocalDate
 
 /**
@@ -56,11 +59,11 @@ import java.time.LocalDate
  * две матрицы на одном экране
  */
 @RequiresApi(Build.VERSION_CODES.O)
-@OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("MutableCollectionMutableState", "UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun CompatibilityScreen(
-    paddingValues: PaddingValues
+    paddingValues: PaddingValues,
+    billingViewModel: BillingViewModel
 ) {
     val dataMap = remember {
         mutableStateOf(hashMapOf<String, String>())
@@ -68,6 +71,10 @@ fun CompatibilityScreen(
     val dataMapSecond = remember {
         mutableStateOf(hashMapOf<String, String>())
     }
+
+    val isActiveSub = billingViewModel.isActiveSub.observeAsState()
+
+
     Scaffold (
         modifier = Modifier.padding(paddingValues)
     ){
@@ -85,11 +92,14 @@ fun CompatibilityScreen(
                 .verticalScroll(state = rememberScrollState(0)),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Square(dataMap)
+            Square(dataMap, billingViewModel)
             Spacer(modifier = Modifier.size(5.dp))
-            Square(dataMapSecond)
+            Square(dataMapSecond, billingViewModel)
             Spacer(modifier = Modifier.size(1.dp))
-            Banner(id = R.string.banner_1)
+
+            if (isActiveSub.value != true) {
+                Banner(id = R.string.banner_4)
+            }
         }
     }
 }
@@ -97,7 +107,9 @@ fun CompatibilityScreen(
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable()
-fun Square(dataMap: MutableState<HashMap<String, String>>) {
+fun Square(
+    dataMap: MutableState<HashMap<String, String>>,
+    billingViewModel: BillingViewModel) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -225,7 +237,7 @@ fun Square(dataMap: MutableState<HashMap<String, String>>) {
             label4 = "Привычки", value4 = dataMap.value["Привычки"].toString(),
             maxHeightSize = 0.125f
         )
-        LastClearLine(value2 = dataMap.value["Быт"].toString(), map = dataMap)
+        LastClearLine(value2 = dataMap.value["Быт"].toString(), map = dataMap, billingViewModel = billingViewModel)
     }
     }
 
@@ -382,7 +394,8 @@ private fun SecondLine(
 @Composable
 private fun LastClearLine(
     value2: String,
-    map: MutableState<HashMap<String, String>>
+    map: MutableState<HashMap<String, String>>,
+    billingViewModel: BillingViewModel
 ) {
     Row(
         modifier = Modifier
@@ -439,7 +452,7 @@ private fun LastClearLine(
             elevation = CardDefaults.cardElevation(5.dp),
             shape = RoundedCornerShape(10.dp),
         ) {
-            Date(map)
+            Date(map, billingViewModel = billingViewModel)
         }
     }
 }
@@ -447,10 +460,18 @@ private fun LastClearLine(
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-private fun Date(map: MutableState<HashMap<String, String>>) {
+private fun Date(
+    map: MutableState<HashMap<String, String>>,
+    billingViewModel: BillingViewModel
+) {
 
     val selectedDateText = remember { mutableStateOf("") }
+
     val calendarState = rememberUseCaseState(visible = false)
+
+    val isActiveSub = billingViewModel.isActiveSub.observeAsState()
+    //state dialog
+    val showDialog = remember { mutableStateOf(false) }
 
     CalendarSample(calendarState = calendarState, selectedDateText = selectedDateText)
 
@@ -467,17 +488,41 @@ private fun Date(map: MutableState<HashMap<String, String>>) {
                 color = Color.White
             )
         }
-        Button(
-            modifier = Modifier
-                .fillMaxSize(),
-            colors = ButtonDefaults.buttonColors(containerColor = DarkBlue),
-            onClick = {
-                calendarState.show()
+
+        if (isActiveSub.value == true) {
+            Button(
+                modifier = Modifier
+                    .fillMaxSize(),
+                colors = ButtonDefaults.buttonColors(containerColor = DarkBlue),
+                onClick = {
+                    calendarState.show()
+                }
+            ) {
+                Text(
+                    text = "Дата рождения",
+                    style = TextStyle(fontSize = 12.sp, fontWeight = FontWeight.Bold)
+                )
             }
-        ) {
-            Text(text = "Дата рождения",
-                style = TextStyle(fontSize = 12.sp, fontWeight = FontWeight.Bold)
-            )
+        } else {
+            if (showDialog.value == true) {
+                AlertDialog(
+                    onDismissRequest  = {showDialog.value = false},
+                    billingViewModel = billingViewModel
+                )
+            }
+            Button(
+                modifier = Modifier
+                    .fillMaxSize(),
+                colors = ButtonDefaults.buttonColors(containerColor = DarkBlue),
+                onClick = {
+                    showDialog.value = true
+                }
+            ) {
+                Text(
+                    text = "Оформите подписку",
+                    style = TextStyle(fontSize = 12.sp, fontWeight = FontWeight.Bold)
+                )
+            }
         }
     }
 

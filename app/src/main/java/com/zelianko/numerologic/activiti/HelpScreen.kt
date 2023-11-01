@@ -23,6 +23,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -44,13 +45,17 @@ import androidx.compose.ui.unit.sp
 import com.zelianko.numerologic.R
 import com.zelianko.numerologic.ads.Banner
 import com.zelianko.numerologic.ui.theme.LightBlue
+import com.zelianko.numerologic.viewmodel.BillingViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun HelpScreen(
-    paddingValues: PaddingValues
+    paddingValues: PaddingValues,
+    billingViewModel: BillingViewModel
 ) {
+
+    val isActiveSub = billingViewModel.isActiveSub.observeAsState()
     Scaffold(
         modifier = Modifier.padding(paddingValues)
     ) {
@@ -68,13 +73,15 @@ fun HelpScreen(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth(),
-                horizontalArrangement = Arrangement.Center,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Banner(id = R.string.banner_2)
+            if (isActiveSub.value == false) {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    horizontalArrangement = Arrangement.Center,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Banner(id = R.string.banner_2)
+                }
             }
             LazyColumn(
                 modifier = Modifier

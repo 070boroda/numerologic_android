@@ -11,8 +11,8 @@ android {
         applicationId = "com.zelianko.numerologic"
         minSdk = 24
         targetSdk = 34
-        versionCode = 18
-        versionName = "2.0.0.18_sub"
+        versionCode = 19
+        versionName = "2.0.0.19"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {

@@ -13,6 +13,7 @@ import com.yandex.metrica.YandexMetrica
 import com.yandex.metrica.YandexMetricaConfig
 import com.yandex.mobile.ads.common.MobileAds
 import com.zelianko.numerologic.activiti.MainScreen
+import com.zelianko.numerologic.viewmodel.BillingViewModel
 import com.zelianko.numerologic.viewmodel.SelectedDateTextViewModel
 
 
@@ -21,6 +22,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val viewModel = ViewModelProvider(this)[SelectedDateTextViewModel::class.java]
+        val billingViewModel = ViewModelProvider(this)[BillingViewModel::class.java]
         MobileAds.initialize(this) {
             // now you can use ads
         }
@@ -30,8 +32,12 @@ class MainActivity : ComponentActivity() {
 
         YandexMetrica.enableActivityAutoTracking(Application())
         setContent {
+            val context = LocalContext.current
+            billingViewModel.initBillingClient(context)
+            billingViewModel.checkSubscription(context)
             MainScreen(
-                viewModel = viewModel
+                viewModel = viewModel,
+                billingViewModel = billingViewModel
             )
         }
     }

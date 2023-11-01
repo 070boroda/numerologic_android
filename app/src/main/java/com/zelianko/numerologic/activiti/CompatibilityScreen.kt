@@ -98,7 +98,7 @@ fun CompatibilityScreen(
             Spacer(modifier = Modifier.size(1.dp))
 
             if (isActiveSub.value != true) {
-                Banner(id = R.string.banner_1)
+                Banner(id = R.string.banner_4)
             }
         }
     }

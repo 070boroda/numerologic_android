@@ -13,12 +13,16 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -26,12 +30,15 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.zelianko.numerologic.R
 import com.zelianko.numerologic.ads.Banner
 import com.zelianko.numerologic.ui.theme.Clear
+import com.zelianko.numerologic.ui.theme.DarkBlue
 import com.zelianko.numerologic.ui.theme.LightBlue
+import com.zelianko.numerologic.viewmodel.BillingViewModel
 import com.zelianko.numerologic.viewmodel.SelectedDateTextViewModel
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -39,9 +46,14 @@ import com.zelianko.numerologic.viewmodel.SelectedDateTextViewModel
 @Composable
 fun TransformationScreen(
     viewModel: SelectedDateTextViewModel,
-    paddingValues: PaddingValues
+    paddingValues: PaddingValues,
+    billingViewModel: BillingViewModel
 ) {
     val dataMap = viewModel.mapDataTransform.observeAsState(hashMapOf())
+
+    val isActiveSub = billingViewModel.isActiveSub.observeAsState()
+
+    val showDialog = remember { mutableStateOf(false) }
 
     Scaffold(
         modifier = Modifier.padding(paddingValues)
@@ -184,28 +196,73 @@ fun TransformationScreen(
             )
             LastClearLine(label2 = "Быт", value2 = dataMap.value["Быт"].toString())
 
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 15.dp),
-                horizontalArrangement = Arrangement.Center,
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                Banner(id = R.string.banner_1)
+            if (isActiveSub.value != true) {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 15.dp),
+                    horizontalArrangement = Arrangement.Center,
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    Banner(id = R.string.banner_2)
+                }
             }
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 15.dp),
-                horizontalArrangement = Arrangement.Center,
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                Text(
-                    text = "Трансформация",
-                    modifier = Modifier.padding(top = 8.dp, bottom = 2.dp),
-                    style = TextStyle(fontSize = 24.sp),
-                    color = Color.White
-                )
+
+            if (isActiveSub.value == false) {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 15.dp),
+                    horizontalArrangement = Arrangement.Center,
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    Text(
+                        text = "     Для расчета трансформации требуется оформить полписку",
+                        modifier = Modifier.padding( all = 20.dp),
+                        style = TextStyle(fontSize = 24.sp),
+                        color = Color.White
+                    )
+                }
+                if (showDialog.value == true) {
+                    AlertDialog(
+                        onDismissRequest  = {showDialog.value = false},
+                        billingViewModel = billingViewModel
+                    )
+                }
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 15.dp),
+                    horizontalArrangement = Arrangement.Center,
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    Button(
+                        colors = ButtonDefaults.buttonColors(containerColor = DarkBlue),
+                        onClick = {
+                            showDialog.value = true
+                        }
+                    ) {
+                        Text(
+                            text = "Оформите подписку",
+                            style = TextStyle(fontSize = 24.sp, fontWeight = FontWeight.Bold)
+                        )
+                    }
+                }
+            } else {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 15.dp),
+                    horizontalArrangement = Arrangement.Center,
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    Text(
+                        text = "Трансфармация",
+                        modifier = Modifier.padding(top = 8.dp, bottom = 2.dp),
+                        style = TextStyle(fontSize = 24.sp),
+                        color = Color.White
+                    )
+                }
             }
         }
     }

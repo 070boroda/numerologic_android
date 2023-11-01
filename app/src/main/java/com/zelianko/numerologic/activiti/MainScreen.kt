@@ -6,6 +6,7 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.navigation.compose.rememberNavController
 import com.zelianko.numerologic.bottom_navigation.ButtonNavigation
 import com.zelianko.numerologic.bottom_navigation.NagGraph
@@ -20,6 +21,7 @@ fun MainScreen(
     billingViewModel: BillingViewModel
 ) {
     val navController = rememberNavController()
+
     Scaffold(
         bottomBar = {
             ButtonNavigation(navHostController = navController)
@@ -30,19 +32,22 @@ fun MainScreen(
             generalScreenContent = {
                 GeneralScreen(
                     viewModel = viewModel,
-                    paddingValues = paddingValues
+                    paddingValues = paddingValues,
+                    billingViewModel = billingViewModel
                 )
             },
             transformationScreen = {
                 TransformationScreen(
                     viewModel = viewModel,
-                    paddingValues = paddingValues
+                    paddingValues = paddingValues,
+                    billingViewModel = billingViewModel
                 )
             },
             degradationScreen = {
                 DegradationScreen(
                     viewModel = viewModel,
-                    paddingValues = paddingValues
+                    paddingValues = paddingValues,
+                    billingViewModel = billingViewModel
                 )
             },
             compatibilityScreenContent = {
@@ -51,7 +56,12 @@ fun MainScreen(
                     billingViewModel = billingViewModel,
                 )
                                          },
-            helpScreenContent = { HelpScreen(paddingValues = paddingValues) }
+            helpScreenContent = {
+                HelpScreen(
+                    paddingValues = paddingValues,
+                    billingViewModel = billingViewModel
+                )
+            }
         )
     }
 }

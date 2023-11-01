@@ -44,6 +44,7 @@ import com.zelianko.numerologic.ads.Banner
 import com.zelianko.numerologic.services.CountNumberServices
 import com.zelianko.numerologic.ui.theme.Clear
 import com.zelianko.numerologic.ui.theme.LightBlue
+import com.zelianko.numerologic.viewmodel.BillingViewModel
 import com.zelianko.numerologic.viewmodel.SelectedDateTextViewModel
 import java.time.LocalDate
 
@@ -52,11 +53,16 @@ import java.time.LocalDate
 @Composable
 fun GeneralScreen(
     viewModel: SelectedDateTextViewModel,
-    paddingValues: PaddingValues
+    paddingValues: PaddingValues,
+    billingViewModel: BillingViewModel
 ) {
     val dataMap = remember {
         mutableStateOf(hashMapOf<String, String>())
     }
+
+    val isActiveSub = billingViewModel.isActiveSub.observeAsState()
+
+
     Scaffold(
         modifier = Modifier.padding(paddingValues)
     ) {
@@ -199,8 +205,12 @@ fun GeneralScreen(
             LastClearLine(label2 = "Быт", value2 = dataMap.value["Быт"].toString())
             date(
                 map = dataMap,
-                viewModel = viewModel
+                viewModel = viewModel,
+                billingViewModel = billingViewModel
             )
+            if (isActiveSub.value != true) {
+                Banner(id = R.string.banner_1)
+            }
         }
     }
 }
@@ -430,10 +440,13 @@ private fun LastClearLine(
 @Composable
 private fun date(
     map: MutableState<HashMap<String, String>>,
-    viewModel: SelectedDateTextViewModel
+    viewModel: SelectedDateTextViewModel,
+    billingViewModel: BillingViewModel
 ): MutableState<HashMap<String, String>> {
 
     val calendarState = rememberUseCaseState(visible = false)
+
+    val isActiveSub = billingViewModel.isActiveSub.observeAsState()
 
     val selectedDateText = viewModel.selectedDateText.observeAsState("")
     CalendarSample1(calendarState, viewModel)
@@ -462,13 +475,15 @@ private fun date(
         ) {
             Text(text = "Дата рождения")
         }
-        Banner(id = R.string.banner_1)
     }
 
     val mapObject = CountNumberServices()
     map.value = mapObject.countNumber(selectedDateText.value)
-    viewModel.setMapDataTransform(mapObject.countTransformNumber(map.value))
-    viewModel.setMapDataDegrad(mapObject.countDegradateNumber(map.value))
+
+    if (isActiveSub.value == true) {
+        viewModel.setMapDataTransform(mapObject.countTransformNumber(map.value))
+        viewModel.setMapDataDegrad(mapObject.countDegradateNumber(map.value))
+    }
     return map
 }
 

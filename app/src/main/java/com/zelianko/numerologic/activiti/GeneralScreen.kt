@@ -2,15 +2,19 @@ package com.zelianko.numerologic.activiti
 
 import android.annotation.SuppressLint
 import android.os.Build
+import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
@@ -40,6 +44,7 @@ import com.maxkeppeler.sheets.calendar.models.CalendarConfig
 import com.maxkeppeler.sheets.calendar.models.CalendarSelection
 import com.maxkeppeler.sheets.calendar.models.CalendarStyle
 import com.zelianko.numerologic.R
+import com.zelianko.numerologic.ads.AdmobBanner
 import com.zelianko.numerologic.ads.Banner
 import com.zelianko.numerologic.services.CountNumberServices
 import com.zelianko.numerologic.ui.theme.Clear
@@ -203,14 +208,30 @@ fun GeneralScreen(
                 maxHeightSize = 0.125f
             )
             LastClearLine(label2 = "Быт", value2 = dataMap.value["Быт"].toString())
+
+            Spacer(modifier = Modifier.size(15.dp))
+
+            if (isActiveSub.value != true) {
+                Row (modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.Center){
+                }
+                Banner(id = R.string.banner_1)
+            }
+            if (isActiveSub.value != true) {
+                Row (modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.Center) {
+                    Log.d("purchases state", "Ads Google start")
+
+                    Log.d("purchases state", "Ads Google end")
+                }
+                AdmobBanner(modifier = Modifier.fillMaxSize())
+            }
+
             date(
                 map = dataMap,
                 viewModel = viewModel,
                 billingViewModel = billingViewModel
             )
-            if (isActiveSub.value != true) {
-                Banner(id = R.string.banner_1)
-            }
         }
     }
 }

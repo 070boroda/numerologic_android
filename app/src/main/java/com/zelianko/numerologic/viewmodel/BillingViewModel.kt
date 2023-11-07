@@ -252,6 +252,7 @@ class BillingViewModel(
                     .build()
 
                 billingClient?.acknowledgePurchase(acknowledgePurchaseParams) { billingResult ->
+                    Log.d("purchases state", "From handlePurchase billing result" + billingResult.responseCode)
                     if (billingResult.responseCode == BillingResponseCode.OK) {
                         _isActiveSub.postValue(true)
                     }

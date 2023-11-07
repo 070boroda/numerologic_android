@@ -2,6 +2,7 @@ package com.zelianko.numerologic.activiti
 
 import android.annotation.SuppressLint
 import android.os.Build
+import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -34,6 +35,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.zelianko.numerologic.R
+import com.zelianko.numerologic.ads.AdmobBanner
 import com.zelianko.numerologic.ads.Banner
 import com.zelianko.numerologic.ui.theme.Clear
 import com.zelianko.numerologic.ui.theme.DarkBlue
@@ -205,6 +207,15 @@ fun TransformationScreen(
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
                     Banner(id = R.string.banner_2)
+                }
+            }
+
+            if (isActiveSub.value != true) {
+                Row (modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.Center) {
+                    Log.d("purchases state", "Ads Google start")
+                    AdmobBanner(modifier = Modifier.fillMaxSize())
+                    Log.d("purchases state", "Ads Google end")
                 }
             }
 

@@ -21,9 +21,11 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -34,6 +36,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.Popup
 import com.zelianko.numerologic.R
 import com.zelianko.numerologic.ads.AdmobBanner
 import com.zelianko.numerologic.ads.Banner
@@ -43,7 +46,7 @@ import com.zelianko.numerologic.ui.theme.LightBlue
 import com.zelianko.numerologic.viewmodel.BillingViewModel
 import com.zelianko.numerologic.viewmodel.SelectedDateTextViewModel
 
-@RequiresApi(Build.VERSION_CODES.O)
+@RequiresApi(Build.VERSION_CODES.Q)
 @SuppressLint("MutableCollectionMutableState", "UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun TransformationScreen(
@@ -55,7 +58,9 @@ fun TransformationScreen(
 
     val isActiveSub = billingViewModel.isActiveSub.observeAsState()
 
-    val showDialog = remember { mutableStateOf(false) }
+  //  val showDialog = remember { mutableStateOf(false) }
+
+    var popupControl by remember { mutableStateOf(false) }
 
     Scaffold(
         modifier = Modifier.padding(paddingValues)
@@ -211,8 +216,10 @@ fun TransformationScreen(
             }
 
             if (isActiveSub.value != true) {
-                Row (modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.Center) {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.Center
+                ) {
                     Log.d("purchases state", "Ads Google start")
                     AdmobBanner(modifier = Modifier.fillMaxSize())
                     Log.d("purchases state", "Ads Google end")
@@ -229,7 +236,7 @@ fun TransformationScreen(
                 ) {
                     Text(
                         text = "Для расчета трансформации ",
-                       // modifier = Modifier.padding(all = 20.dp),
+                        // modifier = Modifier.padding(all = 20.dp),
                         style = TextStyle(fontSize = 24.sp),
                         color = Color.White
                     )
@@ -243,17 +250,30 @@ fun TransformationScreen(
                 ) {
                     Text(
                         text = "требуется оформить подписку",
-                       // modifier = Modifier.padding( all = 20.dp),
+                        // modifier = Modifier.padding( all = 20.dp),
                         style = TextStyle(fontSize = 24.sp),
                         color = Color.White
                     )
                 }
-                if (showDialog.value == true) {
-                    AlertDialog(
-                        onDismissRequest  = {showDialog.value = false},
-                        billingViewModel = billingViewModel
-                    )
+                if (popupControl) {
+                    Popup(
+                        alignment = Alignment.TopStart,
+                    ) {
+                        SubPurScreen(
+                            paddingValues = paddingValues,
+                            billingViewModel = billingViewModel
+                        ) {
+                            popupControl = false
+                        }
+                    }
                 }
+
+//                if (showDialog.value == true) {
+//                    AlertDialog(
+//                        onDismissRequest  = {showDialog.value = false},
+//                        billingViewModel = billingViewModel
+//                    )
+//                }
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -264,11 +284,11 @@ fun TransformationScreen(
                     Button(
                         colors = ButtonDefaults.buttonColors(containerColor = DarkBlue),
                         onClick = {
-                            showDialog.value = true
+                            popupControl = true
                         }
                     ) {
                         Text(
-                            text = "Оформите подписку",
+                            text = "Подробнее",
                             style = TextStyle(fontSize = 24.sp, fontWeight = FontWeight.Bold)
                         )
                     }

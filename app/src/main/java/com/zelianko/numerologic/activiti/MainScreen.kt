@@ -13,7 +13,7 @@ import com.zelianko.numerologic.bottom_navigation.NagGraph
 import com.zelianko.numerologic.viewmodel.BillingViewModel
 import com.zelianko.numerologic.viewmodel.SelectedDateTextViewModel
 
-@RequiresApi(Build.VERSION_CODES.O)
+@RequiresApi(Build.VERSION_CODES.Q)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun MainScreen(

@@ -19,7 +19,7 @@ import com.zelianko.numerologic.viewmodel.SelectedDateTextViewModel
 
 
 class MainActivity : ComponentActivity() {
-    @RequiresApi(Build.VERSION_CODES.O)
+    @RequiresApi(Build.VERSION_CODES.Q)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val viewModel = ViewModelProvider(this)[SelectedDateTextViewModel::class.java]

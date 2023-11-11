@@ -11,8 +11,8 @@ android {
         applicationId = "com.zelianko.numerologic"
         minSdk = 24
         targetSdk = 34
-        versionCode = 23
-        versionName = "2.0.0.23"
+        versionCode = 24
+        versionName = "2.0.0.24"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -76,4 +76,6 @@ dependencies {
     implementation("com.android.billingclient:billing:6.0.1")
     implementation("com.android.billingclient:billing-ktx:6.0.1")
     implementation ("com.google.android.gms:play-services-ads:22.5.0")
+    implementation ("com.github.skydoves:cloudy:0.1.2")
+    implementation ("com.github.commandiron:WheelPickerCompose:1.1.11")
 }

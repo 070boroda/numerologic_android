@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -53,7 +54,7 @@ import com.zelianko.numerologic.viewmodel.BillingViewModel
 import com.zelianko.numerologic.viewmodel.SelectedDateTextViewModel
 import java.time.LocalDate
 
-@RequiresApi(Build.VERSION_CODES.O)
+@RequiresApi(Build.VERSION_CODES.Q)
 @SuppressLint("MutableCollectionMutableState", "UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun GeneralScreen(
@@ -84,6 +85,7 @@ fun GeneralScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(5.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Row(
                 modifier = Modifier
@@ -217,16 +219,16 @@ fun GeneralScreen(
                 }
                 Banner(id = R.string.banner_1)
             }
-            if (isActiveSub.value != true) {
-                Row (modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.Center) {
-                    Log.d("purchases state", "Ads Google start")
-
-                    Log.d("purchases state", "Ads Google end")
-                }
-                AdmobBanner(modifier = Modifier.fillMaxSize())
-            }
-
+//            if (isActiveSub.value != true) {
+//                Row (modifier = Modifier.fillMaxWidth(),
+//                    horizontalArrangement = Arrangement.Center) {
+//                    Log.d("purchases state", "Ads Google start")
+//
+//                    Log.d("purchases state", "Ads Google end")
+//                }
+//                AdmobBanner(modifier = Modifier.fillMaxSize())
+//            }
+ //           DateDialog(viewModel = viewModel)
             date(
                 map = dataMap,
                 viewModel = viewModel,
@@ -457,7 +459,7 @@ private fun LastClearLine(
 }
 
 
-@RequiresApi(Build.VERSION_CODES.O)
+@RequiresApi(Build.VERSION_CODES.Q)
 @Composable
 private fun date(
     map: MutableState<HashMap<String, String>>,
@@ -465,17 +467,12 @@ private fun date(
     billingViewModel: BillingViewModel
 ): MutableState<HashMap<String, String>> {
 
-    val calendarState = rememberUseCaseState(visible = false)
-
     val isActiveSub = billingViewModel.isActiveSub.observeAsState()
-
     val selectedDateText = viewModel.selectedDateText.observeAsState("")
-    CalendarSample1(calendarState, viewModel)
-
 
     Column(
         modifier = Modifier
-            .padding(top = 100.dp)
+            .padding(top = 20.dp)
             .fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -488,14 +485,7 @@ private fun date(
             style = TextStyle(fontSize = 20.sp, fontWeight = FontWeight.Bold),
             color = Color.White
         )
-        Button(
-            modifier = Modifier.padding(bottom = 2.dp),
-            onClick = {
-                calendarState.show()
-            }
-        ) {
-            Text(text = "Дата рождения")
-        }
+        DateDialog(viewModel = viewModel)
     }
 
     val mapObject = CountNumberServices()
@@ -509,7 +499,7 @@ private fun date(
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
-@RequiresApi(Build.VERSION_CODES.O)
+@RequiresApi(Build.VERSION_CODES.Q)
 @Composable
 internal fun CalendarSample1(
     calendarState: UseCaseState,

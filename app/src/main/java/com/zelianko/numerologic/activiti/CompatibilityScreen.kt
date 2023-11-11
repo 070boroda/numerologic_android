@@ -27,9 +27,11 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -41,6 +43,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
+import androidx.compose.ui.window.Popup
 import com.maxkeppeker.sheets.core.models.base.UseCaseState
 import com.maxkeppeker.sheets.core.models.base.rememberUseCaseState
 import com.maxkeppeler.sheets.calendar.CalendarDialog
@@ -95,9 +98,9 @@ fun CompatibilityScreen(
                 .verticalScroll(state = rememberScrollState(0)),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Square(dataMap, billingViewModel)
+            Square(dataMap, billingViewModel, paddingValues = paddingValues)
             Spacer(modifier = Modifier.size(5.dp))
-            Square(dataMapSecond, billingViewModel)
+            Square(dataMapSecond, billingViewModel, paddingValues = paddingValues)
             Spacer(modifier = Modifier.size(1.dp))
 
             if (isActiveSub.value != true) {
@@ -120,7 +123,8 @@ fun CompatibilityScreen(
 @Composable()
 fun Square(
     dataMap: MutableState<HashMap<String, String>>,
-    billingViewModel: BillingViewModel) {
+    billingViewModel: BillingViewModel,
+    paddingValues:PaddingValues) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -248,7 +252,7 @@ fun Square(
             label4 = "Привычки", value4 = dataMap.value["Привычки"].toString(),
             maxHeightSize = 0.125f
         )
-        LastClearLine(value2 = dataMap.value["Быт"].toString(), map = dataMap, billingViewModel = billingViewModel)
+        LastClearLine(value2 = dataMap.value["Быт"].toString(), map = dataMap, billingViewModel = billingViewModel, paddingValues = paddingValues)
     }
     }
 
@@ -406,7 +410,8 @@ private fun SecondLine(
 private fun LastClearLine(
     value2: String,
     map: MutableState<HashMap<String, String>>,
-    billingViewModel: BillingViewModel
+    billingViewModel: BillingViewModel,
+    paddingValues: PaddingValues
 ) {
     Row(
         modifier = Modifier
@@ -463,7 +468,7 @@ private fun LastClearLine(
             elevation = CardDefaults.cardElevation(5.dp),
             shape = RoundedCornerShape(10.dp),
         ) {
-            Date(map, billingViewModel = billingViewModel)
+            Date(map, billingViewModel = billingViewModel, paddingValues = paddingValues)
         }
     }
 }
@@ -473,7 +478,8 @@ private fun LastClearLine(
 @Composable
 private fun Date(
     map: MutableState<HashMap<String, String>>,
-    billingViewModel: BillingViewModel
+    billingViewModel: BillingViewModel,
+    paddingValues:PaddingValues
 ) {
 
     val selectedDateText = remember { mutableStateOf("") }
@@ -483,6 +489,8 @@ private fun Date(
     val isActiveSub = billingViewModel.isActiveSub.observeAsState()
     //state dialog
     val showDialog = remember { mutableStateOf(false) }
+
+    var popupControl by remember { mutableStateOf(false) }
 
     CalendarSample(calendarState = calendarState, selectedDateText = selectedDateText)
 
@@ -515,18 +523,30 @@ private fun Date(
                 )
             }
         } else {
-            if (showDialog.value == true) {
-                AlertDialog(
-                    onDismissRequest  = {showDialog.value = false},
-                    billingViewModel = billingViewModel
-                )
+            if (popupControl) {
+                Popup(
+                    alignment = Alignment.TopStart,
+                ) {
+                    SubPurScreen(
+                        paddingValues = paddingValues,
+                        billingViewModel = billingViewModel
+                    ) {
+                        popupControl = false
+                    }
+                }
             }
+//            if (showDialog.value == true) {
+//                AlertDialog(
+//                    onDismissRequest  = {showDialog.value = false},
+//                    billingViewModel = billingViewModel
+//                )
+//            }
             Button(
                 modifier = Modifier
                     .fillMaxSize(),
                 colors = ButtonDefaults.buttonColors(containerColor = DarkBlue),
                 onClick = {
-                    showDialog.value = true
+                    popupControl = true
                 }
             ) {
                 Text(

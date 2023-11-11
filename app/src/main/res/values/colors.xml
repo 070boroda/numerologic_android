@@ -9,4 +9,6 @@
     <color name="white">#FFFFFFFF</color>
     <color name="clear_gray">#A3A3A3</color>
     <color name="dialog">#8FBBF1</color>
+    <color name="gradient_top">#8FBBF1</color>
+    <color name="gradient_bottom">#FF9800</color>
 </resources>

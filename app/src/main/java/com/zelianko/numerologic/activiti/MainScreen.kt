@@ -6,7 +6,6 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.navigation.compose.rememberNavController
 import com.zelianko.numerologic.bottom_navigation.ButtonNavigation
 import com.zelianko.numerologic.bottom_navigation.NagGraph
@@ -24,7 +23,7 @@ fun MainScreen(
 
     Scaffold(
         bottomBar = {
-            ButtonNavigation(navHostController = navController)
+            ButtonNavigation(navHostController = navController, billingViewModel = billingViewModel)
         },
     ) { paddingValues ->
         NagGraph(
@@ -55,7 +54,7 @@ fun MainScreen(
                     paddingValues = paddingValues,
                     billingViewModel = billingViewModel,
                 )
-                                         },
+            },
             helpScreenContent = {
                 HelpScreen(
                     paddingValues = paddingValues,

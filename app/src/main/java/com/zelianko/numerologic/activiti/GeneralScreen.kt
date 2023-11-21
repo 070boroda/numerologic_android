@@ -219,16 +219,6 @@ fun GeneralScreen(
                 }
                 Banner(id = R.string.banner_1)
             }
-//            if (isActiveSub.value != true) {
-//                Row (modifier = Modifier.fillMaxWidth(),
-//                    horizontalArrangement = Arrangement.Center) {
-//                    Log.d("purchases state", "Ads Google start")
-//
-//                    Log.d("purchases state", "Ads Google end")
-//                }
-//                AdmobBanner(modifier = Modifier.fillMaxSize())
-//            }
- //           DateDialog(viewModel = viewModel)
             date(
                 map = dataMap,
                 viewModel = viewModel,

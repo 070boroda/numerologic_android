@@ -2,7 +2,6 @@ package com.zelianko.numerologic.activiti
 
 import android.annotation.SuppressLint
 import android.os.Build
-import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -13,14 +12,11 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -38,21 +34,13 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.maxkeppeker.sheets.core.models.base.UseCaseState
-import com.maxkeppeker.sheets.core.models.base.rememberUseCaseState
-import com.maxkeppeler.sheets.calendar.CalendarDialog
-import com.maxkeppeler.sheets.calendar.models.CalendarConfig
-import com.maxkeppeler.sheets.calendar.models.CalendarSelection
-import com.maxkeppeler.sheets.calendar.models.CalendarStyle
 import com.zelianko.numerologic.R
-import com.zelianko.numerologic.ads.AdmobBanner
 import com.zelianko.numerologic.ads.Banner
 import com.zelianko.numerologic.services.CountNumberServices
 import com.zelianko.numerologic.ui.theme.Clear
 import com.zelianko.numerologic.ui.theme.LightBlue
 import com.zelianko.numerologic.viewmodel.BillingViewModel
 import com.zelianko.numerologic.viewmodel.SelectedDateTextViewModel
-import java.time.LocalDate
 
 @RequiresApi(Build.VERSION_CODES.Q)
 @SuppressLint("MutableCollectionMutableState", "UnusedMaterial3ScaffoldPaddingParameter")
@@ -214,8 +202,10 @@ fun GeneralScreen(
             Spacer(modifier = Modifier.size(15.dp))
 
             if (isActiveSub.value != true) {
-                Row (modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.Center){
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.Center
+                ) {
                 }
                 Banner(id = R.string.banner_1)
             }
@@ -484,33 +474,41 @@ private fun date(
     if (isActiveSub.value == true) {
         viewModel.setMapDataTransform(mapObject.countTransformNumber(map.value))
         viewModel.setMapDataDegrad(mapObject.countDegradateNumber(map.value))
+        viewModel.setListDis(
+            mapObject.countDissonansAndAbivolentnost(
+                map.value,
+                mapObject.countTransformNumber(map.value),
+                mapObject.countDegradateNumber(map.value)
+            )
+        )
+        viewModel.setCommonMatrix(map.value)
     }
     return map
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
-@RequiresApi(Build.VERSION_CODES.Q)
-@Composable
-internal fun CalendarSample1(
-    calendarState: UseCaseState,
-    viewModel: SelectedDateTextViewModel
-) {
-
-    CalendarDialog(
-        state = calendarState,
-        config = CalendarConfig(
-            yearSelection = true,
-            monthSelection = true,
-            style = CalendarStyle.MONTH,
-            boundary = LocalDate.of(1900, 1, 1)..LocalDate.now()
-        ),
-        selection = CalendarSelection.Dates { newDates ->
-            viewModel.setSelectedDateText(
-                "${newDates.get(0).dayOfMonth}/${newDates.get(0).month.value}/${
-                    newDates.get(0).year
-                }"
-            )
-        },
-    )
-}
-
+//@OptIn(ExperimentalMaterial3Api::class)
+//@RequiresApi(Build.VERSION_CODES.Q)
+//@Composable
+//internal fun CalendarSample1(
+//    calendarState: UseCaseState,
+//    viewModel: SelectedDateTextViewModel
+//) {
+//
+//    CalendarDialog(
+//        state = calendarState,
+//        config = CalendarConfig(
+//            yearSelection = true,
+//            monthSelection = true,
+//            style = CalendarStyle.MONTH,
+//            boundary = LocalDate.of(1900, 1, 1)..LocalDate.now()
+//        ),
+//        selection = CalendarSelection.Dates { newDates ->
+//            viewModel.setSelectedDateText(
+//                "${newDates.get(0).dayOfMonth}/${newDates.get(0).month.value}/${
+//                    newDates.get(0).year
+//                }"
+//            )
+//        },
+//    )
+//}
+//

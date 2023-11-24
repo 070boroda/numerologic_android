@@ -2,18 +2,22 @@ package com.zelianko.numerologic.activiti
 
 import android.annotation.SuppressLint
 import android.os.Build
-import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
@@ -21,6 +25,7 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
@@ -38,8 +43,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Popup
 import com.zelianko.numerologic.R
-import com.zelianko.numerologic.ads.AdmobBanner
-import com.zelianko.numerologic.ads.Banner
 import com.zelianko.numerologic.ui.theme.Clear
 import com.zelianko.numerologic.ui.theme.DarkBlue
 import com.zelianko.numerologic.ui.theme.LightBlue
@@ -54,11 +57,12 @@ fun TransformationScreen(
     paddingValues: PaddingValues,
     billingViewModel: BillingViewModel
 ) {
-    val dataMap = viewModel.mapDataTransform.observeAsState(hashMapOf())
+    val dataMapTransf = viewModel.mapDataTransform.observeAsState(hashMapOf())
+    val dataMapDegr = viewModel.mapDataDegrad.observeAsState(hashMapOf())
 
     val isActiveSub = billingViewModel.isActiveSub.observeAsState()
 
-  //  val showDialog = remember { mutableStateOf(false) }
+      val showDialog = remember { mutableStateOf(false) }
 
     var popupControl by remember { mutableStateOf(false) }
 
@@ -73,158 +77,28 @@ fun TransformationScreen(
                 .alpha(0.8f),
             contentScale = ContentScale.FillBounds
         )
-
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(5.dp),
+                .verticalScroll(state = rememberScrollState(0)),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .fillMaxHeight(0.09f)
-            ) {
-                Card(
-                    modifier = Modifier
-                        .fillMaxWidth(0.5f)
-                        .alpha(1f)
-                        .padding(1.dp),
-                    colors = CardDefaults.cardColors(LightBlue),
-                    elevation = CardDefaults.cardElevation(5.dp),
-                    shape = RoundedCornerShape(10.dp),
-                ) {
-                    Column(
-                        modifier = Modifier.fillMaxSize(),
-                        horizontalAlignment = Alignment.CenterHorizontally
-                    ) {
-                        Text(
-                            text = "Доп.цифры",
-                            modifier = Modifier.padding(top = 2.dp),
-                            style = TextStyle(fontSize = 12.sp),
-                            color = Color.White
-                        )
-                        Text(
-                            text = if (dataMap.value.isEmpty()) {
-                                "----"
-                            } else {
-                                dataMap.value["Доп.цифры"].toString()
-                            },
-                            modifier = Modifier.padding(top = 8.dp, bottom = 2.dp),
-                            style = TextStyle(fontSize = 18.sp),
-                            color = Color.White
-                        )
-                    }
-                }
-
-                Card(
-                    modifier = Modifier
-                        .fillMaxWidth(0.5f)
-                        .alpha(1f)
-                        .padding(1.dp),
-                    colors = CardDefaults.cardColors(LightBlue),
-                    elevation = CardDefaults.cardElevation(5.dp),
-                    shape = RoundedCornerShape(10.dp),
-                ) {
-                    Column(
-                        modifier = Modifier.fillMaxSize(),
-                        horizontalAlignment = Alignment.CenterHorizontally
-                    ) {
-                        Text(
-                            text = "Число судьбы",
-                            modifier = Modifier.padding(top = 2.dp),
-                            style = TextStyle(fontSize = 12.sp),
-                            color = Color.White
-                        )
-                        Text(
-                            text = if (dataMap.value.isEmpty()) {
-                                "----"
-                            } else {
-                                dataMap.value["Число судьбы"].toString()
-                            },
-                            modifier = Modifier.padding(top = 8.dp, bottom = 2.dp),
-                            style = TextStyle(fontSize = 18.sp),
-                            color = Color.White
-                        )
-                    }
-                }
-                Card(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .alpha(1f)
-                        .padding(1.dp),
-                    colors = CardDefaults.cardColors(LightBlue),
-                    elevation = CardDefaults.cardElevation(5.dp),
-                    shape = RoundedCornerShape(10.dp),
-                ) {
-                    Column(
-                        modifier = Modifier.fillMaxSize(),
-                        horizontalAlignment = Alignment.CenterHorizontally
-                    ) {
-                        Text(
-                            text = "Темперамент",
-                            modifier = Modifier.padding(top = 2.dp),
-                            style = TextStyle(fontSize = 11.sp),
-                            color = Color.White
-                        )
-                        Text(
-                            text = if (dataMap.value.isEmpty()) {
-                                "----"
-                            } else {
-                                dataMap.value["Темперамент"].toString()
-                            },
-                            modifier = Modifier.padding(top = 8.dp, bottom = 2.dp),
-                            style = TextStyle(fontSize = 18.sp),
-                            color = Color.White
-                        )
-                    }
-                }
-            }
-
-            SecondLine(
-                label1 = "Характер", value1 = dataMap.value["Характер"].toString(),
-                label2 = "Здоровье", value2 = dataMap.value["Здоровье"].toString(),
-                label3 = "Удача", value3 = dataMap.value["Удача"].toString(),
-                label4 = "Цель", value4 = dataMap.value["Цель"].toString(), maxHeightSize = 0.10f
+            Text(
+                text = "Транформация",
+                modifier = Modifier.padding(top = 2.dp),
+                style = TextStyle(fontSize = 24.sp),
+                color = Color.White
             )
-
-            SecondLine(
-                label1 = "Энергия", value1 = dataMap.value["Энергия"].toString(),
-                label2 = "Логика", value2 = dataMap.value["Логика"].toString(),
-                label3 = "Долг", value3 = dataMap.value["Долг"].toString(),
-                label4 = "Семья", value4 = dataMap.value["Семья"].toString(), maxHeightSize = 0.11f
+            SquereDegrAndTransf(dataMapTransf, isActiveSub, paddingValues, billingViewModel)
+            Spacer(modifier = Modifier.size(2.dp))
+            Text(
+                text = "Деградация",
+                modifier = Modifier.padding(top = 2.dp),
+                style = TextStyle(fontSize = 24.sp),
+                color = Color.White
             )
+            SquereDegrAndTransf(dataMapDegr, isActiveSub, paddingValues, billingViewModel)
 
-            SecondLine(
-                label1 = "Интерес", value1 = dataMap.value["Интерес"].toString(),
-                label2 = "Труд", value2 = dataMap.value["Труд"].toString(),
-                label3 = "Память", value3 = dataMap.value["Память"].toString(),
-                label4 = "Привычки", value4 = dataMap.value["Привычки"].toString(),
-                maxHeightSize = 0.125f
-            )
-            LastClearLine(label2 = "Быт", value2 = dataMap.value["Быт"].toString())
-
-            if (isActiveSub.value != true) {
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(top = 15.dp),
-                    horizontalArrangement = Arrangement.Center,
-                    verticalAlignment = Alignment.CenterVertically,
-                ) {
-                    Banner(id = R.string.banner_2)
-                }
-            }
-
-            if (isActiveSub.value != true) {
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.Center
-                ) {
-                    Log.d("purchases state", "Ads Google start")
-                    AdmobBanner(modifier = Modifier.fillMaxSize())
-                    Log.d("purchases state", "Ads Google end")
-                }
-            }
 
             if (isActiveSub.value == false) {
                 Row(
@@ -235,12 +109,52 @@ fun TransformationScreen(
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
                     Text(
-                        text = "Для расчета трансформации ",
+                        text = "Для расчета",
                         // modifier = Modifier.padding(all = 20.dp),
                         style = TextStyle(fontSize = 24.sp),
                         color = Color.White
                     )
                 }
+                Row(
+                        modifier = Modifier
+                            .fillMaxWidth(),
+                horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    Text(
+                        text = "трансформации",
+                        // modifier = Modifier.padding(all = 20.dp),
+                        style = TextStyle(fontSize = 24.sp),
+                        color = Color.White
+                    )
+                }
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    horizontalArrangement = Arrangement.Center,
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    Text(
+                        text = "и",
+                        // modifier = Modifier.padding(all = 20.dp),
+                        style = TextStyle(fontSize = 24.sp),
+                        color = Color.White
+                    )
+                }
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    horizontalArrangement = Arrangement.Center,
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    Text(
+                        text = "деградации",
+                        // modifier = Modifier.padding(all = 20.dp),
+                        style = TextStyle(fontSize = 24.sp),
+                        color = Color.White
+                    )
+                }
+
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -268,12 +182,12 @@ fun TransformationScreen(
                     }
                 }
 
-//                if (showDialog.value == true) {
-//                    AlertDialog(
-//                        onDismissRequest  = {showDialog.value = false},
-//                        billingViewModel = billingViewModel
-//                    )
-//                }
+                if (showDialog.value == true) {
+                    AlertDialog(
+                        onDismissRequest = { showDialog.value = false },
+                        billingViewModel = billingViewModel
+                    )
+                }
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -293,22 +207,26 @@ fun TransformationScreen(
                         )
                     }
                 }
-            } else {
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(top = 15.dp),
-                    horizontalArrangement = Arrangement.Center,
-                    verticalAlignment = Alignment.CenterVertically,
-                ) {
-                    Text(
-                        text = "Трансфармация",
-                        modifier = Modifier.padding(top = 8.dp, bottom = 2.dp),
-                        style = TextStyle(fontSize = 24.sp),
-                        color = Color.White
-                    )
-                }
             }
+            Spacer(modifier = Modifier.height(15.dp))
+//        } else {
+//                Row(
+//                    modifier = Modifier
+//                        .fillMaxWidth()
+//                        .padding(top = 15.dp),
+//                    horizontalArrangement = Arrangement.Center,
+//                    verticalAlignment = Alignment.CenterVertically,
+//                ) {
+//                    Text(
+//                        text = "Трансфармация",
+//                        modifier = Modifier.padding(top = 8.dp, bottom = 2.dp),
+//                        style = TextStyle(fontSize = 24.sp),
+//                        color = Color.White
+//                    )
+//                }
+//            }
+
+
         }
     }
 }
@@ -531,4 +449,251 @@ private fun LastClearLine(
         ) {
         }
     }
+}
+
+@Composable
+fun SquereDegrAndTransf(
+    dataMap: State<HashMap<String, String>>,
+    isActiveSub: State<Boolean?>,
+    paddingValues: PaddingValues,
+    billingViewModel: BillingViewModel
+) {
+    var popupControl by remember { mutableStateOf(false) }
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(5.dp),
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .fillMaxHeight(0.09f)
+        ) {
+            Card(
+                modifier = Modifier
+                    .fillMaxWidth(0.5f)
+                    .alpha(1f)
+                    .padding(1.dp),
+                colors = CardDefaults.cardColors(LightBlue),
+                elevation = CardDefaults.cardElevation(5.dp),
+                shape = RoundedCornerShape(10.dp),
+            ) {
+                Column(
+                    modifier = Modifier.fillMaxSize(),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Text(
+                        text = "Доп.цифры",
+                        modifier = Modifier.padding(top = 2.dp),
+                        style = TextStyle(fontSize = 12.sp),
+                        color = Color.White
+                    )
+                    Text(
+                        text = if (dataMap.value.isEmpty()) {
+                            "----"
+                        } else {
+                            dataMap.value["Доп.цифры"].toString()
+                        },
+                        modifier = Modifier.padding(top = 8.dp, bottom = 2.dp),
+                        style = TextStyle(fontSize = 18.sp),
+                        color = Color.White
+                    )
+                }
+            }
+
+            Card(
+                modifier = Modifier
+                    .fillMaxWidth(0.5f)
+                    .alpha(1f)
+                    .padding(1.dp),
+                colors = CardDefaults.cardColors(LightBlue),
+                elevation = CardDefaults.cardElevation(5.dp),
+                shape = RoundedCornerShape(10.dp),
+            ) {
+                Column(
+                    modifier = Modifier.fillMaxSize(),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Text(
+                        text = "Число судьбы",
+                        modifier = Modifier.padding(top = 2.dp),
+                        style = TextStyle(fontSize = 12.sp),
+                        color = Color.White
+                    )
+                    Text(
+                        text = if (dataMap.value.isEmpty()) {
+                            "----"
+                        } else {
+                            dataMap.value["Число судьбы"].toString()
+                        },
+                        modifier = Modifier.padding(top = 8.dp, bottom = 2.dp),
+                        style = TextStyle(fontSize = 18.sp),
+                        color = Color.White
+                    )
+                }
+            }
+            Card(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .alpha(1f)
+                    .padding(1.dp),
+                colors = CardDefaults.cardColors(LightBlue),
+                elevation = CardDefaults.cardElevation(5.dp),
+                shape = RoundedCornerShape(10.dp),
+            ) {
+                Column(
+                    modifier = Modifier.fillMaxSize(),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Text(
+                        text = "Темперамент",
+                        modifier = Modifier.padding(top = 2.dp),
+                        style = TextStyle(fontSize = 11.sp),
+                        color = Color.White
+                    )
+                    Text(
+                        text = if (dataMap.value.isEmpty()) {
+                            "----"
+                        } else {
+                            dataMap.value["Темперамент"].toString()
+                        },
+                        modifier = Modifier.padding(top = 8.dp, bottom = 2.dp),
+                        style = TextStyle(fontSize = 18.sp),
+                        color = Color.White
+                    )
+                }
+            }
+        }
+
+        SecondLine(
+            label1 = "Характер", value1 = dataMap.value["Характер"].toString(),
+            label2 = "Здоровье", value2 = dataMap.value["Здоровье"].toString(),
+            label3 = "Удача", value3 = dataMap.value["Удача"].toString(),
+            label4 = "Цель", value4 = dataMap.value["Цель"].toString(), maxHeightSize = 0.10f
+        )
+
+        SecondLine(
+            label1 = "Энергия", value1 = dataMap.value["Энергия"].toString(),
+            label2 = "Логика", value2 = dataMap.value["Логика"].toString(),
+            label3 = "Долг", value3 = dataMap.value["Долг"].toString(),
+            label4 = "Семья", value4 = dataMap.value["Семья"].toString(), maxHeightSize = 0.11f
+        )
+
+        SecondLine(
+            label1 = "Интерес", value1 = dataMap.value["Интерес"].toString(),
+            label2 = "Труд", value2 = dataMap.value["Труд"].toString(),
+            label3 = "Память", value3 = dataMap.value["Память"].toString(),
+            label4 = "Привычки", value4 = dataMap.value["Привычки"].toString(),
+            maxHeightSize = 0.125f
+        )
+        LastClearLine(label2 = "Быт", value2 = dataMap.value["Быт"].toString())
+
+//        if (isActiveSub.value != true) {
+//            Row(
+//                modifier = Modifier
+//                    .fillMaxWidth()
+//                    .padding(top = 15.dp),
+//                horizontalArrangement = Arrangement.Center,
+//                verticalAlignment = Alignment.CenterVertically,
+//            ) {
+//                Banner(id = R.string.banner_2)
+//            }
+//        }
+//
+//        if (isActiveSub.value != true) {
+//            Row(
+//                modifier = Modifier.fillMaxWidth(),
+//                horizontalArrangement = Arrangement.Center
+//            ) {
+//                Log.d("purchases state", "Ads Google start")
+//                AdmobBanner(modifier = Modifier.fillMaxSize())
+//                Log.d("purchases state", "Ads Google end")
+//            }
+//        }
+//
+//        if (isActiveSub.value == false) {
+//            Row(
+//                modifier = Modifier
+//                    .fillMaxWidth()
+//                    .padding(top = 15.dp),
+//                horizontalArrangement = Arrangement.Center,
+//                verticalAlignment = Alignment.CenterVertically,
+//            ) {
+//                Text(
+//                    text = "Для расчета трансформации ",
+//                    // modifier = Modifier.padding(all = 20.dp),
+//                    style = TextStyle(fontSize = 24.sp),
+//                    color = Color.White
+//                )
+//            }
+//            Row(
+//                modifier = Modifier
+//                    .fillMaxWidth()
+//                    .padding(top = 7.dp),
+//                horizontalArrangement = Arrangement.Center,
+//                verticalAlignment = Alignment.CenterVertically,
+//            ) {
+//                Text(
+//                    text = "требуется оформить подписку",
+//                    // modifier = Modifier.padding( all = 20.dp),
+//                    style = TextStyle(fontSize = 24.sp),
+//                    color = Color.White
+//                )
+//            }
+//            if (popupControl) {
+//                Popup(
+//                    alignment = Alignment.TopStart,
+//                ) {
+//                    SubPurScreen(
+//                        paddingValues = paddingValues,
+//                        billingViewModel = billingViewModel
+//                    ) {
+//                        popupControl = false
+//                    }
+//                }
+//            }
+//
+////                if (showDialog.value == true) {
+////                    AlertDialog(
+////                        onDismissRequest  = {showDialog.value = false},
+////                        billingViewModel = billingViewModel
+////                    )
+////                }
+//            Row(
+//                modifier = Modifier
+//                    .fillMaxWidth()
+//                    .padding(top = 15.dp),
+//                horizontalArrangement = Arrangement.Center,
+//                verticalAlignment = Alignment.CenterVertically,
+//            ) {
+//                Button(
+//                    colors = ButtonDefaults.buttonColors(containerColor = DarkBlue),
+//                    onClick = {
+//                        popupControl = true
+//                    }
+//                ) {
+//                    Text(
+//                        text = "Подробнее",
+//                        style = TextStyle(fontSize = 24.sp, fontWeight = FontWeight.Bold)
+//                    )
+//                }
+//            }
+//        } else {
+//            Row(
+//                modifier = Modifier
+//                    .fillMaxWidth()
+//                    .padding(top = 15.dp),
+//                horizontalArrangement = Arrangement.Center,
+//                verticalAlignment = Alignment.CenterVertically,
+//            ) {
+//                Text(
+//                    text = "Трансфармация",
+//                    modifier = Modifier.padding(top = 8.dp, bottom = 2.dp),
+//                    style = TextStyle(fontSize = 24.sp),
+//                    color = Color.White
+//                )
+//            }
+        //  }
+    }
+
 }

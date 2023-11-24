@@ -33,4 +33,12 @@ class SelectedDateTextViewModel : ViewModel() {
     fun setListDis (newValue: MutableList<Int>) {
         _listDis.value = newValue
     }
+
+
+    private val _commonMatrix = MutableLiveData<HashMap<String, String>>()
+    val commonMatrix: LiveData<HashMap<String, String>> = _commonMatrix
+
+    fun setCommonMatrix (newValue: HashMap<String, String>) {
+        _commonMatrix.value = newValue
+    }
  }

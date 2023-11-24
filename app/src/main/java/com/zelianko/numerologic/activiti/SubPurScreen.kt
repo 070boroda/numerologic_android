@@ -39,13 +39,12 @@ import com.zelianko.numerologic.viewmodel.BillingViewModel
 @Composable
 //@Preview(showBackground = true)
 fun SubPurScreen(
-    modifier: Modifier = Modifier,
     paddingValues: PaddingValues,
     billingViewModel: BillingViewModel,
     onDismissRequest: () -> Unit,
 ) {
 
-    val textSub = billingViewModel.textSub.observeAsState("")
+//    val textSub = billingViewModel.textSub.observeAsState("")
     val textPrice = billingViewModel.textPrice.observeAsState("")
     val tokenOffer = billingViewModel.offerToken.observeAsState("")
     val productDetails = billingViewModel.productDetails.observeAsState()
@@ -122,9 +121,15 @@ fun SubPurScreen(
                 style = TextStyle(fontSize = 18.sp, fontWeight = FontWeight.Bold),
                 color = Color.DarkGray
             )
+            Text(
+                text = "4. Расчет ДИССОНАНСОВ",
+                modifier = Modifier.padding(all = 8.dp),
+                style = TextStyle(fontSize = 18.sp, fontWeight = FontWeight.Bold),
+                color = Color.DarkGray
+            )
 
             Text(
-                text = "3. Скрываете рекламу",
+                text = "5. Скрываете рекламу",
                 modifier = Modifier.padding(all = 8.dp),
                 style = TextStyle(fontSize = 18.sp, fontWeight = FontWeight.Bold),
                 color = Color.DarkGray

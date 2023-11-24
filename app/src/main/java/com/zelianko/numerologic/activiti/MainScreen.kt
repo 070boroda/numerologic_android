@@ -43,7 +43,7 @@ fun MainScreen(
                 )
             },
             degradationScreen = {
-                DegradationScreen(
+                DakScreen(
                     viewModel = viewModel,
                     paddingValues = paddingValues,
                     billingViewModel = billingViewModel

@@ -484,6 +484,7 @@ private fun date(
     if (isActiveSub.value == true) {
         viewModel.setMapDataTransform(mapObject.countTransformNumber(map.value))
         viewModel.setMapDataDegrad(mapObject.countDegradateNumber(map.value))
+        viewModel.setListDis(mapObject.countDissonansAndAbivolentnost(map.value, mapObject.countTransformNumber(map.value), mapObject.countDegradateNumber(map.value)))
     }
     return map
 }

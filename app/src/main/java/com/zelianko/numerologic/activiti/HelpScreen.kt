@@ -106,6 +106,8 @@ fun HelpScreen(
                 itemsIndexed(
                     listOf(
                         "Общие сведения",
+                        "ДИССОНАНС",
+                        "АМБИВАЛЕНТНОСТЬ",
                         "ХАРАКТЕР",
                         "ЭНЕРГИЯ",
                         "ИНТЕРЕС",
@@ -139,6 +141,8 @@ fun TextBlock(header: String) {
     val stringArray: Array<String>
     when (header) {
         "Общие сведения" -> stringArray = stringArrayResource(R.array.headers)
+        "ДИССОНАНС" -> stringArray = stringArrayResource(R.array.disonans)
+        "АМБИВАЛЕНТНОСТЬ" -> stringArray = stringArrayResource(R.array.ambivalentnost)
         "ХАРАКТЕР" -> stringArray = stringArrayResource(R.array.character)
         "ЭНЕРГИЯ" -> stringArray = stringArrayResource(R.array.energy)
         "ИНТЕРЕС" -> stringArray = stringArrayResource(R.array.interes)

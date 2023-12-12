@@ -89,8 +89,25 @@ fun SubPurScreen(
                 style = TextStyle(fontSize = 35.sp, fontWeight = FontWeight.Bold),
                 color = Color.DarkGray
             )
+            Spacer(modifier = Modifier.size(10.dp))
+            Button(
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = colorResource(R.color.purple_200),
+                    contentColor = Color.White
+                ),
+                onClick = {
+                    productDetails.value?.let {
+                        billingViewModel.launchPurchaseFlow(
+                            it,
+                            activity,
+                            tokenOffer.value
+                        )
+                    }
+                }) {
+                Text("Подписаться " + textPrice.value + "/мес.", fontSize = 22.sp)
+            }
 
-            Spacer(modifier = Modifier.size(80.dp))
+            Spacer(modifier = Modifier.size(10.dp))
 
             Text(
                 text = "Оформив подписку, вы:",
@@ -153,23 +170,6 @@ fun SubPurScreen(
             )
 
             Spacer(modifier = Modifier.size(80.dp))
-
-            Button(
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = colorResource(R.color.purple_200),
-                    contentColor = Color.White
-                ),
-                onClick = {
-                    productDetails.value?.let {
-                        billingViewModel.launchPurchaseFlow(
-                            it,
-                            activity,
-                            tokenOffer.value
-                        )
-                    }
-                }) {
-                Text("Подписаться " + textPrice.value + "/мес.", fontSize = 22.sp)
-            }
         }
     }
 }

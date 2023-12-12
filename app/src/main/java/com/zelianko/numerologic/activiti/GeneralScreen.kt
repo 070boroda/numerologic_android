@@ -12,9 +12,12 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Scaffold
@@ -72,17 +75,19 @@ fun GeneralScreen(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(5.dp),
+                .padding(5.dp)
+                .verticalScroll(rememberScrollState()),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .fillMaxHeight(0.09f)
+                    .height(73.dp)
             ) {
                 Card(
                     modifier = Modifier
                         .fillMaxWidth(0.5f)
+                        //.height(69.dp)
                         .alpha(1f)
                         .padding(1.dp),
                     colors = CardDefaults.cardColors(LightBlue),
@@ -115,6 +120,7 @@ fun GeneralScreen(
                 Card(
                     modifier = Modifier
                         .fillMaxWidth(0.5f)
+                       // .height(69.dp)
                         .alpha(1f)
                         .padding(1.dp),
                     colors = CardDefaults.cardColors(LightBlue),
@@ -146,6 +152,7 @@ fun GeneralScreen(
                 Card(
                     modifier = Modifier
                         .fillMaxWidth()
+                         //.height(69.dp)
                         .alpha(1f)
                         .padding(1.dp),
                     colors = CardDefaults.cardColors(LightBlue),
@@ -180,14 +187,16 @@ fun GeneralScreen(
                 label1 = "Характер", value1 = dataMap.value["Характер"].toString(),
                 label2 = "Здоровье", value2 = dataMap.value["Здоровье"].toString(),
                 label3 = "Удача", value3 = dataMap.value["Удача"].toString(),
-                label4 = "Цель", value4 = dataMap.value["Цель"].toString(), maxHeightSize = 0.10f
+                label4 = "Цель", value4 = dataMap.value["Цель"].toString(),
+                //maxHeightSize = 0.10f
             )
 
             SecondLine(
                 label1 = "Энергия", value1 = dataMap.value["Энергия"].toString(),
                 label2 = "Логика", value2 = dataMap.value["Логика"].toString(),
                 label3 = "Долг", value3 = dataMap.value["Долг"].toString(),
-                label4 = "Семья", value4 = dataMap.value["Семья"].toString(), maxHeightSize = 0.11f
+                label4 = "Семья", value4 = dataMap.value["Семья"].toString(),
+                //maxHeightSize = 0.11f
             )
 
             SecondLine(
@@ -195,12 +204,17 @@ fun GeneralScreen(
                 label2 = "Труд", value2 = dataMap.value["Труд"].toString(),
                 label3 = "Память", value3 = dataMap.value["Память"].toString(),
                 label4 = "Привычки", value4 = dataMap.value["Привычки"].toString(),
-                maxHeightSize = 0.125f
+               // maxHeightSize = 0.125f
             )
             LastClearLine(label2 = "Быт", value2 = dataMap.value["Быт"].toString())
 
-            Spacer(modifier = Modifier.size(15.dp))
-
+            Spacer(modifier = Modifier.size(10.dp))
+            date(
+                map = dataMap,
+                viewModel = viewModel,
+                billingViewModel = billingViewModel
+            )
+            Spacer(modifier = Modifier.size(5.dp))
             if (isActiveSub.value != true) {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
@@ -209,11 +223,6 @@ fun GeneralScreen(
                 }
                 Banner(id = R.string.banner_1)
             }
-            date(
-                map = dataMap,
-                viewModel = viewModel,
-                billingViewModel = billingViewModel
-            )
         }
     }
 }
@@ -229,12 +238,12 @@ private fun SecondLine(
     value3: String,
     label4: String,
     value4: String,
-    maxHeightSize: Float
+   // maxHeightSize: Float
 ) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .fillMaxHeight(maxHeightSize)
+            .size(73.dp)
     )
     {
         Card(
@@ -374,7 +383,7 @@ private fun LastClearLine(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .fillMaxHeight(0.15f)
+            .height(73.dp)
     )
     {
         Card(

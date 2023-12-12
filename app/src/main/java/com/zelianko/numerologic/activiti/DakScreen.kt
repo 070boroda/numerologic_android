@@ -14,10 +14,16 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -26,12 +32,15 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.Popup
 import com.zelianko.numerologic.R
 import com.zelianko.numerologic.ads.AdmobBanner
 import com.zelianko.numerologic.ads.Banner
+import com.zelianko.numerologic.ui.theme.DarkBlue
 import com.zelianko.numerologic.viewmodel.BillingViewModel
 import com.zelianko.numerologic.viewmodel.SelectedDateTextViewModel
 
@@ -46,6 +55,10 @@ fun DakScreen(
     val isActiveSub = billingViewModel.isActiveSub.observeAsState()
 
     val matrix = viewModel.commonMatrix.observeAsState()
+
+    val showDialog = remember { mutableStateOf(false) }
+
+    var popupControl by remember { mutableStateOf(false) }
 
     Scaffold(
         modifier = Modifier.padding(paddingValues)
@@ -87,23 +100,67 @@ fun DakScreen(
             }
             if (isActiveSub.value != true) {
                 SubInformation()
-            } else {
-            LazyColumn(
-                modifier = Modifier
-                    .padding(
-                        start = 20.dp,
-                        end = 15.dp,
-                        top = 10.dp,
+
+                if (popupControl) {
+                    Popup(
+                        alignment = Alignment.TopStart,
+                    ) {
+                        SubPurScreen(
+                            paddingValues = paddingValues,
+                            billingViewModel = billingViewModel
+                        ) {
+                            popupControl = false
+                        }
+                    }
+                }
+
+                if (showDialog.value == true) {
+                    AlertDialog(
+                        onDismissRequest = { showDialog.value = false },
+                        billingViewModel = billingViewModel
                     )
-                    .fillMaxWidth()
-            ) {
-                itemsIndexed(
-                    dataList.value,
-                ) { _, item ->
-                    TextBlockForDak(header = item, matrix =  matrix.value)
+                }
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 15.dp),
+                    horizontalArrangement = Arrangement.Center,
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    Button(
+                        colors = ButtonDefaults.buttonColors(containerColor = DarkBlue),
+                        onClick = {
+                            popupControl = true
+                        }
+                    ) {
+                        Text(
+                            text = "Подробнее",
+                            style = TextStyle(fontSize = 24.sp, fontWeight = FontWeight.Bold)
+                        )
+                    }
                 }
             }
-            }
+            Spacer(modifier = Modifier.height(15.dp))
+
+
+//            } else {
+//            LazyColumn(
+//                modifier = Modifier
+//                    .padding(
+//                        start = 20.dp,
+//                        end = 15.dp,
+//                        top = 10.dp,
+//                    )
+//                    .fillMaxWidth()
+//            ) {
+//                itemsIndexed(
+//                    dataList.value,
+//                ) { _, item ->
+//                    TextBlockForDak(header = item, matrix =  matrix.value)
+//                }
+//            }
+//            }
+//        }
         }
     }
 }

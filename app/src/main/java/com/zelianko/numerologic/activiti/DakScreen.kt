@@ -139,6 +139,22 @@ fun DakScreen(
                         )
                     }
                 }
+            } else {
+                LazyColumn(
+                    modifier = Modifier
+                        .padding(
+                            start = 20.dp,
+                            end = 15.dp,
+                            top = 10.dp,
+                        )
+                        .fillMaxWidth()
+                ) {
+                    itemsIndexed(
+                        dataList.value,
+                    ) { _, item ->
+                        TextBlockForDak(header = item, matrix = matrix.value)
+                    }
+                }
             }
             Spacer(modifier = Modifier.height(15.dp))
 

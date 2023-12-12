@@ -57,9 +57,9 @@ fun ButtonNavigation(
                 selected = currentRow == bottomItem.route,
 
                 onClick = {
-                    if (isActiveSub.value != true) {
-                        showInterstialAd(context)
-                    }
+//                    if (isActiveSub.value != true) {
+//                        showInterstialAd(context)
+//                    }
                     navigationState.navigateTo(bottomItem.route)
                 },
                 icon = {

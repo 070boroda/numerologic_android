@@ -155,7 +155,7 @@ class CountNumberServices {
         }
 
         //В секторе Здоровье стоит 44, 444, 4444, 44444 + в секторе Память одна 9 или сектор пуст
-        if (!commonMatrix["Логика"].equals("---") || !(commonMatrix["Логика"].equals("4")) &&
+        if ((!commonMatrix["Здоровье"].equals("---") || !commonMatrix["Здоровье"].equals("4")) &&
             (commonMatrix["Память"].equals("9") || commonMatrix["Память"].equals("---"))
         ) {
             result.add(2)
@@ -203,7 +203,7 @@ class CountNumberServices {
                 result.add(7)
             } else if (commonMatrix["Цель"]!!.toInt() > 3) {
                 //смотрим трансформацию, если там Цель 1, 2, 3 - это скрытая цель СЦ
-                if (transformMatrix["Цель"]!!.toInt() in 1..3) {
+                if (transformMatrix["Цель"]!!.toInt() in 0..3) {
                     result.add(7)
                 }
             }
@@ -263,7 +263,10 @@ class CountNumberServices {
 
         //В секторе Цель 4 или 5 + в секторе Быт 1, 2 или пуст + в секторе Семья 1, 2, 3 или пуст
         if (commonMatrix["Цель"].equals("4") || commonMatrix["Цель"].equals("5")) {
-            if (commonMatrix["Быт"].equals("1") || commonMatrix["Быт"].equals("2") || commonMatrix["Быт"].equals("0")) {
+            if (commonMatrix["Быт"].equals("1") || commonMatrix["Быт"].equals("2") || commonMatrix["Быт"].equals(
+                    "0"
+                )
+            ) {
                 if (commonMatrix["Семья"]!!.toInt() in 0..3) {
                     result.add(15)
                 }
@@ -339,7 +342,7 @@ class CountNumberServices {
                 result.add(24)
             } else if (commonMatrix["Цель"]!!.toInt() > 3) {
                 //смотрим трансформацию, если там Цель 1, 2, 3 - это скрытая цель СЦ
-                if (transformMatrix["Цель"]!!.toInt() in 1..3) {
+                if (transformMatrix["Цель"]!!.toInt() in 0..3) {
                     result.add(24)
                 }
             }
@@ -351,6 +354,119 @@ class CountNumberServices {
                 result.add(25)
             }
         }
+//        ----------------------------Амбивалентность ----------------------------------------------
+
+//        Интерес 3 или пуст + Логика 55, 555 и выше
+        if ((commonMatrix["Интерес"].equals("---") || commonMatrix["Интерес"].equals("3")) &&
+            (commonMatrix["Логика"] != "---" && commonMatrix["Логика"] != "5")
+        ) {
+            result.add(26)
+        }
+
+//        Интерес 3 или пуст + Быт 3, 4, 5 и выше
+        if ((commonMatrix["Интерес"].equals("---") || commonMatrix["Интерес"].equals("3")) &&
+            commonMatrix["Быт"]!!.toInt() > 2
+        ) {
+            result.add(27)
+        }
+
+//        Темперамент 1, 2 или пуст + Цель 1, 2, 3 или пуст
+        if ((commonMatrix["Темперамент"]!!.toInt() in 1..2 || commonMatrix["Темперамент"].equals("---")) &&
+            (commonMatrix["Цель"].equals("---") || commonMatrix["Цель"]!!.toInt() in 1..3)
+        ) {
+            result.add(28)
+        }
+
+//        Сектор Характер 1111 + Долг 8; или  Характер 11111 и более + Долг 8 или пуст
+        if ((commonMatrix["Характер"].equals("1111") && commonMatrix["Долг"].equals("8")) ||
+            (commonMatrix["Характер"]!!.length >= 5 && (commonMatrix["Долг"].equals("8") || commonMatrix["Долг"].equals(
+                "---"
+            )))
+        ) {
+            result.add(29)
+        }
+
+//        Темперамент 1/2/пуст + Энергия 2/пуст + Долг 8/пуст + Семья 1/2/3/пуст
+        if ((commonMatrix["Темперамент"]!!.toInt() in 1..2 || commonMatrix["Темперамент"].equals("---")) &&
+            (commonMatrix["Энергия"].equals("2") || commonMatrix["Энергия"].equals("---")) &&
+            (commonMatrix["Долг"].equals("8") || commonMatrix["Долг"].equals("---")) &&
+            (commonMatrix["Семья"]!!.toInt() in 0..3)
+        ) {
+            result.add(30)
+        }
+
+//        Темперамент 1/2/пуст + Цель 1/2/3/пуст (Скрытая Цель)
+//        Долг 88/888 + Семья 4/5 и выше+ Цель 1/2/3/пуст (Скрытая Цель)
+        if ((commonMatrix["Темперамент"]!!.toInt() in 1..2 || commonMatrix["Темперамент"].equals("---")) &&
+            (commonMatrix["Цель"]!!.toInt() in 0..3 || transformMatrix["Цель"]!!.toInt() in 0..3)
+        ) {
+            result.add(31)
+        } else if ((commonMatrix["Долг"].equals("88") || commonMatrix["Долг"].equals("888")) &&
+            (commonMatrix["Семья"]!!.toInt() >= 4) &&
+            (commonMatrix["Цель"]!!.toInt() in 0..3 || transformMatrix["Цель"]!!.toInt() in 0..3)
+        ) {
+            result.add(31)
+        }
+//        --------------------------------------------------------------------------------------------
+
+//        Цель 1/2/3/пуст (Скрытая Цель) + Семья 1/2/3/пуст + Быт 3/4/5
+        if (commonMatrix["Семья"]!!.toInt() in 0..3 && commonMatrix["Быт"]!!.toInt() in 3..5 &&
+            (commonMatrix["Цель"]!!.toInt() in 0..3 || transformMatrix["Цель"]!!.toInt() in 0..3)
+        ) {
+            result.add(32)
+        }
+
+//        Цель 1/2/3/пуст (Скрытая Цель) + Семья 1/2/3/пуст + Здоровье 4 и выше + Труд 6 и выше
+//        Цель 1/2/3/пуст (Скрытая Цель) + Быт 1/2/пуст + Здоровье 4 и выше + Труд 6 и выше
+//        Быт 1/2/пуст + Семья 1/2/3/пуст + Здоровье 4 и выше + Труд 6 и выше
+        if (commonMatrix["Семья"]!!.toInt() in 0..3 &&
+            (!commonMatrix["Здоровье"].equals("---") && commonMatrix["Здоровье"]!!.toInt() >= 4) &&
+            (!commonMatrix["Труд"].equals("---") && commonMatrix["Труд"]!!.toInt() >= 6) &&
+            (commonMatrix["Цель"]!!.toInt() in 0..3 || transformMatrix["Цель"]!!.toInt() in 0..3)
+        ) {
+            result.add(33)
+        } else if (
+            commonMatrix["Быт"]!!.toInt() in 0..2 &&
+            (!commonMatrix["Здоровье"].equals("---") && commonMatrix["Здоровье"]!!.toInt() >= 4) &&
+            (!commonMatrix["Труд"].equals("---") && commonMatrix["Труд"]!!.toInt() >= 6) &&
+            (commonMatrix["Цель"]!!.toInt() in 0..3 || transformMatrix["Цель"]!!.toInt() in 0..3)
+        ) {
+            result.add(33)
+        } else if (
+            commonMatrix["Быт"]!!.toInt() in 0..2 &&
+            (!commonMatrix["Здоровье"].equals("---") && commonMatrix["Здоровье"]!!.toInt() >= 4) &&
+            (!commonMatrix["Труд"].equals("---") && commonMatrix["Труд"]!!.toInt() >= 6) &&
+            commonMatrix["Семья"]!!.toInt() in 0..3
+        ) {
+            result.add(33)
+        }
+
+//        --------------------------- Дисонансы + Амбивалентности -----------------------------------
+//        Интерес 33 + Темперамент 2
+        if (commonMatrix["Интерес"].equals("33") && commonMatrix["Темперамент"].equals("2")) {
+            result.add(34)
+        }
+
+//        Долг 88 + Семья 2
+//        Долг 888 + Семья 3
+        if ((commonMatrix["Долг"].equals("88") && commonMatrix["Семья"].equals("2")) ||
+            (commonMatrix["Долг"].equals("888") && commonMatrix["Семья"].equals("3"))
+        ) {
+            result.add(35)
+        }
+
+//        Логика 55 и выше + Память 9/пуст + Семья 4 и выше
+        if ((!commonMatrix["Логика"].equals("---") && !commonMatrix["Логика"].equals("5")) &&
+            (commonMatrix["Память"].equals("---") || commonMatrix["Память"].equals("9")) &&
+            (commonMatrix["Семья"]!!.toInt() >= 4)
+        ) {
+            result.add(36)
+        }
+//        Семья 1/2/3/пуст + Быт 3, 4, 5 и выше
+        if (commonMatrix["Семья"]!!.toInt() in 0..3 && commonMatrix["Быт"]!!.toInt() >= 3) {
+            result.add(37)
+        }
+
         return result
     }
 

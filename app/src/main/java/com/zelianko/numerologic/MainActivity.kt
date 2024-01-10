@@ -11,11 +11,11 @@ import androidx.activity.compose.setContent
 import androidx.annotation.RequiresApi
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.ViewModelProvider
-import com.yandex.metrica.YandexMetrica
-import com.yandex.metrica.YandexMetricaConfig
 import com.zelianko.numerologic.activiti.MainScreen
 import com.zelianko.numerologic.viewmodel.BillingViewModel
 import com.zelianko.numerologic.viewmodel.SelectedDateTextViewModel
+import io.appmetrica.analytics.AppMetrica
+import io.appmetrica.analytics.AppMetricaConfig
 
 
 class MainActivity : ComponentActivity() {
@@ -27,12 +27,15 @@ class MainActivity : ComponentActivity() {
         com.yandex.mobile.ads.common.MobileAds.initialize(this) {
             // now you can use ads
         }
-        val config =
-            YandexMetricaConfig.newConfigBuilder("25783e36-10b1-4551-bab1-89236908f4af").build()
-
-        YandexMetrica.activate(applicationContext, config)
-
-        YandexMetrica.enableActivityAutoTracking(Application())
+//        val config =
+//            YandexMetricaConfig.newConfigBuilder("25783e36-10b1-4551-bab1-89236908f4af").build()
+//
+//        YandexMetrica.activate(applicationContext, config)
+//
+//        YandexMetrica.enableActivityAutoTracking(Application())
+        val config = AppMetricaConfig.newConfigBuilder("25783e36-10b1-4551-bab1-89236908f4af").build()
+        // Initializing the AppMetrica SDK.
+        AppMetrica.activate(this, config)
 
         com.google.android.gms.ads.MobileAds.initialize(this) {}
 

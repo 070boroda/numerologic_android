@@ -157,26 +157,6 @@ fun DakScreen(
                 }
             }
             Spacer(modifier = Modifier.height(15.dp))
-
-
-//            } else {
-//            LazyColumn(
-//                modifier = Modifier
-//                    .padding(
-//                        start = 20.dp,
-//                        end = 15.dp,
-//                        top = 10.dp,
-//                    )
-//                    .fillMaxWidth()
-//            ) {
-//                itemsIndexed(
-//                    dataList.value,
-//                ) { _, item ->
-//                    TextBlockForDak(header = item, matrix =  matrix.value)
-//                }
-//            }
-//            }
-//        }
         }
     }
 }
@@ -272,7 +252,7 @@ fun TextBlockForDak(header: Int, matrix: HashMap<String, String>?) {
         }
         22 -> {
             index = stringResource(R.string.twenty_two_dis)
-            title = "Здоровье ${matrix?.get("Здоровье")}/Память ${matrix?.get("Память")}/Долг ${matrix?.get("Долг")}/Интерес ${matrix?.get("Интерес")}"
+            title = "Здор ${matrix?.get("Здоровье")}/Память ${matrix?.get("Память")}/Долг ${matrix?.get("Долг")}/Ин ${matrix?.get("Интерес")}"
         }
         23 -> {
             index = stringResource(R.string.twenty_three_dis)
@@ -286,6 +266,55 @@ fun TextBlockForDak(header: Int, matrix: HashMap<String, String>?) {
             index = stringResource(R.string.twenty_five_dis)
             title = "Темперамент ${matrix?.get("Темперамент")} + Семья ${matrix?.get("Семья")}"
         }
+        26 -> {
+            index = stringResource(R.string.one_amb)
+            title = "Интерес ${matrix?.get("Интерес")} + Логика ${matrix?.get("Логика")}"
+        }
+        27 -> {
+            index = stringResource(R.string.two_amb)
+            title = "Интерес ${matrix?.get("Интерес")} + Быт ${matrix?.get("Быт")}"
+        }
+        28 -> {
+            index = stringResource(R.string.three_amb)
+            title = "Темперамент ${matrix?.get("Темперамент")} + Цель ${matrix?.get("Цель")}"
+        }
+        29 -> {
+            index = stringResource(R.string.four_amb)
+            title = "Характер ${matrix?.get("Характер")} + Долг ${matrix?.get("Долг")}"
+        }
+        30 -> {
+            index = stringResource(R.string.five_amb)
+            title = "Темп.${matrix?.get("Темперамент")}/Эн.${matrix?.get("Энергия")}/Долг${matrix?.get("Долг")}/Семья${matrix?.get("Семья")}"
+        }
+        31 -> {
+            index = stringResource(R.string.six_amb)
+            title = "Темп.${matrix?.get("Темперамент")}/Дл.${matrix?.get("Долг")}/Семья${matrix?.get("Семья")},Цель/Скрытая цель"
+        }
+        32 -> {
+            index = stringResource(R.string.seven_amb)
+            title = "Семья ${matrix?.get("Семья")} + Быт ${matrix?.get("Быт")}, Цель/Скрытая цель"
+        }
+        33 -> {
+            index = stringResource(R.string.eight_amb)
+            title = "Трудоголик"
+        }
+        34 -> {
+            index = stringResource(R.string.dis_amb_one)
+            title = "Интерес ${matrix?.get("Интерес")} + Темперамент ${matrix?.get("Темперамент")}"
+        }
+        35 -> {
+            index = stringResource(R.string.dis_amb_two)
+            title = "Долг ${matrix?.get("Долг")} + Семья ${matrix?.get("Семья")}"
+        }
+        36 -> {
+            index = stringResource(R.string.dis_amb_three)
+            title = "Логика ${matrix?.get("Логика")} + Память ${matrix?.get("Память")} + Семья ${matrix?.get("Семья")}"
+        }
+        37 -> {
+            index = stringResource(R.string.dis_amb_foure)
+            title = "Быт ${matrix?.get("Быт")} + Семья ${matrix?.get("Семья")}"
+        }
+
     }
 
     var content: String = index

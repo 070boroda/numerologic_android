@@ -23,7 +23,7 @@ fun DateDialog(
     viewModel: SelectedDateTextViewModel,
 ) {
     WheelDatePicker(
-        startDate = LocalDate.of(LocalDate.now().year, 1, 1),
+        startDate = LocalDate.of(LocalDate.now().year.minus(3), 1, 1),
         minDate = LocalDate.of(1900, 1, 1),
         maxDate = LocalDate.now(),
         yearsRange = IntRange(1900, 2122),

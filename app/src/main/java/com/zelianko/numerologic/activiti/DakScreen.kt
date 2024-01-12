@@ -314,6 +314,116 @@ fun TextBlockForDak(header: Int, matrix: HashMap<String, String>?) {
             index = stringResource(R.string.dis_amb_foure)
             title = "Быт ${matrix?.get("Быт")} + Семья ${matrix?.get("Семья")}"
         }
+//        CODE
+        38 -> {
+            index = stringResource(R.string.code_one)
+            title = "Код успешности"
+        }
+        39 -> {
+            index = stringResource(R.string.code_two)
+            title = "Донор четырех энергий"
+        }
+        40 -> {
+            index = stringResource(R.string.code_three)
+            title = "Тиски"
+        }
+        41 -> {
+            index = stringResource(R.string.code_foure)
+            title = "Тиски с агрессией"
+        }
+        42 -> {
+            index = stringResource(R.string.code_five)
+            title = "Перфекционист"
+        }
+        43 -> {
+            index = stringResource(R.string.code_six)
+            title = "Перфекционизм"
+        }
+        44 -> {
+            index = stringResource(R.string.code_seven)
+            title = "Замороженность чувств"
+        }
+        45 -> {
+            index = stringResource(R.string.code_eight)
+            title = "Родительские коды"
+        }
+        46 -> {
+            index = stringResource(R.string.code_nine)
+            title = "Коды Ипохондрика"
+        }
+        47 -> {
+            index = stringResource(R.string.code_ten)
+            title = "Писательский код"
+        }
+        48 -> {
+            index = stringResource(R.string.code_eleven)
+            title = "Сильная эмоциональность"
+        }
+        49 -> {
+            index = stringResource(R.string.code_twelve)
+            title = "Брачный инстинкт"
+        }
+
+        50 -> {
+            index = stringResource(R.string.code_13)
+            title = "Магическое мышление"
+        }
+        51 -> {
+            index = stringResource(R.string.code_14)
+            title = "Рисковый код"
+        }
+        52 -> {
+            index = stringResource(R.string.code_15)
+            title = "Рисковый код + "
+        }
+        53 -> {
+            index = stringResource(R.string.code_16)
+            title = "Генератор идей"
+        }
+        54 -> {
+            index = stringResource(R.string.code_17)
+            title = "Скептик"
+        }
+        55 -> {
+            index = stringResource(R.string.code_18)
+            title = "Жизнь не учит"
+        }
+        56 -> {
+            index = stringResource(R.string.code_19)
+            title = "Код кверулянта или сутяжный синдром"
+        }
+        57 -> {
+            index = stringResource(R.string.code_20)
+            title = "«Код зодчества» или Созидатель"
+        }
+        58 -> {
+            index = stringResource(R.string.code_21)
+            title = "Код популярности"
+        }
+        59 -> {
+            index = stringResource(R.string.code_22)
+            title = "Трудоголизм"
+        }
+        60 -> {
+            index = stringResource(R.string.code_23)
+            title = "Трудоголизм +"
+        }
+        61 -> {
+            index = stringResource(R.string.code_24)
+            title = "Темная воронка"
+        }
+        62 -> {
+            index = stringResource(R.string.code_25)
+            title = "Мегера"
+        }
+        63 -> {
+            index = stringResource(R.string.code_26)
+            title = "Все дураки"
+        }
+        64 -> {
+            index = stringResource(R.string.code_27)
+            title = "Накопительство"
+        }
 
     }
 
@@ -340,13 +450,11 @@ fun SubInformation(
         Text(
             text = """
                     Для расшифровки 
-                    ДИССОНАНСОВ
-                    оформите подписку
-                    В ближайшее время будет
-                    добавлен расчет
+                    ДИССОНАНСОВ,
                     АМБИВАЛЕНТНОСТИ
                     и
-                    КОДЫ
+                    КОДОВ
+                    оформите подписку
                          
                     """.trimIndent(),
             // modifier = Modifier.padding(all = 20.dp),

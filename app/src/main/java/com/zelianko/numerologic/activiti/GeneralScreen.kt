@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -120,7 +119,7 @@ fun GeneralScreen(
                 Card(
                     modifier = Modifier
                         .fillMaxWidth(0.5f)
-                       // .height(69.dp)
+                        // .height(69.dp)
                         .alpha(1f)
                         .padding(1.dp),
                     colors = CardDefaults.cardColors(LightBlue),
@@ -152,7 +151,7 @@ fun GeneralScreen(
                 Card(
                     modifier = Modifier
                         .fillMaxWidth()
-                         //.height(69.dp)
+                        //.height(69.dp)
                         .alpha(1f)
                         .padding(1.dp),
                     colors = CardDefaults.cardColors(LightBlue),
@@ -204,7 +203,7 @@ fun GeneralScreen(
                 label2 = "Труд", value2 = dataMap.value["Труд"].toString(),
                 label3 = "Память", value3 = dataMap.value["Память"].toString(),
                 label4 = "Привычки", value4 = dataMap.value["Привычки"].toString(),
-               // maxHeightSize = 0.125f
+                // maxHeightSize = 0.125f
             )
             LastClearLine(label2 = "Быт", value2 = dataMap.value["Быт"].toString())
 
@@ -238,7 +237,7 @@ private fun SecondLine(
     value3: String,
     label4: String,
     value4: String,
-   // maxHeightSize: Float
+    // maxHeightSize: Float
 ) {
     Row(
         modifier = Modifier
@@ -448,6 +447,7 @@ private fun LastClearLine(
 }
 
 
+@SuppressLint("SuspiciousIndentation")
 @RequiresApi(Build.VERSION_CODES.Q)
 @Composable
 private fun date(
@@ -486,8 +486,7 @@ private fun date(
         viewModel.setListDis(
             mapObject.countDissonansAndAbivolentnost(
                 map.value,
-                mapObject.countTransformNumber(map.value),
-                mapObject.countDegradateNumber(map.value)
+                mapObject.countTransformNumber(map.value)
             )
         )
         viewModel.setCommonMatrix(map.value)

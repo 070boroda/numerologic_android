@@ -16,9 +16,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material3.Card
-import androidx.compose.material3.CardColors
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
@@ -32,7 +30,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.modifier.modifierLocalConsumer
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.text.TextStyle
@@ -40,7 +37,6 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight.Companion.Bold
 import androidx.compose.ui.text.font.FontWeight.Companion.Normal
 import androidx.compose.ui.text.style.TextIndent
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.zelianko.numerologic.R
@@ -49,7 +45,6 @@ import com.zelianko.numerologic.ads.Banner
 import com.zelianko.numerologic.ui.theme.LightBlue
 import com.zelianko.numerologic.viewmodel.BillingViewModel
 
-@OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun HelpScreen(
@@ -87,8 +82,10 @@ fun HelpScreen(
             }
 
             if (isActiveSub.value != true) {
-                Row (modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.Center) {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.Center
+                ) {
                     Log.d("purchases state", "Ads Google start")
                     AdmobBanner(modifier = Modifier.fillMaxSize())
                     Log.d("purchases state", "Ads Google end")
@@ -108,6 +105,7 @@ fun HelpScreen(
                         "Общие сведения",
                         "ДИССОНАНС",
                         "АМБИВАЛЕНТНОСТЬ",
+                        "КОДЫ",
                         "ХАРАКТЕР",
                         "ЭНЕРГИЯ",
                         "ИНТЕРЕС",
@@ -143,6 +141,7 @@ fun TextBlock(header: String) {
         "Общие сведения" -> stringArray = stringArrayResource(R.array.headers)
         "ДИССОНАНС" -> stringArray = stringArrayResource(R.array.disonans)
         "АМБИВАЛЕНТНОСТЬ" -> stringArray = stringArrayResource(R.array.ambivalentnost)
+        "КОДЫ" -> stringArray = stringArrayResource(R.array.code)
         "ХАРАКТЕР" -> stringArray = stringArrayResource(R.array.character)
         "ЭНЕРГИЯ" -> stringArray = stringArrayResource(R.array.energy)
         "ИНТЕРЕС" -> stringArray = stringArrayResource(R.array.interes)
@@ -163,11 +162,13 @@ fun TextBlock(header: String) {
         }
     }
 
-    var content:String = stringArray.contentToString()
+    var content: String = stringArray.contentToString()
     content = content.replace("[", "").replace("]", "")
 
-    ExpandableCard(title = header,
-        content = content)
+    ExpandableCard(
+        title = header,
+        content = content
+    )
     Spacer(Modifier.height(15.dp))
 }
 
@@ -197,7 +198,7 @@ fun Header(value: String) {
 @Composable
 fun InfoTextBlock(value: String) {
     Text(
-        text =  value,
+        text = value,
         fontSize = 12.sp,
         color = Color.White,
         fontWeight = Normal,
@@ -208,9 +209,9 @@ fun InfoTextBlock(value: String) {
 
 
 @Composable
-fun ExpandableCard(title:String, content:String) {
+fun ExpandableCard(title: String, content: String) {
 
-    var expanded = remember { mutableStateOf (false) }
+    var expanded = remember { mutableStateOf(false) }
 
     Card(
         shape = RoundedCornerShape(8.dp),

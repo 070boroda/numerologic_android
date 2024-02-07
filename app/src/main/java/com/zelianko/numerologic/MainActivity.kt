@@ -1,7 +1,6 @@
 package com.zelianko.numerologic
 
 import android.app.Activity
-import android.app.Application
 import android.content.Context
 import android.content.ContextWrapper
 import android.os.Build
@@ -27,13 +26,16 @@ class MainActivity : ComponentActivity() {
         com.yandex.mobile.ads.common.MobileAds.initialize(this) {
             // now you can use ads
         }
+
+        com.yandex.mobile.ads.common.MobileAds.enableDebugErrorIndicator(false)
 //        val config =
 //            YandexMetricaConfig.newConfigBuilder("25783e36-10b1-4551-bab1-89236908f4af").build()
 //
 //        YandexMetrica.activate(applicationContext, config)
 //
 //        YandexMetrica.enableActivityAutoTracking(Application())
-        val config = AppMetricaConfig.newConfigBuilder("25783e36-10b1-4551-bab1-89236908f4af").build()
+        val config =
+            AppMetricaConfig.newConfigBuilder("25783e36-10b1-4551-bab1-89236908f4af").build()
         // Initializing the AppMetrica SDK.
         AppMetrica.activate(this, config)
 

@@ -37,6 +37,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -53,6 +54,7 @@ import com.maxkeppeler.sheets.calendar.models.CalendarStyle
 import com.zelianko.numerologic.R
 import com.zelianko.numerologic.ads.AdmobBanner
 import com.zelianko.numerologic.ads.Banner
+import com.zelianko.numerologic.ads.InterstitialAdWrapper
 import com.zelianko.numerologic.services.CountNumberServices
 import com.zelianko.numerologic.ui.theme.Clear
 import com.zelianko.numerologic.ui.theme.DarkBlue
@@ -81,6 +83,11 @@ fun CompatibilityScreen(
     val isActiveSub = billingViewModel.isActiveSub.observeAsState()
 
 
+    if (isActiveSub.value == false) {
+        InterstitialAdWrapper(context = LocalContext.current)
+    }
+
+
     Scaffold (
         modifier = Modifier.padding(paddingValues)
     ){
@@ -100,6 +107,12 @@ fun CompatibilityScreen(
         ) {
             Square(dataMap, billingViewModel, paddingValues = paddingValues)
             Spacer(modifier = Modifier.size(5.dp))
+
+            if (isActiveSub.value != true) {
+                Banner(id = R.string.banner_4)
+            }
+
+            Spacer(modifier = Modifier.size(5.dp))
             Square(dataMapSecond, billingViewModel, paddingValues = paddingValues)
             Spacer(modifier = Modifier.size(1.dp))
 
@@ -109,9 +122,7 @@ fun CompatibilityScreen(
             if (isActiveSub.value != true) {
                 Row (modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.Center) {
-                    Log.d("purchases state", "Ads Google start")
                     AdmobBanner(modifier = Modifier.fillMaxSize())
-                    Log.d("purchases state", "Ads Google end")
                 }
             }
         }
@@ -508,7 +519,7 @@ private fun Date(
             )
         }
 
-        if (isActiveSub.value == true) {
+//        if (isActiveSub.value == true) {
             Button(
                 modifier = Modifier
                     .fillMaxSize(),
@@ -522,39 +533,33 @@ private fun Date(
                     style = TextStyle(fontSize = 12.sp, fontWeight = FontWeight.Bold)
                 )
             }
-        } else {
-            if (popupControl) {
-                Popup(
-                    alignment = Alignment.TopStart,
-                ) {
-                    SubPurScreen(
-                        paddingValues = paddingValues,
-                        billingViewModel = billingViewModel
-                    ) {
-                        popupControl = false
-                    }
-                }
-            }
-//            if (showDialog.value == true) {
-//                AlertDialog(
-//                    onDismissRequest  = {showDialog.value = false},
-//                    billingViewModel = billingViewModel
+//        } else {
+//            if (popupControl) {
+//                Popup(
+//                    alignment = Alignment.TopStart,
+//                ) {
+//                    SubPurScreen(
+//                        paddingValues = paddingValues,
+//                        billingViewModel = billingViewModel
+//                    ) {
+//                        popupControl = false
+//                    }
+//                }
+//            }
+//            Button(
+//                modifier = Modifier
+//                    .fillMaxSize(),
+//                colors = ButtonDefaults.buttonColors(containerColor = DarkBlue),
+//                onClick = {
+//                    popupControl = true
+//                }
+//            ) {
+//                Text(
+//                    text = "Оформите подписку",
+//                    style = TextStyle(fontSize = 12.sp, fontWeight = FontWeight.Bold)
 //                )
 //            }
-            Button(
-                modifier = Modifier
-                    .fillMaxSize(),
-                colors = ButtonDefaults.buttonColors(containerColor = DarkBlue),
-                onClick = {
-                    popupControl = true
-                }
-            ) {
-                Text(
-                    text = "Оформите подписку",
-                    style = TextStyle(fontSize = 12.sp, fontWeight = FontWeight.Bold)
-                )
-            }
-        }
+//        }
     }
 
     val mapObject = CountNumberServices()

@@ -18,6 +18,7 @@ import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -29,11 +30,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight.Companion.Bold
 import androidx.compose.ui.text.font.FontWeight.Companion.Normal
 import androidx.compose.ui.text.style.TextIndent
 import androidx.compose.ui.unit.dp
@@ -41,7 +42,6 @@ import androidx.compose.ui.unit.sp
 import com.zelianko.numerologic.R
 import com.zelianko.numerologic.ads.AdmobBanner
 import com.zelianko.numerologic.ads.Banner
-import com.zelianko.numerologic.ads.InterstitialAdWrapper
 import com.zelianko.numerologic.ui.theme.LightBlue
 import com.zelianko.numerologic.viewmodel.BillingViewModel
 
@@ -53,10 +53,6 @@ fun HelpScreen(
 ) {
 
     val isActiveSub = billingViewModel.isActiveSub.observeAsState()
-    if (isActiveSub.value == false) {
-        InterstitialAdWrapper(context = LocalContext.current)
-    }
-
     Scaffold(
         modifier = Modifier.padding(paddingValues)
     ) {
@@ -74,7 +70,17 @@ fun HelpScreen(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            if (isActiveSub.value != true) {
+            if (isActiveSub.value == false) {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    horizontalArrangement = Arrangement.Center,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Banner(id = R.string.banner_2)
+                }
+            }
+            if (isActiveSub.value == false) {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.Center
@@ -117,16 +123,6 @@ fun HelpScreen(
                     )
                 ) { _, item ->
                     TextBlock(header = item)
-                    if (isActiveSub.value == false) {
-                        Row(
-                            modifier = Modifier
-                                .fillMaxWidth(),
-                            horizontalArrangement = Arrangement.Center,
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            Banner(id = R.string.banner_2)
-                        }
-                    }
                 }
             }
         }

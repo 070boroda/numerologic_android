@@ -37,7 +37,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -54,7 +53,6 @@ import com.maxkeppeler.sheets.calendar.models.CalendarStyle
 import com.zelianko.numerologic.R
 import com.zelianko.numerologic.ads.AdmobBanner
 import com.zelianko.numerologic.ads.Banner
-import com.zelianko.numerologic.ads.InterstitialAdWrapper
 import com.zelianko.numerologic.services.CountNumberServices
 import com.zelianko.numerologic.ui.theme.Clear
 import com.zelianko.numerologic.ui.theme.DarkBlue
@@ -83,11 +81,6 @@ fun CompatibilityScreen(
     val isActiveSub = billingViewModel.isActiveSub.observeAsState()
 
 
-    if (isActiveSub.value == false) {
-        InterstitialAdWrapper(context = LocalContext.current)
-    }
-
-
     Scaffold (
         modifier = Modifier.padding(paddingValues)
     ){
@@ -107,12 +100,6 @@ fun CompatibilityScreen(
         ) {
             Square(dataMap, billingViewModel, paddingValues = paddingValues)
             Spacer(modifier = Modifier.size(5.dp))
-
-            if (isActiveSub.value != true) {
-                Banner(id = R.string.banner_4)
-            }
-
-            Spacer(modifier = Modifier.size(5.dp))
             Square(dataMapSecond, billingViewModel, paddingValues = paddingValues)
             Spacer(modifier = Modifier.size(1.dp))
 
@@ -122,7 +109,9 @@ fun CompatibilityScreen(
             if (isActiveSub.value != true) {
                 Row (modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.Center) {
+                    Log.d("purchases state", "Ads Google start")
                     AdmobBanner(modifier = Modifier.fillMaxSize())
+                    Log.d("purchases state", "Ads Google end")
                 }
             }
         }
@@ -518,7 +507,7 @@ private fun Date(
                 color = Color.White
             )
         }
-
+        //Пока делаем расчет двух матриц на одном экране бесплатным
 //        if (isActiveSub.value == true) {
             Button(
                 modifier = Modifier

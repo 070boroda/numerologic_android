@@ -11,8 +11,8 @@ android {
         applicationId = "com.zelianko.numerologic"
         minSdk = 24
         targetSdk = 34
-        versionCode = 35
-        versionName = "2.0.0.35"
+        versionCode = 37
+        versionName = "2.0.0.37"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -48,7 +48,7 @@ android {
 
 dependencies {
 
-    implementation ("com.yandex.android:mobileads:6.3.0")
+    implementation ("com.yandex.android:mobileads:6.4.1")
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.7.0")
@@ -76,9 +76,9 @@ dependencies {
     implementation ("com.maxkeppeler.sheets-compose-dialogs:core:1.2.0")
     implementation ("com.maxkeppeler.sheets-compose-dialogs:calendar:1.2.0")
 
-    implementation("com.android.billingclient:billing:6.1.0")
-    implementation("com.android.billingclient:billing-ktx:6.1.0")
-    implementation ("com.google.android.gms:play-services-ads:22.6.0")
+    implementation("com.android.billingclient:billing:6.2.0")
+    implementation("com.android.billingclient:billing-ktx:6.2.0")
+    implementation ("com.google.android.gms:play-services-ads:23.0.0")
     implementation ("com.github.skydoves:cloudy:0.1.2")
     implementation ("com.github.commandiron:WheelPickerCompose:1.1.11")
 }

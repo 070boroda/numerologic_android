@@ -80,8 +80,7 @@ fun HelpScreen(
                     Banner(id = R.string.banner_2)
                 }
             }
-
-            if (isActiveSub.value != true) {
+            if (isActiveSub.value == false) {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.Center
@@ -172,46 +171,10 @@ fun TextBlock(header: String) {
     Spacer(Modifier.height(15.dp))
 }
 
-/**
- * Заголовок
- */
-@Composable
-fun Header(value: String) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth(),
-        horizontalArrangement = Arrangement.Center
-    ) {
-        Text(
-            text = value,
-            fontSize = 20.sp,
-            color = Color.White,
-            fontWeight = Bold,
-            fontFamily = FontFamily.Default,
-        )
-    }
-}
-
-/**
- * Текст сообщения
- */
-@Composable
-fun InfoTextBlock(value: String) {
-    Text(
-        text = value,
-        fontSize = 12.sp,
-        color = Color.White,
-        fontWeight = Normal,
-        fontFamily = FontFamily.Default,
-        style = TextStyle(textIndent = TextIndent(20.sp, 0.sp))
-    )
-}
-
-
 @Composable
 fun ExpandableCard(title: String, content: String) {
 
-    var expanded = remember { mutableStateOf(false) }
+    val expanded = remember { mutableStateOf(false) }
 
     Card(
         shape = RoundedCornerShape(8.dp),

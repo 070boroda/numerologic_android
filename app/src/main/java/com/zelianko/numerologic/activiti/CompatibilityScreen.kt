@@ -507,8 +507,8 @@ private fun Date(
                 color = Color.White
             )
         }
-
-        if (isActiveSub.value == true) {
+        //Пока делаем расчет двух матриц на одном экране бесплатным
+//        if (isActiveSub.value == true) {
             Button(
                 modifier = Modifier
                     .fillMaxSize(),
@@ -522,39 +522,33 @@ private fun Date(
                     style = TextStyle(fontSize = 12.sp, fontWeight = FontWeight.Bold)
                 )
             }
-        } else {
-            if (popupControl) {
-                Popup(
-                    alignment = Alignment.TopStart,
-                ) {
-                    SubPurScreen(
-                        paddingValues = paddingValues,
-                        billingViewModel = billingViewModel
-                    ) {
-                        popupControl = false
-                    }
-                }
-            }
-//            if (showDialog.value == true) {
-//                AlertDialog(
-//                    onDismissRequest  = {showDialog.value = false},
-//                    billingViewModel = billingViewModel
+//        } else {
+//            if (popupControl) {
+//                Popup(
+//                    alignment = Alignment.TopStart,
+//                ) {
+//                    SubPurScreen(
+//                        paddingValues = paddingValues,
+//                        billingViewModel = billingViewModel
+//                    ) {
+//                        popupControl = false
+//                    }
+//                }
+//            }
+//            Button(
+//                modifier = Modifier
+//                    .fillMaxSize(),
+//                colors = ButtonDefaults.buttonColors(containerColor = DarkBlue),
+//                onClick = {
+//                    popupControl = true
+//                }
+//            ) {
+//                Text(
+//                    text = "Оформите подписку",
+//                    style = TextStyle(fontSize = 12.sp, fontWeight = FontWeight.Bold)
 //                )
 //            }
-            Button(
-                modifier = Modifier
-                    .fillMaxSize(),
-                colors = ButtonDefaults.buttonColors(containerColor = DarkBlue),
-                onClick = {
-                    popupControl = true
-                }
-            ) {
-                Text(
-                    text = "Оформите подписку",
-                    style = TextStyle(fontSize = 12.sp, fontWeight = FontWeight.Bold)
-                )
-            }
-        }
+//        }
     }
 
     val mapObject = CountNumberServices()

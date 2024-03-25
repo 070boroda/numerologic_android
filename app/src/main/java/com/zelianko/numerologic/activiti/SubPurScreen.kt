@@ -115,20 +115,20 @@ fun SubPurScreen(
                 style = TextStyle(fontSize = 18.sp, fontWeight = FontWeight.Bold),
                 color = Color.DarkGray
             )
-            Text(
-                text = "1. Получаете доступ к расчету",
-                modifier = Modifier.padding(top = 5.dp),
-                style = TextStyle(fontSize = 18.sp, fontWeight = FontWeight.Bold),
-                color = Color.DarkGray
-            )
-            Text(
-                text = "совместимости",
-                style = TextStyle(fontSize = 18.sp, fontWeight = FontWeight.Bold),
-                color = Color.DarkGray
-            )
+//            Text(
+//                text = "1. Получаете доступ к расчету",
+//                modifier = Modifier.padding(top = 5.dp),
+//                style = TextStyle(fontSize = 18.sp, fontWeight = FontWeight.Bold),
+//                color = Color.DarkGray
+//            )
+//            Text(
+//                text = "совместимости",
+//                style = TextStyle(fontSize = 18.sp, fontWeight = FontWeight.Bold),
+//                color = Color.DarkGray
+//            )
 
             Text(
-                text = "2. Получаете доступ к расчету",
+                text = "1. Получаете доступ к расчету",
                 modifier = Modifier.padding(top = 5.dp),
                 style = TextStyle(fontSize = 18.sp, fontWeight = FontWeight.Bold),
                 color = Color.DarkGray
@@ -139,14 +139,14 @@ fun SubPurScreen(
                 color = Color.DarkGray
             )
             Text(
-                text = "4. Расчет ДИССОНАНСОВ",
+                text = "2. Расчет ДИССОНАНСОВ",
                 modifier = Modifier.padding(all = 8.dp),
                 style = TextStyle(fontSize = 18.sp, fontWeight = FontWeight.Bold),
                 color = Color.DarkGray
             )
 
             Text(
-                text = "5. Скрываете рекламу",
+                text = "3. Скрываете рекламу",
                 modifier = Modifier.padding(all = 8.dp),
                 style = TextStyle(fontSize = 18.sp, fontWeight = FontWeight.Bold),
                 color = Color.DarkGray

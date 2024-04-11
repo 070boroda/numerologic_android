@@ -42,7 +42,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Popup
+import com.zelianko.kitchencalculator.constants.StringConstants
+import com.zelianko.kitchencalculator.constants.StringConstants.Companion.transform_screen_bottom
 import com.zelianko.numerologic.R
+import com.zelianko.numerologic.ads.AdmobBanner
+import com.zelianko.numerologic.ads.Banner
 import com.zelianko.numerologic.ui.theme.Clear
 import com.zelianko.numerologic.ui.theme.DarkBlue
 import com.zelianko.numerologic.ui.theme.LightBlue
@@ -77,12 +81,17 @@ fun TransformationScreen(
                 .alpha(0.8f),
             contentScale = ContentScale.FillBounds
         )
+
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .verticalScroll(state = rememberScrollState(0)),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
+            if (isActiveSub.value == false) {
+                Banner(id = R.string.banner_3)
+                AdmobBanner(textId = StringConstants.transform_screen_top)
+            }
             Text(
                 text = "Транформация",
                 modifier = Modifier.padding(top = 2.dp),
@@ -91,6 +100,10 @@ fun TransformationScreen(
             )
             SquereDegrAndTransf(dataMapTransf, isActiveSub, paddingValues, billingViewModel)
             Spacer(modifier = Modifier.size(2.dp))
+            if (isActiveSub.value == false) {
+                Banner(id = R.string.banner_3)
+                AdmobBanner(textId = transform_screen_bottom)
+            }
             Text(
                 text = "Деградация",
                 modifier = Modifier.padding(top = 2.dp),

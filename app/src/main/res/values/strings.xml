@@ -1,9 +1,9 @@
 <resources>
     <string name="app_name">Numerology</string>
-    <string name="banner_1">R-M-3095140-1</string>
-    <string name="banner_2">R-M-3095140-2</string>
-    <string name="banner_3">R-M-3095140-4</string>
-    <string name="banner_4">R-M-3095140-6</string>
+    <string name="banner_1">R–M–3095140–1</string>
+    <string name="banner_2">R–M–3095140–2</string>
+    <string name="banner_3">R–M–3095140–4</string>
+    <string name="banner_4">R–M–3095140–6</string>
 
     <!--    Диссонанс-->
 
@@ -452,6 +452,6 @@
         когда ему кажется, что покупка даст облегчение страданию.
     </string>
 
-    <string name="twenty_six_dis">R-M-3095140-6</string>
+    <string name="twenty_six_dis">R–M–3095140–6</string>
 
 </resources>

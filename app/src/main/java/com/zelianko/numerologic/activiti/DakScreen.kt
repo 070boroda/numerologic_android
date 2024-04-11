@@ -37,6 +37,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Popup
+import com.zelianko.kitchencalculator.constants.StringConstants.Companion.dak_screen
 import com.zelianko.numerologic.R
 import com.zelianko.numerologic.ads.AdmobBanner
 import com.zelianko.numerologic.ads.Banner
@@ -78,25 +79,8 @@ fun DakScreen(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             if (isActiveSub.value == false) {
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth(),
-                    horizontalArrangement = Arrangement.Center,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Banner(id = R.string.banner_2)
-                }
-            }
-
-            if (isActiveSub.value != true) {
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.Center
-                ) {
-                    Log.d("purchases state", "Ads Google start")
-                    AdmobBanner(modifier = Modifier.fillMaxSize())
-                    Log.d("purchases state", "Ads Google end")
-                }
+                Banner(id = R.string.banner_2)
+                AdmobBanner(textId = dak_screen)
             }
             if (isActiveSub.value != true) {
                 SubInformation()

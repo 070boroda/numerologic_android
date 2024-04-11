@@ -80,6 +80,11 @@ fun DegradationScreen(
                 .fillMaxSize()
                 .padding(5.dp),
         ) {
+            if (isActiveSub.value == false) {
+                Banner(id = R.string.banner_3)
+                AdmobBanner()
+            }
+
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -204,7 +209,12 @@ fun DegradationScreen(
             )
             LastClearLine(label2 = "Быт", value2 = dataMap.value["Быт"].toString())
 
-            if (isActiveSub.value != true) {
+            if (isActiveSub.value == false) {
+                Banner(id = R.string.banner_3)
+                AdmobBanner()
+            }
+
+            if (isActiveSub.value == false) {
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -212,34 +222,13 @@ fun DegradationScreen(
                     horizontalArrangement = Arrangement.Center,
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
-                    Banner(id = R.string.banner_3)
+                    Text(
+                        text = "Для расчета деградации",
+                        //modifier = Modifier.padding( all = 20.dp),
+                        style = TextStyle(fontSize = 24.sp),
+                        color = Color.White
+                    )
                 }
-            }
-
-            if (isActiveSub.value != true) {
-                Row (modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.Center) {
-                    Log.d("purchases state", "Ads Google start")
-                    AdmobBanner(modifier = Modifier.fillMaxSize())
-                    Log.d("purchases state", "Ads Google end")
-                }
-            }
-
-            if (isActiveSub.value == false) {
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(top = 15.dp),
-                        horizontalArrangement = Arrangement.Center,
-                        verticalAlignment = Alignment.CenterVertically,
-                    ) {
-                        Text(
-                            text = "Для расчета деградации",
-                            //modifier = Modifier.padding( all = 20.dp),
-                            style = TextStyle(fontSize = 24.sp),
-                            color = Color.White
-                        )
-                    }
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -249,7 +238,7 @@ fun DegradationScreen(
                 ) {
                     Text(
                         text = "требуется оформить подписку",
-                      //  modifier = Modifier.padding( all = 20.dp),
+                        //  modifier = Modifier.padding( all = 20.dp),
                         style = TextStyle(fontSize = 24.sp),
                         color = Color.White
                     )

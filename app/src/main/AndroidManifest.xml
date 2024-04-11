@@ -4,6 +4,7 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="com.android.vending.BILLING" />
+    <uses-permission android:name="com.google.android.gms.permission.AD_ID" />
 <!--    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />-->
 
     <application
@@ -16,10 +17,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Numerologic"
         tools:targetApi="31">
-        <meta-data
-            android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-9309082672837567~3282048152"/>
-
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -31,6 +28,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!-- Sample AdMob app ID: ca-app-pub-3940256099942544~3347511713 -->
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-9309082672837567~3282048152"/>
     </application>
 
 </manifest>

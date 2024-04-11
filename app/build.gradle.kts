@@ -11,8 +11,8 @@ android {
         applicationId = "com.zelianko.numerologic"
         minSdk = 24
         targetSdk = 34
-        versionCode = 37
-        versionName = "2.0.0.37"
+        versionCode = 38
+        versionName = "2.0.0.38"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -48,7 +48,7 @@ android {
 
 dependencies {
 
-    implementation ("com.yandex.android:mobileads:6.4.1")
+    implementation ("com.yandex.android:mobileads:7.0.0")
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.7.0")
@@ -81,4 +81,17 @@ dependencies {
     implementation ("com.google.android.gms:play-services-ads:23.0.0")
     implementation ("com.github.skydoves:cloudy:0.1.2")
     implementation ("com.github.commandiron:WheelPickerCompose:1.1.11")
+
+
+    // For Java-friendly APIs to register and unregister callbacks
+    implementation ("androidx.window:window-java:1.2.0")
+
+    // For RxJava2 integration
+    implementation ("androidx.window:window-rxjava2:1.2.0")
+
+    // For RxJava3 integration
+    implementation ("androidx.window:window-rxjava3:1.2.0")
+
+    // For testing
+    implementation ("androidx.window:window-testing:1.2.0")
 }

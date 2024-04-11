@@ -2,15 +2,10 @@ package com.zelianko.numerologic.ads
 
 import android.app.Activity
 import android.app.Application
-import android.content.ContentValues.TAG
 import android.content.Context
-import android.os.Build
 import android.os.Bundle
 import android.util.Log
-import android.widget.Toast
-import androidx.annotation.RequiresApi
 import androidx.lifecycle.*
-import androidx.lifecycle.ProcessLifecycleOwner
 import com.google.android.gms.ads.AdError
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.FullScreenContentCallback
@@ -31,18 +26,17 @@ class AppOpenAdManager : Application.ActivityLifecycleCallbacks {
 
     private val lifecycleEventObserver = LifecycleEventObserver { source, event ->
         if (event == Lifecycle.Event.ON_RESUME) {
-            Log.e(TAG, "ON_RESUME: showOpen Ad")
+            Log.e("G Start App Ads", "ON_RESUME: showOpen Ad")
             currentActivity?.let { showAdIfAvailable(it) }
         } else if (event == Lifecycle.Event.ON_PAUSE) {
-            Log.e("APP", "paused")
+            Log.e("G Start App Ads", "paused")
         }
     }
 
-    @RequiresApi(Build.VERSION_CODES.Q)
-    constructor(application: Activity?, adUnit: String) {
+    constructor(application: Application, adUnit: String) {
         this.adUnit = adUnit
-        Log.e(TAG, "Ad Open ID : $adUnit" )
-        application?.registerActivityLifecycleCallbacks(this)
+        Log.e("G Start App Ad", "Ad Open ID : $adUnit" )
+        application.registerActivityLifecycleCallbacks(this)
         ProcessLifecycleOwner.get().lifecycle.addObserver(lifecycleEventObserver)
     }
 
@@ -95,14 +89,14 @@ class AppOpenAdManager : Application.ActivityLifecycleCallbacks {
                     appOpenAd = ad
                     isLoadingAd = false
                     loadTime = Date().time
-                    Log.d(TAG, "onAdLoaded.")
-                    Toast.makeText(context, "onAdLoaded", Toast.LENGTH_SHORT).show()
+                    Log.d("G Start App Ads", "onAdLoaded.")
+                    //Toast.makeText(context, "onAdLoaded", Toast.LENGTH_SHORT).show()
                 }
 
 
                 override fun onAdFailedToLoad(loadAdError: LoadAdError) {
                     isLoadingAd = false
-                    Log.d(TAG, "onAdFailedToLoad: " + loadAdError.message)
+                    Log.d("G Start App Ads", "onAdFailedToLoad: " + loadAdError.message)
                     //Toast.makeText(context, "onAdFailedToLoad", Toast.LENGTH_SHORT).show()
                 }
             }
@@ -118,7 +112,7 @@ class AppOpenAdManager : Application.ActivityLifecycleCallbacks {
 
     /** Check if ad exists and can be shown. */
     private fun isAdAvailable(): Boolean {
-        return appOpenAd != null && wasLoadTimeLessThanNHoursAgo(4)
+        return appOpenAd != null && wasLoadTimeLessThanNHoursAgo(1)
     }
 
     private fun showAdIfAvailable(activity: Activity) {
@@ -135,19 +129,19 @@ class AppOpenAdManager : Application.ActivityLifecycleCallbacks {
     fun showAdIfAvailable(activity: Activity, onShowAdCompleteListener: OnShowAdCompleteListener) {
         // If the app open ad is already showing, do not show the ad again.
         if (isShowingAd) {
-            Log.d(TAG, "The app open ad is already showing.")
+            Log.d("G Start App Ads", "The app open ad is already showing.")
             return
         }
 
         // If the app open ad is not available yet, invoke the callback then load the ad.
         if (!isAdAvailable()) {
-            Log.d(TAG, "The app open ad is not ready yet.")
+            Log.d("G Start App Ads", "The app open ad is not ready yet.")
             onShowAdCompleteListener.onShowAdComplete()
             loadAd(activity)
             return
         }
 
-        Log.d(TAG, "Will show ad.")
+        Log.d("G Start App Ads", "Will show ad.")
 
         appOpenAd!!.setFullScreenContentCallback(
             object : FullScreenContentCallback() {
@@ -156,7 +150,7 @@ class AppOpenAdManager : Application.ActivityLifecycleCallbacks {
                     // Set the reference to null so isAdAvailable() returns false.
                     appOpenAd = null
                     isShowingAd = false
-                    Log.d(TAG, "onAdDismissedFullScreenContent.")
+                    Log.d("G Start App Ads", "onAdDismissedFullScreenContent.")
                     /* Toast.makeText(activity, "onAdDismissedFullScreenContent", Toast.LENGTH_SHORT)
                          .show()*/
 
@@ -168,7 +162,7 @@ class AppOpenAdManager : Application.ActivityLifecycleCallbacks {
                 override fun onAdFailedToShowFullScreenContent(adError: AdError) {
                     appOpenAd = null
                     isShowingAd = false
-                    Log.d(TAG, "onAdFailedToShowFullScreenContent: " + adError.message)
+                    Log.d("G Start App Ads", "onAdFailedToShowFullScreenContent: " + adError.message)
                     /*Toast.makeText(
                         activity,
                         "onAdFailedToShowFullScreenContent",
@@ -181,7 +175,7 @@ class AppOpenAdManager : Application.ActivityLifecycleCallbacks {
 
                 /** Called when fullscreen content is shown. */
                 override fun onAdShowedFullScreenContent() {
-                    Log.d(TAG, "onAdShowedFullScreenContent.")
+                    Log.d("G Start App Ads", "onAdShowedFullScreenContent.")
                     /*Toast.makeText(activity, "onAdShowedFullScreenContent", Toast.LENGTH_SHORT)
                         .show()*/
                 }

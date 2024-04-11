@@ -2,10 +2,8 @@ package com.zelianko.numerologic.activiti
 
 import android.annotation.SuppressLint
 import android.os.Build
-import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -42,14 +40,13 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.window.Dialog
-import androidx.compose.ui.window.Popup
 import com.maxkeppeker.sheets.core.models.base.UseCaseState
 import com.maxkeppeker.sheets.core.models.base.rememberUseCaseState
 import com.maxkeppeler.sheets.calendar.CalendarDialog
 import com.maxkeppeler.sheets.calendar.models.CalendarConfig
 import com.maxkeppeler.sheets.calendar.models.CalendarSelection
 import com.maxkeppeler.sheets.calendar.models.CalendarStyle
+import com.zelianko.kitchencalculator.constants.StringConstants
 import com.zelianko.numerologic.R
 import com.zelianko.numerologic.ads.AdmobBanner
 import com.zelianko.numerologic.ads.Banner
@@ -81,39 +78,35 @@ fun CompatibilityScreen(
     val isActiveSub = billingViewModel.isActiveSub.observeAsState()
 
 
-    Scaffold (
+    Scaffold(
         modifier = Modifier.padding(paddingValues)
-    ){
-    Image(
-        painter = painterResource(id = R.drawable.screen_1),
-        contentDescription = "image1",
-        modifier = Modifier
-            .fillMaxSize()
-            .alpha(0.8f),
-        contentScale = ContentScale.FillBounds
-    )
+    ) {
+        Image(
+            painter = painterResource(id = R.drawable.screen_1),
+            contentDescription = "image1",
+            modifier = Modifier
+                .fillMaxSize()
+                .alpha(0.8f),
+            contentScale = ContentScale.FillBounds
+        )
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .verticalScroll(state = rememberScrollState(0)),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
+            if (isActiveSub.value != true) {
+                Banner(id = R.string.banner_4)
+                AdmobBanner(textId = StringConstants.compobility_screen_top)
+            }
             Square(dataMap, billingViewModel, paddingValues = paddingValues)
+            if (isActiveSub.value != true) {
+                Banner(id = R.string.banner_4)
+                AdmobBanner(textId = StringConstants.compobility_screen_bottom)
+            }
             Spacer(modifier = Modifier.size(5.dp))
             Square(dataMapSecond, billingViewModel, paddingValues = paddingValues)
             Spacer(modifier = Modifier.size(1.dp))
-
-            if (isActiveSub.value != true) {
-                Banner(id = R.string.banner_4)
-            }
-            if (isActiveSub.value != true) {
-                Row (modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.Center) {
-                    Log.d("purchases state", "Ads Google start")
-                    AdmobBanner(modifier = Modifier.fillMaxSize())
-                    Log.d("purchases state", "Ads Google end")
-                }
-            }
         }
     }
 }
@@ -124,7 +117,8 @@ fun CompatibilityScreen(
 fun Square(
     dataMap: MutableState<HashMap<String, String>>,
     billingViewModel: BillingViewModel,
-    paddingValues:PaddingValues) {
+    paddingValues: PaddingValues
+) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -252,10 +246,14 @@ fun Square(
             label4 = "Привычки", value4 = dataMap.value["Привычки"].toString(),
             maxHeightSize = 0.125f
         )
-        LastClearLine(value2 = dataMap.value["Быт"].toString(), map = dataMap, billingViewModel = billingViewModel, paddingValues = paddingValues)
+        LastClearLine(
+            value2 = dataMap.value["Быт"].toString(),
+            map = dataMap,
+            billingViewModel = billingViewModel,
+            paddingValues = paddingValues
+        )
     }
-    }
-
+}
 
 
 @Composable
@@ -479,7 +477,7 @@ private fun LastClearLine(
 private fun Date(
     map: MutableState<HashMap<String, String>>,
     billingViewModel: BillingViewModel,
-    paddingValues:PaddingValues
+    paddingValues: PaddingValues
 ) {
 
     val selectedDateText = remember { mutableStateOf("") }
@@ -509,19 +507,19 @@ private fun Date(
         }
         //Пока делаем расчет двух матриц на одном экране бесплатным
 //        if (isActiveSub.value == true) {
-            Button(
-                modifier = Modifier
-                    .fillMaxSize(),
-                colors = ButtonDefaults.buttonColors(containerColor = DarkBlue),
-                onClick = {
-                    calendarState.show()
-                }
-            ) {
-                Text(
-                    text = "Дата рождения",
-                    style = TextStyle(fontSize = 12.sp, fontWeight = FontWeight.Bold)
-                )
+        Button(
+            modifier = Modifier
+                .fillMaxSize(),
+            colors = ButtonDefaults.buttonColors(containerColor = DarkBlue),
+            onClick = {
+                calendarState.show()
             }
+        ) {
+            Text(
+                text = "Дата рождения",
+                style = TextStyle(fontSize = 12.sp, fontWeight = FontWeight.Bold)
+            )
+        }
 //        } else {
 //            if (popupControl) {
 //                Popup(
@@ -558,7 +556,7 @@ private fun Date(
 @OptIn(ExperimentalMaterial3Api::class)
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-internal fun CalendarSample(calendarState: UseCaseState, selectedDateText: MutableState<String>){
+internal fun CalendarSample(calendarState: UseCaseState, selectedDateText: MutableState<String>) {
 
     CalendarDialog(
         state = calendarState,
@@ -569,7 +567,8 @@ internal fun CalendarSample(calendarState: UseCaseState, selectedDateText: Mutab
             boundary = LocalDate.of(1900, 1, 1)..LocalDate.now()
         ),
         selection = CalendarSelection.Dates { newDates ->
-            selectedDateText.value = "${newDates.get(0).dayOfMonth}/${newDates.get(0).month.value}/${newDates.get(0).year}"
+            selectedDateText.value =
+                "${newDates.get(0).dayOfMonth}/${newDates.get(0).month.value}/${newDates.get(0).year}"
         },
     )
 }

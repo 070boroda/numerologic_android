@@ -36,7 +36,9 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.zelianko.kitchencalculator.constants.StringConstants
 import com.zelianko.numerologic.R
+import com.zelianko.numerologic.ads.AdmobBanner
 import com.zelianko.numerologic.ads.Banner
 import com.zelianko.numerologic.services.CountNumberServices
 import com.zelianko.numerologic.ui.theme.Clear
@@ -78,6 +80,10 @@ fun GeneralScreen(
                 .verticalScroll(rememberScrollState()),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
+            if (isActiveSub.value != true) {
+                Banner(id = R.string.banner_1)
+                AdmobBanner(textId = StringConstants.general_screen)
+            }
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -215,12 +221,8 @@ fun GeneralScreen(
             )
             Spacer(modifier = Modifier.size(5.dp))
             if (isActiveSub.value != true) {
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.Center
-                ) {
-                }
                 Banner(id = R.string.banner_1)
+                AdmobBanner(textId = StringConstants.general_screen_bottom)
             }
         }
     }

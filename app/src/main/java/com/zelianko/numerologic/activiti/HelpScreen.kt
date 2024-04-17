@@ -68,7 +68,7 @@ fun HelpScreen(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             if (isActiveSub.value == false) {
-                Banner(id = R.string.banner_2)
+                Banner(id = R.string.banner_8)
                 AdmobBanner(textId = info_screen)
             }
 

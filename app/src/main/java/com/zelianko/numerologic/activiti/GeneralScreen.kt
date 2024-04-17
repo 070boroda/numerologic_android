@@ -221,7 +221,6 @@ fun GeneralScreen(
             )
             Spacer(modifier = Modifier.size(5.dp))
             if (isActiveSub.value != true) {
-                Banner(id = R.string.banner_1)
                 AdmobBanner(textId = StringConstants.general_screen_bottom)
             }
         }

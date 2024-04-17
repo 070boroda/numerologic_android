@@ -1,9 +1,15 @@
 <resources>
     <string name="app_name">Numerology</string>
-    <string name="banner_1">R–M–3095140–1</string>
-    <string name="banner_2">R–M–3095140–2</string>
-    <string name="banner_3">R–M–3095140–4</string>
-    <string name="banner_4">R–M–3095140–6</string>
+    <string name="banner_1">R-M-3095140-1</string>
+    <string name="banner_2">R-M-3095140-2</string>
+    <string name="banner_3">R-M-3095140-4</string>
+    <string name="banner_4">R-M-3095140-6</string>
+
+
+
+    <string name="banner_7">R-M-3095140-7</string>
+    <string name="banner_8">R-M-3095140-8</string>
+    <string name="banner_9">R-M-3095140-9</string>
 
     <!--    Диссонанс-->
 

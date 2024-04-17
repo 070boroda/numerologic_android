@@ -101,7 +101,7 @@ fun TransformationScreen(
             SquereDegrAndTransf(dataMapTransf, isActiveSub, paddingValues, billingViewModel)
             Spacer(modifier = Modifier.size(2.dp))
             if (isActiveSub.value == false) {
-                Banner(id = R.string.banner_3)
+                Banner(id = R.string.banner_7)
                 AdmobBanner(textId = transform_screen_bottom)
             }
             Text(

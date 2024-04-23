@@ -11,8 +11,8 @@ android {
         applicationId = "com.zelianko.numerologic"
         minSdk = 24
         targetSdk = 34
-        versionCode = 39
-        versionName = "2.0.0.39"
+        versionCode = 40
+        versionName = "2.0.0.40"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -94,4 +94,8 @@ dependencies {
 
     // For testing
     implementation ("androidx.window:window-testing:1.2.0")
+
+
+   // implementation ("com.yandex.ads.mediation:mobileads-mytarget:5.20.1.0")
+    implementation ("com.yandex.android:mobileads-mediation:7.0.1.0")
 }

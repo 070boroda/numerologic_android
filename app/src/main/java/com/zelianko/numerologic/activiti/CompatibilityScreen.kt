@@ -98,6 +98,7 @@ fun CompatibilityScreen(
             if (isActiveSub.value != true) {
                 Banner(id = R.string.banner_4)
                 AdmobBanner(textId = StringConstants.compobility_screen_top)
+//                                    AdmobBanner()
             }
             Square(dataMap, billingViewModel, paddingValues = paddingValues)
             if (isActiveSub.value != true) {

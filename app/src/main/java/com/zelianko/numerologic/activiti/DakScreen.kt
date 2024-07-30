@@ -1,7 +1,6 @@
 package com.zelianko.numerologic.activiti
 
 import android.annotation.SuppressLint
-import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -40,7 +39,8 @@ import androidx.compose.ui.window.Popup
 import com.zelianko.kitchencalculator.constants.StringConstants.Companion.dak_screen
 import com.zelianko.numerologic.R
 import com.zelianko.numerologic.ads.AdmobBanner
-import com.zelianko.numerologic.ads.Banner
+import com.zelianko.numerologic.ads.BannerInline
+import com.zelianko.numerologic.ads.BannerSticky
 import com.zelianko.numerologic.ui.theme.DarkBlue
 import com.zelianko.numerologic.viewmodel.BillingViewModel
 import com.zelianko.numerologic.viewmodel.SelectedDateTextViewModel
@@ -75,11 +75,11 @@ fun DakScreen(
         Column(
             modifier = Modifier
                 .fillMaxSize(),
-            verticalArrangement = Arrangement.Center,
+            verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             if (isActiveSub.value == false) {
-                Banner(id = R.string.banner_2)
+                BannerSticky(id = R.string.banner_2)
                 AdmobBanner(textId = dak_screen)
             }
             if (isActiveSub.value != true) {
@@ -123,6 +123,8 @@ fun DakScreen(
                         )
                     }
                 }
+                Spacer(modifier = Modifier.weight(1f))
+                BannerInline("R-M-3095140-11", 3)
             } else {
                 LazyColumn(
                     modifier = Modifier

@@ -11,8 +11,8 @@ android {
         applicationId = "com.zelianko.numerologic"
         minSdk = 24
         targetSdk = 34
-        versionCode = 40
-        versionName = "2.0.0.40"
+        versionCode = 41
+        versionName = "2.0.0.41"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -48,7 +48,7 @@ android {
 
 dependencies {
 
-    implementation ("com.yandex.android:mobileads:7.0.0")
+    implementation ("com.yandex.android:mobileads:7.2.0")
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.7.0")

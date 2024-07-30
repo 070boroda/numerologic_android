@@ -2,7 +2,6 @@ package com.zelianko.numerologic.activiti
 
 import android.annotation.SuppressLint
 import android.os.Build
-import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -39,7 +38,7 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Popup
 import com.zelianko.numerologic.R
 import com.zelianko.numerologic.ads.AdmobBanner
-import com.zelianko.numerologic.ads.Banner
+import com.zelianko.numerologic.ads.BannerSticky
 import com.zelianko.numerologic.ui.theme.Clear
 import com.zelianko.numerologic.ui.theme.DarkBlue
 import com.zelianko.numerologic.ui.theme.LightBlue
@@ -81,7 +80,7 @@ fun DegradationScreen(
                 .padding(5.dp),
         ) {
             if (isActiveSub.value == false) {
-                Banner(id = R.string.banner_3)
+                BannerSticky(id = R.string.banner_3)
                 AdmobBanner()
             }
 
@@ -210,7 +209,7 @@ fun DegradationScreen(
             LastClearLine(label2 = "Быт", value2 = dataMap.value["Быт"].toString())
 
             if (isActiveSub.value == false) {
-                Banner(id = R.string.banner_3)
+                BannerSticky(id = R.string.banner_3)
                 AdmobBanner()
             }
 

@@ -37,7 +37,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Popup
 import com.zelianko.numerologic.R
-import com.zelianko.numerologic.ads.AdmobBanner
 import com.zelianko.numerologic.ads.BannerSticky
 import com.zelianko.numerologic.ui.theme.Clear
 import com.zelianko.numerologic.ui.theme.DarkBlue
@@ -81,7 +80,7 @@ fun DegradationScreen(
         ) {
             if (isActiveSub.value == false) {
                 BannerSticky(id = R.string.banner_3)
-                AdmobBanner()
+//                AdmobBanner()
             }
 
             Row(
@@ -210,7 +209,7 @@ fun DegradationScreen(
 
             if (isActiveSub.value == false) {
                 BannerSticky(id = R.string.banner_3)
-                AdmobBanner()
+//                AdmobBanner()
             }
 
             if (isActiveSub.value == false) {

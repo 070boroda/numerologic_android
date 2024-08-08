@@ -46,9 +46,7 @@ import com.maxkeppeler.sheets.calendar.CalendarDialog
 import com.maxkeppeler.sheets.calendar.models.CalendarConfig
 import com.maxkeppeler.sheets.calendar.models.CalendarSelection
 import com.maxkeppeler.sheets.calendar.models.CalendarStyle
-import com.zelianko.kitchencalculator.constants.StringConstants
 import com.zelianko.numerologic.R
-import com.zelianko.numerologic.ads.AdmobBanner
 import com.zelianko.numerologic.ads.BannerSticky
 import com.zelianko.numerologic.services.CountNumberServices
 import com.zelianko.numerologic.ui.theme.Clear
@@ -97,13 +95,13 @@ fun CompatibilityScreen(
         ) {
             if (isActiveSub.value != true) {
                 BannerSticky(id = R.string.banner_4)
-                AdmobBanner(textId = StringConstants.compobility_screen_top)
+//                AdmobBanner(textId = StringConstants.compobility_screen_top)
 //                                    AdmobBanner()
             }
             Square(dataMap, billingViewModel, paddingValues = paddingValues)
             if (isActiveSub.value != true) {
                 BannerSticky(id = R.string.banner_9)
-                AdmobBanner(textId = StringConstants.compobility_screen_bottom)
+//                AdmobBanner(textId = StringConstants.compobility_screen_bottom)
             }
             Spacer(modifier = Modifier.size(5.dp))
             Square(dataMapSecond, billingViewModel, paddingValues = paddingValues)

@@ -42,10 +42,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Popup
-import com.zelianko.kitchencalculator.constants.StringConstants
-import com.zelianko.kitchencalculator.constants.StringConstants.Companion.transform_screen_bottom
 import com.zelianko.numerologic.R
-import com.zelianko.numerologic.ads.AdmobBanner
 import com.zelianko.numerologic.ads.BannerSticky
 import com.zelianko.numerologic.ui.theme.Clear
 import com.zelianko.numerologic.ui.theme.DarkBlue
@@ -66,7 +63,7 @@ fun TransformationScreen(
 
     val isActiveSub = billingViewModel.isActiveSub.observeAsState()
 
-      val showDialog = remember { mutableStateOf(false) }
+    val showDialog = remember { mutableStateOf(false) }
 
     var popupControl by remember { mutableStateOf(false) }
 
@@ -90,7 +87,7 @@ fun TransformationScreen(
         ) {
             if (isActiveSub.value == false) {
                 BannerSticky(id = R.string.banner_3)
-                AdmobBanner(textId = StringConstants.transform_screen_top)
+//                AdmobBanner(textId = StringConstants.transform_screen_top)
             }
             Text(
                 text = "Транформация",
@@ -102,7 +99,7 @@ fun TransformationScreen(
             Spacer(modifier = Modifier.size(2.dp))
             if (isActiveSub.value == false) {
                 BannerSticky(id = R.string.banner_7)
-                AdmobBanner(textId = transform_screen_bottom)
+//                AdmobBanner(textId = transform_screen_bottom)
             }
             Text(
                 text = "Деградация",
@@ -129,10 +126,10 @@ fun TransformationScreen(
                     )
                 }
                 Row(
-                        modifier = Modifier
-                            .fillMaxWidth(),
-                horizontalArrangement = Arrangement.Center,
-                verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    horizontalArrangement = Arrangement.Center,
+                    verticalAlignment = Alignment.CenterVertically,
                 ) {
                     Text(
                         text = "трансформации",

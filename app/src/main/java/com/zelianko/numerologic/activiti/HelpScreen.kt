@@ -35,9 +35,7 @@ import androidx.compose.ui.text.font.FontWeight.Companion.Normal
 import androidx.compose.ui.text.style.TextIndent
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.zelianko.kitchencalculator.constants.StringConstants.Companion.info_screen
 import com.zelianko.numerologic.R
-import com.zelianko.numerologic.ads.AdmobBanner
 import com.zelianko.numerologic.ads.BannerSticky
 import com.zelianko.numerologic.ui.theme.LightBlue
 import com.zelianko.numerologic.viewmodel.BillingViewModel
@@ -69,7 +67,7 @@ fun HelpScreen(
         ) {
             if (isActiveSub.value == false) {
                 BannerSticky(id = R.string.banner_8)
-                AdmobBanner(textId = info_screen)
+//                AdmobBanner(textId = info_screen)
             }
 
             LazyColumn(

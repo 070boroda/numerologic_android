@@ -29,11 +29,6 @@ class MainActivity : ComponentActivity() {
         com.yandex.mobile.ads.common.MobileAds.initialize(this) {}
 
         com.yandex.mobile.ads.common.MobileAds.enableDebugErrorIndicator(false)
-        com.google.android.gms.ads.MobileAds.initialize(this) {}
-//        val config =
-//            YandexMetricaConfig.newConfigBuilder("25783e36-10b1-4551-bab1-89236908f4af").build()
-//        YandexMetrica.activate(applicationContext, config)
-//        YandexMetrica.enableActivityAutoTracking(Application())
 
         val config =
             AppMetricaConfig.newConfigBuilder("25783e36-10b1-4551-bab1-89236908f4af").build()
@@ -50,10 +45,6 @@ class MainActivity : ComponentActivity() {
             if (isActiveSub.value == false) {
                 AppOpenAdManager(this.application, StringConstants.StartAdAppScreenId)
             }
-
-//            val app = context.applicationContext as Application
-//            AppOpenAdManager(findActivity(), "ca-app-pub-9309082672837567/9615807629")
-            // AppOpenAdManager(app, "ca-app-pub-3940256099942544/3419835294") //test id
             MainScreen(
                 viewModel = viewModel,
                 billingViewModel = billingViewModel

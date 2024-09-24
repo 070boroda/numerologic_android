@@ -35,8 +35,8 @@ fun ButtonNavigation(
 ) {
     val listItem = listOf(
         BottomItem.Screen1,
-        BottomItem.Screen4,
-        BottomItem.Screen5,
+//        BottomItem.Screen4,
+//        BottomItem.Screen5,
         BottomItem.Screen3,
         BottomItem.Screen2,
     )

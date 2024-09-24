@@ -48,7 +48,7 @@ android {
 
 dependencies {
 
-    implementation ("com.yandex.android:mobileads:7.3.0")
+    implementation ("com.yandex.android:mobileads:7.4.0")
     implementation("androidx.core:core-ktx:1.13.1")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.8.4")
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.8.4")
@@ -78,7 +78,7 @@ dependencies {
 
     implementation("com.android.billingclient:billing:7.0.0")
     implementation("com.android.billingclient:billing-ktx:7.0.0")
-    implementation ("com.google.android.gms:play-services-ads:23.2.0")
+    implementation ("com.google.android.gms:play-services-ads:23.0.0")
     implementation ("com.github.skydoves:cloudy:0.1.2")
     implementation ("com.github.commandiron:WheelPickerCompose:1.1.11")
 
@@ -97,5 +97,5 @@ dependencies {
 
 
    // implementation ("com.yandex.ads.mediation:mobileads-mytarget:5.20.1.0")
-    implementation ("com.yandex.android:mobileads-mediation:7.0.1.0")
+    implementation ("com.yandex.android:mobileads-mediation:7.4.0.0")
 }
